@@ -1,0 +1,452 @@
+{
+  "name": "settings",
+  "size": [
+    960,
+    540
+  ],
+  "background": "void-0",
+  "elements": [
+    {
+      "kind": "sprite",
+      "asset": "containers/window_fleur.png",
+      "box": [
+        112,
+        48,
+        736,
+        440
+      ],
+      "clip": [
+        0,
+        0,
+        960,
+        540
+      ],
+      "purpose": ""
+    },
+    {
+      "kind": "text",
+      "text": "Settings",
+      "box": [
+        136,
+        75,
+        686,
+        23
+      ],
+      "face": "headings",
+      "token": "bone-0",
+      "align": "center"
+    },
+    {
+      "kind": "sprite",
+      "asset": "inputs/tab_top_selected.png",
+      "box": [
+        152,
+        120,
+        104,
+        26
+      ],
+      "clip": [
+        0,
+        0,
+        960,
+        540
+      ],
+      "purpose": ""
+    },
+    {
+      "kind": "text",
+      "text": "General",
+      "box": [
+        156,
+        126,
+        96,
+        16
+      ],
+      "face": "body",
+      "token": "bone-0",
+      "align": "center"
+    },
+    {
+      "kind": "sprite",
+      "asset": "inputs/tab_top_normal.png",
+      "box": [
+        264,
+        120,
+        104,
+        26
+      ],
+      "clip": [
+        0,
+        0,
+        960,
+        540
+      ],
+      "purpose": ""
+    },
+    {
+      "kind": "text",
+      "text": "Audio",
+      "box": [
+        268,
+        126,
+        96,
+        16
+      ],
+      "face": "body",
+      "token": "bone-0",
+      "align": "center"
+    },
+    {
+      "kind": "sprite",
+      "asset": "inputs/tab_top_normal.png",
+      "box": [
+        376,
+        120,
+        104,
+        26
+      ],
+      "clip": [
+        0,
+        0,
+        960,
+        540
+      ],
+      "purpose": ""
+    },
+    {
+      "kind": "text",
+      "text": "Controls",
+      "box": [
+        380,
+        126,
+        96,
+        16
+      ],
+      "face": "body",
+      "token": "bone-0",
+      "align": "center"
+    },
+    {
+      "kind": "text",
+      "text": "Display mode",
+      "box": [
+        152,
+        184,
+        240,
+        20
+      ],
+      "face": "body",
+      "token": "bone-0",
+      "align": "left"
+    },
+    {
+      "kind": "sprite",
+      "asset": "inputs/dropdown_normal.png",
+      "box": [
+        448,
+        176,
+        312,
+        28
+      ],
+      "clip": [
+        0,
+        0,
+        960,
+        540
+      ],
+      "purpose": ""
+    },
+    {
+      "kind": "text",
+      "text": "Borderless",
+      "box": [
+        461,
+        182,
+        260,
+        18
+      ],
+      "face": "body",
+      "token": "bone-1",
+      "align": "left"
+    },
+    {
+      "kind": "text",
+      "text": "Music volume",
+      "box": [
+        152,
+        240,
+        240,
+        20
+      ],
+      "face": "body",
+      "token": "bone-0",
+      "align": "left"
+    },
+    {
+      "kind": "sprite",
+      "asset": "inputs/slider_track_normal.png",
+      "box": [
+        448,
+        246,
+        256,
+        9
+      ],
+      "clip": [
+        0,
+        0,
+        960,
+        540
+      ],
+      "purpose": ""
+    },
+    {
+      "kind": "sprite",
+      "asset": "inputs/slider_fill_normal.png",
+      "box": [
+        451,
+        249,
+        180,
+        4
+      ],
+      "clip": [
+        0,
+        0,
+        960,
+        540
+      ],
+      "purpose": ""
+    },
+    {
+      "kind": "sprite",
+      "asset": "inputs/slider_knob_round_normal.png",
+      "box": [
+        621,
+        240,
+        20,
+        20
+      ],
+      "clip": [
+        0,
+        0,
+        960,
+        540
+      ],
+      "purpose": ""
+    },
+    {
+      "kind": "text",
+      "text": "72%",
+      "box": [
+        720,
+        240,
+        40,
+        20
+      ],
+      "face": "body",
+      "token": "bone-0",
+      "align": "right"
+    },
+    {
+      "kind": "text",
+      "text": "Shadows",
+      "box": [
+        152,
+        292,
+        240,
+        20
+      ],
+      "face": "body",
+      "token": "bone-0",
+      "align": "left"
+    },
+    {
+      "kind": "sprite",
+      "asset": "slice/checkbox_on_idle.png",
+      "box": [
+        448,
+        290,
+        20,
+        20
+      ],
+      "clip": [
+        0,
+        0,
+        960,
+        540
+      ],
+      "purpose": ""
+    },
+    {
+      "kind": "text",
+      "text": "Enabled",
+      "box": [
+        484,
+        292,
+        276,
+        20
+      ],
+      "face": "body",
+      "token": "bone-0",
+      "align": "left"
+    },
+    {
+      "kind": "text",
+      "text": "Online features",
+      "box": [
+        152,
+        336,
+        240,
+        20
+      ],
+      "face": "body",
+      "token": "bone-4",
+      "align": "left"
+    },
+    {
+      "kind": "sprite",
+      "asset": "slice/toggle_off_disabled.png",
+      "box": [
+        448,
+        334,
+        36,
+        20
+      ],
+      "clip": [
+        0,
+        0,
+        960,
+        540
+      ],
+      "purpose": "Unavailable while offline"
+    },
+    {
+      "kind": "text",
+      "text": "Offline",
+      "box": [
+        500,
+        336,
+        260,
+        20
+      ],
+      "face": "body",
+      "token": "bone-4",
+      "align": "left"
+    },
+    {
+      "kind": "text",
+      "text": "Open journal",
+      "box": [
+        152,
+        380,
+        240,
+        20
+      ],
+      "face": "body",
+      "token": "bone-0",
+      "align": "left"
+    },
+    {
+      "kind": "sprite",
+      "asset": "inputs/keycap_normal.png",
+      "box": [
+        448,
+        374,
+        52,
+        28
+      ],
+      "clip": [
+        0,
+        0,
+        960,
+        540
+      ],
+      "purpose": ""
+    },
+    {
+      "kind": "text",
+      "text": "J",
+      "box": [
+        456,
+        380,
+        36,
+        16
+      ],
+      "face": "body",
+      "token": "bone-0",
+      "align": "center"
+    },
+    {
+      "kind": "sprite",
+      "asset": "slice/button_secondary_normal.png",
+      "box": [
+        488,
+        432,
+        128,
+        28
+      ],
+      "clip": [
+        0,
+        0,
+        960,
+        540
+      ],
+      "purpose": ""
+    },
+    {
+      "kind": "text",
+      "text": "Cancel",
+      "box": [
+        496,
+        438,
+        112,
+        16
+      ],
+      "face": "body",
+      "token": "bone-0",
+      "align": "center"
+    },
+    {
+      "kind": "sprite",
+      "asset": "slice/button_primary_focus.png",
+      "box": [
+        640,
+        432,
+        128,
+        28
+      ],
+      "clip": [
+        0,
+        0,
+        960,
+        540
+      ],
+      "purpose": "Keyboard focus"
+    },
+    {
+      "kind": "text",
+      "text": "Apply",
+      "box": [
+        648,
+        438,
+        112,
+        16
+      ],
+      "face": "body",
+      "token": "bone-0",
+      "align": "center"
+    },
+    {
+      "kind": "text",
+      "text": "Tab: next control     Arrows: adjust     Enter: apply     Esc: close",
+      "box": [
+        120,
+        504,
+        720,
+        20
+      ],
+      "face": "body",
+      "token": "bone-3",
+      "align": "center"
+    }
+  ]
+}

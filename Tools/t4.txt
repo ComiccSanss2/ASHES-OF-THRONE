@@ -1,0 +1,41 @@
+stop
+wait:4
+clear
+play
+wait:25
+msg:GameUI,DevQuickStart,x
+wait:8
+msg:Player_0 (local),DevGod,1
+msg:Player_0 (local),DevTeleport,0;0.3;71
+wait:2
+msg:Player_0 (local),DevTeleport,0;0.3;76
+wait:3
+shot
+msg:Player_0 (local),DevTeleport,0;0.3;109
+wait:4
+shot
+msg:Player_0 (local),DevTeleport,-22;0.3;120
+wait:4
+shot
+msg:Player_0 (local),DevTeleport,44;0.3;116
+wait:4
+shot
+msg:CastleProgress(Clone),DevProgress,great
+msg:Player_0 (local),DevTeleport,0;0.3;133
+wait:5
+shot
+msg:Player_0 (local),DevTeleport,0;7.8;160
+wait:4
+shot
+msg:DragonArena(Clone),DevStartFight,x
+wait:6
+shot
+msg:Dragon(Clone),DevMove,Breath
+wait:2.5
+shot
+wait:6
+msg:Dragon(Clone),DevMove,TakeOff
+wait:4.5
+shot
+wait:8
+shot

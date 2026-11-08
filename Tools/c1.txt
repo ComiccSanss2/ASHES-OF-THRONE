@@ -1,0 +1,4 @@
+stop
+wait:3
+refresh
+wait:50

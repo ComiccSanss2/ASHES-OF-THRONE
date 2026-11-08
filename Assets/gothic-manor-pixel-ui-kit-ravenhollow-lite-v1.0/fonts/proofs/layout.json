@@ -1,0 +1,118 @@
+{
+  "body": [
+    {
+      "ink_bounds": [
+        0,
+        -10,
+        185,
+        2
+      ],
+      "line_advances": [
+        186
+      ],
+      "pen_origin": [
+        0,
+        10
+      ],
+      "text": "Inventory: 0123456789 / 100%"
+    },
+    {
+      "ink_bounds": [
+        0,
+        -14,
+        189,
+        4
+      ],
+      "line_advances": [
+        190
+      ],
+      "pen_origin": [
+        0,
+        14
+      ],
+      "text": "À bientôt! Coração, São João."
+    },
+    {
+      "ink_bounds": [
+        0,
+        -15,
+        188,
+        2
+      ],
+      "line_advances": [
+        189
+      ],
+      "pen_origin": [
+        0,
+        15
+      ],
+      "text": "Łódź Čeština Őrség Űr Ñandú"
+    },
+    {
+      "ink_bounds": [
+        0,
+        -14,
+        93,
+        4
+      ],
+      "line_advances": [
+        94
+      ],
+      "pen_origin": [
+        0,
+        14
+      ],
+      "text": "j f (ÀÇ) gyp - Ŕ"
+    }
+  ],
+  "headings": [
+    {
+      "ink_bounds": [
+        1,
+        -12,
+        247,
+        3
+      ],
+      "line_advances": [
+        247
+      ],
+      "pen_origin": [
+        0,
+        12
+      ],
+      "text": "Inventory Items Info Journal"
+    },
+    {
+      "ink_bounds": [
+        1,
+        -16,
+        239,
+        3
+      ],
+      "line_advances": [
+        239
+      ],
+      "pen_origin": [
+        0,
+        16
+      ],
+      "text": "Łódź Čeština Őrség Űr Ñandú"
+    },
+    {
+      "ink_bounds": [
+        1,
+        -16,
+        190,
+        3
+      ],
+      "line_advances": [
+        190
+      ],
+      "pen_origin": [
+        0,
+        16
+      ],
+      "text": "Ĉu Ĝardeno Ŝtono Ţară"
+    }
+  ]
+}

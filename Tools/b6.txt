@@ -1,0 +1,45 @@
+stop
+wait:3
+refresh
+wait:50
+menu:Dark Fantasy/Build Everything (playable scene)
+wait:95
+clear
+play
+wait:25
+msg:GameUI,DevMenuTest,knight
+msg:GameUI,DevQuickStart,x
+wait:8
+msg:Player_0 (local),DevGod,1
+msg:Player_0 (local),DevTeleport,0;0.3;72
+wait:2
+render:0,1.8,68,0,0.2,90,60|gal_water
+render:0,2.2,70,0,0.0,100,45|gal_far
+msg:Player_0 (local),DevTeleport,24;0.3;120
+wait:2
+render:24,1.8,120,30,1.2,123,60|cells
+msg:Player_0 (local),DevTeleport,-2.5;0.2;108.2
+wait:2
+msg:Checkpoint_2,DevRest,x
+wait:2.5
+shot
+msg:GameUI,DevMenuTest,fight
+wait:7
+msg:Player_0 (local),DevTeleport,0;7.7;164
+wait:3
+msg:Dragon(Clone),DevMove,Charge
+wait:0.95
+render:14,9,166,0,7.5,180,60|ch_lane
+wait:0.6
+render:14,9,166,0,7.5,180,60|ch_run
+wait:0.5
+render:14,9,166,0,7.5,180,60|ch_run2
+wait:2
+msg:Dragon(Clone),DevMove,Breath
+wait:2.5
+render:14,10,166,0,7.5,180,60|breath
+wait:2
+render:14,10,166,0,7.5,180,60|burn
+msg:Dragon(Clone),DevMove,TailSweep
+wait:1.0
+render:14,10,166,0,7.5,182,60|tail

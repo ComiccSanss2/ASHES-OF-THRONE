@@ -1,0 +1,19 @@
+msg:Player_0 (local),DevTeleport,0;0.3;116
+wait:2
+render:2.5,2.0,111.5,0,1.1,116,60|fx_idle
+msg:Player_0 (local),DevCast,0
+wait:0.45
+render:2.5,2.0,111.5,0,1.1,116,60|fx_hymn_charge
+wait:0.5
+render:3.5,3.0,109,0,0.5,116,60|fx_hymn
+wait:12
+msg:Player_0 (local),DevCast,1
+wait:0.95
+render:3.5,3.0,109,0,0.5,116,60|fx_anthem
+wait:2
+render:2.5,2.0,111.5,0,1.1,116,60|fx_aura
+msg:Player_0 (local),DevCast,3
+wait:0.75
+render:3.5,4.0,109,0,0.5,118,60|fx_cresc_mark
+wait:0.4
+render:3.5,4.0,109,0,0.5,118,60|fx_cresc

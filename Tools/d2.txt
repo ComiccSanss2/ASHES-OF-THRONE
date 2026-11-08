@@ -1,0 +1,5 @@
+msg:Player_0 (local),DevTeleport,0;0.3;76
+wait:2
+render:0,3,80,0,0,82,60|w_top
+render:-19,3,80,-19,0,82,60|w_top2
+shot

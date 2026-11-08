@@ -1,0 +1,78 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4a144fd1e3f5ad48ac00b705cb2eac6, type: 3}
+  m_Name: RavenhollowSkin
+  m_EditorClassIdentifier: Assembly-CSharp::DarkFantasy.UI.UISkin
+  headingFont: {fileID: 12800000, guid: c44c0c93fce7fef458909afd95a5149c, type: 3}
+  bodyFont: {fileID: 12800000, guid: 3347922e528ad8d47bffde0cc80e146a, type: 3}
+  windowFleur: {fileID: 21300000, guid: 1d5bfcab7f8d62b4aa5fb0f53d69040f, type: 3}
+  panelClean: {fileID: 21300000, guid: 0ab043c2fbf289048a1d1807c5a605b6, type: 3}
+  speechOrnate: {fileID: 21300000, guid: 12e673b7f1577964a9967b435de5d243, type: 3}
+  nameplate: {fileID: 21300000, guid: 2c18d266556056c4eb44ac5f04cfee36, type: 3}
+  ribbon: {fileID: 21300000, guid: ded32cda6d9d5b34fb83f043bc0b96a2, type: 3}
+  buttonNormal: {fileID: 21300000, guid: 6c62561cf19e95341ac5e8293a38a84b, type: 3}
+  buttonHover: {fileID: 21300000, guid: 10d8f97e11ecdcb40a3eb66d1a888179, type: 3}
+  buttonPressed: {fileID: 21300000, guid: ea0de45e3b188aa43949215aab622558, type: 3}
+  buttonSelected: {fileID: 21300000, guid: bbd20f711f379de4eb3db16a374be241, type: 3}
+  buttonDisabled: {fileID: 21300000, guid: b3874df8671a5ed4f9676007b7b2e7fb, type: 3}
+  button2Normal: {fileID: 21300000, guid: 7c1e333d416b15344a09bedbb1a804f3, type: 3}
+  button2Hover: {fileID: 21300000, guid: 97d9a57ff31218b45a7ded8ffde41b5e, type: 3}
+  button2Pressed: {fileID: 21300000, guid: 0d25682fd9affed49bf6c601f8777845, type: 3}
+  button2Selected: {fileID: 21300000, guid: 30f4390cd21d30c44aa7452d8d82e6b3, type: 3}
+  button2Disabled: {fileID: 21300000, guid: 5092aa448a565cc4cbe49564a1b35908, type: 3}
+  fieldIdle: {fileID: 21300000, guid: d4d723256fde3a54e8392295811db89e, type: 3}
+  fieldHover: {fileID: 21300000, guid: 08a22a452a8f6804cbb580008bd30e9f, type: 3}
+  fieldFocus: {fileID: 21300000, guid: a27656487ce54334785e56de0021bf20, type: 3}
+  fieldDisabled: {fileID: 21300000, guid: e10da27ab33e5e442aad8e0ea87f8964, type: 3}
+  fieldCaret: {fileID: 21300000, guid: 31811629abc64dd4aabb57f1dc38dd6a, type: 3}
+  sliderTrack: {fileID: 21300000, guid: cf4ca552b9b845548abc5753eec3f009, type: 3}
+  sliderFill: {fileID: 21300000, guid: 1ef92674b7e8fd649a1eed9bddec5e99, type: 3}
+  sliderKnob: {fileID: 21300000, guid: beccef5646ae81649b020f24b8b6b59d, type: 3}
+  sliderKnobHover: {fileID: 21300000, guid: f7dd9cf6933c9474d8bcb7fcb432c942, type: 3}
+  sliderKnobPressed: {fileID: 21300000, guid: 7999a392f5b4c284fb28ae853a4bbb62, type: 3}
+  checkboxOn: {fileID: 21300000, guid: 0235faa003d96ab40962aa77646829a4, type: 3}
+  checkboxOff: {fileID: 21300000, guid: fc17d8e6695013a4aa312b7dcf753797, type: 3}
+  checkboxOnHover: {fileID: 21300000, guid: 9f92d2b5dbf61d64e893d0ad065c2335, type: 3}
+  checkboxOffHover: {fileID: 21300000, guid: 178bebc095c93774ea1ec30f8827449f, type: 3}
+  keycap: {fileID: 21300000, guid: e4603d6a59b41d340985d1f3bc80d86a, type: 3}
+  barFrameHp: {fileID: 21300000, guid: 8e622c2edfb9f1d429a7451fd73f256e, type: 3}
+  barFillHp: {fileID: 21300000, guid: e2dccfa13dc85104ea63810b3b413cde, type: 3}
+  barFrameMana: {fileID: 21300000, guid: 2dc8a778d6b74a248a286b482978e244, type: 3}
+  barFillMana: {fileID: 21300000, guid: 42f28e64fef413341baddf1f3ee6b26f, type: 3}
+  barFrameXp: {fileID: 21300000, guid: 8201469ae5f38814f81e2186405a8aab, type: 3}
+  barFillXp: {fileID: 21300000, guid: eef4093e098caa045a1b4a4eb0c14ae9, type: 3}
+  barTicks: {fileID: 21300000, guid: 99b928e6e1af4cf479876d491081c492, type: 3}
+  iconHeart: {fileID: 21300000, guid: 15c4f4f9522975848ad47acea6e2ed37, type: 3}
+  iconPotion: {fileID: 21300000, guid: 48770da9e37fb5f40856ac7993438687, type: 3}
+  iconSkull: {fileID: 21300000, guid: 5d3a5991e2f44f3488fa7fd1ed211e60, type: 3}
+  iconShield: {fileID: 21300000, guid: 36afa50aa1db21845ba792004b837fdd, type: 3}
+  iconSword: {fileID: 21300000, guid: 5873ecdfd40bdec44b33e5a6eb60acc9, type: 3}
+  iconGear: {fileID: 21300000, guid: ff25ae754dfc8bf4fa7e9763bf0eafdd, type: 3}
+  iconCandle: {fileID: 21300000, guid: e9c721f3059ac0b4c97110d9179ab286, type: 3}
+  iconCharacter: {fileID: 21300000, guid: 174b1befa59223b439a3faada2b1e780, type: 3}
+  iconInfo: {fileID: 21300000, guid: 7b23482d29f3f8049b07d6e7a244b68a, type: 3}
+  iconClose: {fileID: 21300000, guid: 839c9afe225e14b47971af2a7955e9a6, type: 3}
+  cursor: {fileID: 2800000, guid: 87ee32cfafd955f4b9a4c1c0916ca8ac, type: 3}
+  cursorHotspot: {x: 0, y: 0}
+  bone0: {r: 0.9843137, g: 0.92156863, b: 0.8117647, a: 1}
+  bone1: {r: 0.9098039, g: 0.8156863, b: 0.70980394, a: 1}
+  bone3: {r: 0.65882355, g: 0.5411765, b: 0.4627451, a: 1}
+  bone4: {r: 0.35686275, g: 0.2901961, b: 0.2627451, a: 1}
+  void0: {r: 0.019607844, g: 0.015686275, b: 0.03137255, a: 1}
+  void1: {r: 0.047058824, g: 0.039215688, b: 0.05882353, a: 1}
+  velvet2: {r: 0.24705882, g: 0.02745098, b: 0.0627451, a: 1}
+  hp1: {r: 0.74509805, g: 0.14509805, b: 0.19607843, a: 1}
+  hp2: {r: 0.91764706, g: 0.3764706, b: 0.40784314, a: 1}
+  gold1: {r: 0.8745098, g: 0.49019608, b: 0.1254902, a: 1}
+  gold2: {r: 0.972549, g: 0.7176471, b: 0.29803923, a: 1}
+  ok1: {r: 0.36078432, g: 0.6117647, b: 0.60784316, a: 1}
+  silver0: {r: 0.6431373, g: 0.6117647, b: 0.6156863, a: 1}

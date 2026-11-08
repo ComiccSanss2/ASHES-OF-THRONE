@@ -1,0 +1,6 @@
+dump:SkyDome,Dome
+dump:Main Camera
+msg:Main Camera,DevVhs,0
+wait:0.5
+shot
+msg:Main Camera,DevVhs,1

@@ -1,0 +1,28 @@
+Ravenhollow — Gothic Manor Pixel UI Kit
+Asset Licence, version 1.0
+
+You may:
+- Use these assets in any number of personal and commercial projects, including
+  games, apps, prototypes, videos and client work, without royalties.
+- Modify, recolour, crop, animate and combine the assets for those projects.
+- Distribute the assets as part of your finished project. Credit to Brunka Games
+  is appreciated but not required.
+
+You may not:
+- Resell, redistribute, sublicense or share the assets or modified versions as
+  standalone assets, templates, asset packs, NFTs, or another asset collection.
+- Upload the asset files to public repositories or asset stores.
+- Use the pack assets to train, fine-tune or evaluate generative AI models.
+- Claim the original pack artwork as your own creation.
+
+Third-party fonts are an exception: original fonts and their bitmap derivatives
+are governed solely by the SIL Open Font License 1.1 supplied beside them. The
+asset restrictions above do not replace or add restrictions to that font licence.
+
+Questions and feedback: post a comment on the Ravenhollow project page at
+https://brunkagames.itch.io
+
+Not affiliated with, endorsed or sponsored by Sony, Microsoft or Nintendo.
+Button prompts are generic shapes and letters for input hints; trademarks
+belong to their respective owners. File names describe the visible input cue,
+not a console brand.

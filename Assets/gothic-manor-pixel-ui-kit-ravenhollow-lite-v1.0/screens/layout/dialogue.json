@@ -1,0 +1,254 @@
+{
+  "name": "dialogue",
+  "size": [
+    960,
+    540
+  ],
+  "background": "void-0",
+  "elements": [
+    {
+      "kind": "sprite",
+      "asset": "containers/window_fleur.png",
+      "box": [
+        80,
+        48,
+        800,
+        440
+      ],
+      "clip": [
+        0,
+        0,
+        960,
+        540
+      ],
+      "purpose": ""
+    },
+    {
+      "kind": "text",
+      "text": "A quiet warning",
+      "box": [
+        104,
+        75,
+        750,
+        23
+      ],
+      "face": "headings",
+      "token": "bone-0",
+      "align": "center"
+    },
+    {
+      "kind": "text",
+      "text": "Up/Down: reply     Enter: choose     Space: continue     Esc: leave",
+      "box": [
+        104,
+        504,
+        752,
+        20
+      ],
+      "face": "body",
+      "token": "bone-3",
+      "align": "center"
+    },
+    {
+      "kind": "sprite",
+      "asset": "containers/dlg_portrait_frame_ornate.png",
+      "box": [
+        136,
+        160,
+        66,
+        82
+      ],
+      "clip": [
+        0,
+        0,
+        960,
+        540
+      ],
+      "purpose": ""
+    },
+    {
+      "kind": "sprite",
+      "asset": "icons/icon_character_48.png",
+      "box": [
+        145,
+        184,
+        48,
+        48
+      ],
+      "clip": [
+        0,
+        0,
+        960,
+        540
+      ],
+      "purpose": "Generic pack character glyph; no external portrait artwork"
+    },
+    {
+      "kind": "sprite",
+      "asset": "containers/dlg_nameplate_ornate.png",
+      "box": [
+        232,
+        152,
+        552,
+        24
+      ],
+      "clip": [
+        0,
+        0,
+        960,
+        540
+      ],
+      "purpose": ""
+    },
+    {
+      "kind": "text",
+      "text": "The chapel keeper",
+      "box": [
+        252,
+        156,
+        512,
+        18
+      ],
+      "face": "body",
+      "token": "bone-0",
+      "align": "left"
+    },
+    {
+      "kind": "sprite",
+      "asset": "containers/dlg_speech_ornate.png",
+      "box": [
+        232,
+        190,
+        552,
+        130
+      ],
+      "clip": [
+        0,
+        0,
+        960,
+        540
+      ],
+      "purpose": ""
+    },
+    {
+      "kind": "text",
+      "text": "The manor keeps what it is given.\nIf you open the west wing, take a light.\nAnd leave the bells untouched.",
+      "box": [
+        252,
+        210,
+        512,
+        78
+      ],
+      "face": "body",
+      "token": "bone-1",
+      "align": "left"
+    },
+    {
+      "kind": "sprite",
+      "asset": "containers/dlg_continue_arrow_frame00.png",
+      "box": [
+        750,
+        290,
+        13,
+        9
+      ],
+      "clip": [
+        0,
+        0,
+        960,
+        540
+      ],
+      "purpose": "Stable frame of the shipped continue animation"
+    },
+    {
+      "kind": "sprite",
+      "asset": "containers/dlg_choice_row_selected_focus.png",
+      "box": [
+        232,
+        344,
+        552,
+        27
+      ],
+      "clip": [
+        0,
+        0,
+        960,
+        540
+      ],
+      "purpose": ""
+    },
+    {
+      "kind": "text",
+      "text": "Ask about the sealed wing.",
+      "box": [
+        256,
+        349,
+        500,
+        18
+      ],
+      "face": "body",
+      "token": "bone-0",
+      "align": "left"
+    },
+    {
+      "kind": "sprite",
+      "asset": "containers/dlg_choice_row_idle.png",
+      "box": [
+        232,
+        384,
+        552,
+        27
+      ],
+      "clip": [
+        0,
+        0,
+        960,
+        540
+      ],
+      "purpose": ""
+    },
+    {
+      "kind": "text",
+      "text": "Ask who lived in the manor.",
+      "box": [
+        256,
+        389,
+        500,
+        18
+      ],
+      "face": "body",
+      "token": "bone-0",
+      "align": "left"
+    },
+    {
+      "kind": "sprite",
+      "asset": "containers/dlg_choice_row_idle.png",
+      "box": [
+        232,
+        424,
+        552,
+        27
+      ],
+      "clip": [
+        0,
+        0,
+        960,
+        540
+      ],
+      "purpose": ""
+    },
+    {
+      "kind": "text",
+      "text": "Thank the keeper and leave.",
+      "box": [
+        256,
+        429,
+        500,
+        18
+      ],
+      "face": "body",
+      "token": "bone-0",
+      "align": "left"
+    }
+  ]
+}

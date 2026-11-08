@@ -1,0 +1,23 @@
+stop
+wait:3
+refresh
+wait:50
+clear
+play
+wait:25
+msg:GameUI,DevMenuTest,knight
+msg:GameUI,DevQuickStart,x
+wait:8
+msg:Player_0 (local),DevGod,1
+msg:GameUI,DevMenuTest,fight
+wait:4
+msg:Player_0 (local),DevTeleport,8;7.7;163
+wait:0.3
+msg:Dragon(Clone),DevMove,Charge
+wait:1.0
+shot
+render:24,26,176,0,7.5,180,70|ch_lane
+wait:0.5
+render:24,26,176,0,7.5,180,70|ch_run
+wait:0.6
+render:24,26,176,0,7.5,180,70|ch_run2

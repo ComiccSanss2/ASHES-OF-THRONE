@@ -1,0 +1,2 @@
+dump:Systems,SkyDome,Dome,Main Camera
+render:0,9.5,175,0,12,240,60|sky_chk

@@ -1,0 +1,37 @@
+stop
+wait:3
+refresh
+wait:50
+clear
+play
+wait:25
+msg:GameUI,DevMenuTest,bard
+msg:GameUI,DevQuickStart,x
+wait:8
+msg:Player_0 (local),DevGod,1
+msg:Player_0 (local),DevTeleport,0;0.3;112
+wait:2
+msg:Player_0 (local),DevCast,0
+wait:1.0
+shot
+wait:2
+msg:Player_0 (local),DevCast,1
+wait:1.1
+shot
+wait:2
+msg:Player_0 (local),DevCast,3
+wait:0.7
+shot
+wait:0.4
+shot
+msg:GameUI,DevMenuTest,fight
+wait:4
+msg:Player_0 (local),DevTeleport,8;7.7;163
+wait:0.3
+msg:Dragon(Clone),DevMove,Charge
+wait:1.1
+shot
+wait:2.5
+msg:Dragon(Clone),DevMove,Stomp
+wait:1.0
+shot

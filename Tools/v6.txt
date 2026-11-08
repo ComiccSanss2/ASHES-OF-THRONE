@@ -1,0 +1,24 @@
+stop
+wait:3
+refresh
+wait:50
+menu:Dark Fantasy/Build Everything (playable scene)
+wait:150
+clear
+play
+wait:30
+msg:GameUI,DevMenuTest,archer
+msg:GameUI,DevQuickStart,x
+wait:8
+msg:Player_0 (local),DevGod,1
+msg:GameUI,DevUnlockWeapons,x
+msg:Player_0 (local),DevEquip,2
+msg:GameUI,DevMenuTest,terrace
+wait:6
+shot
+msg:Main Camera,DevVhs,0
+wait:0.5
+shot
+msg:Player_0 (local),DevAttack,0
+wait:0.75
+shot

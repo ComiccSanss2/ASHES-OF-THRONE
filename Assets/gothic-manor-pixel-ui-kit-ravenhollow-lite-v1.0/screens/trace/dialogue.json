@@ -1,0 +1,336 @@
+{
+  "elements": [
+    {
+      "asset": "containers/window_fleur.png",
+      "box": [
+        80,
+        48,
+        800,
+        440
+      ],
+      "clip": [
+        0,
+        0,
+        960,
+        540
+      ],
+      "kind": "sprite",
+      "layer": 0,
+      "purpose": "",
+      "source_rgba_sha256": "c26d58d4468d51b670134b2792a3857edbff10162552c49f7977b4b9a46d41f2",
+      "state": "idle"
+    },
+    {
+      "align": "center",
+      "box": [
+        104,
+        75,
+        750,
+        23
+      ],
+      "font": "ravenhollow_bitmap_jacquard12_21",
+      "ink": [
+        416,
+        77,
+        543,
+        92
+      ],
+      "kind": "text",
+      "layer": 1,
+      "outline": null,
+      "text": "A quiet warning",
+      "token": "bone-0"
+    },
+    {
+      "align": "center",
+      "box": [
+        104,
+        504,
+        752,
+        20
+      ],
+      "font": "ravenhollow_bitmap_jersey10",
+      "ink": [
+        273,
+        507,
+        687,
+        519
+      ],
+      "kind": "text",
+      "layer": 2,
+      "outline": null,
+      "text": "Up/Down: reply     Enter: choose     Space: continue     Esc: leave",
+      "token": "bone-3"
+    },
+    {
+      "asset": "containers/dlg_portrait_frame_ornate.png",
+      "box": [
+        136,
+        160,
+        66,
+        82
+      ],
+      "clip": [
+        0,
+        0,
+        960,
+        540
+      ],
+      "kind": "sprite",
+      "layer": 3,
+      "purpose": "",
+      "source_rgba_sha256": "040d449a1019cd75f876d9094bb6037e3df90df0727212079579bc4737f3219f",
+      "state": "idle"
+    },
+    {
+      "asset": "icons/icon_character_48.png",
+      "box": [
+        145,
+        184,
+        48,
+        48
+      ],
+      "clip": [
+        0,
+        0,
+        960,
+        540
+      ],
+      "kind": "sprite",
+      "layer": 4,
+      "purpose": "Generic pack character glyph; no external portrait artwork",
+      "source_rgba_sha256": "d833a0a79a6ca1118c14cde1944aea902a1be91aa3415f92aa621aca50f21949",
+      "state": "idle"
+    },
+    {
+      "asset": "containers/dlg_nameplate_ornate.png",
+      "box": [
+        232,
+        152,
+        552,
+        24
+      ],
+      "clip": [
+        0,
+        0,
+        960,
+        540
+      ],
+      "kind": "sprite",
+      "layer": 5,
+      "purpose": "",
+      "source_rgba_sha256": "e5b195e9469c51c989aa3c3c41f393d6b8317b1c96b3b02afff9d49e9ce1b261",
+      "state": "idle"
+    },
+    {
+      "align": "left",
+      "box": [
+        252,
+        156,
+        512,
+        18
+      ],
+      "font": "ravenhollow_bitmap_jersey10",
+      "ink": [
+        252,
+        159,
+        371,
+        171
+      ],
+      "kind": "text",
+      "layer": 6,
+      "outline": null,
+      "text": "The chapel keeper",
+      "token": "bone-0"
+    },
+    {
+      "asset": "containers/dlg_speech_ornate.png",
+      "box": [
+        232,
+        190,
+        552,
+        130
+      ],
+      "clip": [
+        0,
+        0,
+        960,
+        540
+      ],
+      "kind": "sprite",
+      "layer": 7,
+      "purpose": "",
+      "source_rgba_sha256": "bf5c29eda1e45ba4481794f86762aa34a5bcecb5b46d79da71259e42916e719b",
+      "state": "idle"
+    },
+    {
+      "align": "left",
+      "box": [
+        252,
+        210,
+        512,
+        78
+      ],
+      "font": "ravenhollow_bitmap_jersey10",
+      "ink": [
+        252,
+        213,
+        502,
+        263
+      ],
+      "kind": "text",
+      "layer": 8,
+      "outline": null,
+      "text": "The manor keeps what it is given.\nIf you open the west wing, take a light.\nAnd leave the bells untouched.",
+      "token": "bone-1"
+    },
+    {
+      "asset": "containers/dlg_continue_arrow_frame00.png",
+      "box": [
+        750,
+        290,
+        13,
+        9
+      ],
+      "clip": [
+        0,
+        0,
+        960,
+        540
+      ],
+      "kind": "sprite",
+      "layer": 9,
+      "purpose": "Stable frame of the shipped continue animation",
+      "source_rgba_sha256": "ee650ad1c11e695e67a31819cc9b4bc0794d0272d9cbfca8807fb97ddc938dcd",
+      "state": "frame00"
+    },
+    {
+      "asset": "containers/dlg_choice_row_selected_focus.png",
+      "box": [
+        232,
+        344,
+        552,
+        27
+      ],
+      "clip": [
+        0,
+        0,
+        960,
+        540
+      ],
+      "kind": "sprite",
+      "layer": 10,
+      "purpose": "",
+      "source_rgba_sha256": "eb5d2d487674088485231a158fc9fde1ba58cc02779457289da3fe299d8241aa",
+      "state": "selected_focus"
+    },
+    {
+      "align": "left",
+      "box": [
+        256,
+        349,
+        500,
+        18
+      ],
+      "font": "ravenhollow_bitmap_jersey10",
+      "ink": [
+        256,
+        352,
+        428,
+        364
+      ],
+      "kind": "text",
+      "layer": 11,
+      "outline": null,
+      "text": "Ask about the sealed wing.",
+      "token": "bone-0"
+    },
+    {
+      "asset": "containers/dlg_choice_row_idle.png",
+      "box": [
+        232,
+        384,
+        552,
+        27
+      ],
+      "clip": [
+        0,
+        0,
+        960,
+        540
+      ],
+      "kind": "sprite",
+      "layer": 12,
+      "purpose": "",
+      "source_rgba_sha256": "8f902f90e9dca63b231e033a4758f2030d7c4c03be6f8967e7dfcc8eed88d9e5",
+      "state": "idle"
+    },
+    {
+      "align": "left",
+      "box": [
+        256,
+        389,
+        500,
+        18
+      ],
+      "font": "ravenhollow_bitmap_jersey10",
+      "ink": [
+        256,
+        392,
+        432,
+        402
+      ],
+      "kind": "text",
+      "layer": 13,
+      "outline": null,
+      "text": "Ask who lived in the manor.",
+      "token": "bone-0"
+    },
+    {
+      "asset": "containers/dlg_choice_row_idle.png",
+      "box": [
+        232,
+        424,
+        552,
+        27
+      ],
+      "clip": [
+        0,
+        0,
+        960,
+        540
+      ],
+      "kind": "sprite",
+      "layer": 14,
+      "purpose": "",
+      "source_rgba_sha256": "8f902f90e9dca63b231e033a4758f2030d7c4c03be6f8967e7dfcc8eed88d9e5",
+      "state": "idle"
+    },
+    {
+      "align": "left",
+      "box": [
+        256,
+        429,
+        500,
+        18
+      ],
+      "font": "ravenhollow_bitmap_jersey10",
+      "ink": [
+        256,
+        432,
+        439,
+        444
+      ],
+      "kind": "text",
+      "layer": 15,
+      "outline": null,
+      "text": "Thank the keeper and leave.",
+      "token": "bone-0"
+    }
+  ],
+  "name": "dialogue",
+  "size": [
+    960,
+    540
+  ]
+}

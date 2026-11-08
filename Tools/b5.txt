@@ -1,0 +1,19 @@
+stop
+wait:3
+menu:Dark Fantasy/Build Everything (playable scene)
+wait:95
+clear
+play
+wait:25
+msg:GameUI,DevMenuTest,bard
+msg:GameUI,DevQuickStart,x
+wait:8
+msg:Player_0 (local),DevGod,1
+msg:GameUI,DevMenuTest,terrace
+wait:6
+shot
+render:0,10,170,0,12,240,60|ter_north
+render:0,10,190,-60,8,200,60|ter_west
+render:0,10,190,60,10,215,60|ter_east
+render:0,22,150,0,8,200,70|ter_over
+render:10,9.5,196,0,9,240,50|ter_sunset

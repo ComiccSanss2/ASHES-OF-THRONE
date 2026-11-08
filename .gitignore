@@ -1,0 +1,51 @@
+# =========================================================================
+# Unity Ignore Rules
+# =========================================================================
+
+# Temporaires et caches générés par Unity (seront régénérés automatiquement)
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Uu]serSettings/
+[Mm]emoryCaptures/
+[Rr]ecordings/
+
+# Asset store packages téléchargés
+/[Aa]ssets/AssetStoreTools*
+
+# Fichiers de projet Visual Studio / VS Code / Rider générés
+.vs/
+.idea/
+.vsconfig
+/*.csproj
+/*.unityproj
+/*.sln
+/*.slnx
+/*.gen.cs
+/*.csproj.user
+/*.cache
+/*.pidb
+/*.booproj
+/*.svd
+/*.pdb
+/*.mdb
+
+# OS / Système
+.DS_Store
+.DS_Store?
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# Executables & Builds
+*.apk
+*.aab
+*.unitypackage
+*.app
+
+# WebGL / Crash Reports
+sysinfo.txt
+ crashreport.out

@@ -1,0 +1,32 @@
+stop
+wait:3
+refresh
+wait:45
+menu:Dark Fantasy/Build Everything (playable scene)
+wait:240
+clear
+play
+wait:30
+msg:GameUI,DevMenuTest,bard
+msg:GameUI,DevQuickStart,x
+wait:8
+msg:Player_0 (local),DevGod,1
+msg:Player_0 (local),DevTeleport,-23.5;0.3;121
+wait:4
+msg:Oswin,DevTalk,x
+wait:1
+msg:GameUI,DevChat,Hello from the cells!
+msg:GameUI,DevScoreboard,1
+wait:1
+shot
+msg:GameUI,DevScoreboard,0
+msg:Oswin,DevTalk,x
+msg:Player_0 (local),DevTeleport,-46;0.3;82
+wait:3
+shot
+msg:Player_0 (local),DevTeleport,-3;-12;344
+wait:3
+shot
+msg:Player_0 (local),DevTeleport,2;7.95;339.5
+wait:3
+shot

@@ -1,0 +1,7130 @@
+{
+  "atlas": {
+    "alpha": [
+      0,
+      255
+    ],
+    "cell_size": [
+      17,
+      17
+    ],
+    "columns": 16,
+    "file": "fonts/ravenhollow_bitmap_jersey10.png",
+    "format": "RGBA",
+    "gutter_px": 1,
+    "rgb": [
+      255,
+      255,
+      255
+    ],
+    "sampling": "nearest",
+    "sha256": "5be319e8466d5e4148b0257c18b56b00735d9320c020e9150a9e8fb0e6ad7c1b",
+    "size": [
+      272,
+      340
+    ]
+  },
+  "bitmap_derivative": true,
+  "bitmap_license": {
+    "file": "fonts/ravenhollow_bitmap_jersey10.OFL.txt",
+    "license_id": "OFL-1.1",
+    "notices_and_text": "byte-identical to original OFL.txt; bitmap derivative remains under OFL"
+  },
+  "coverage": {
+    "missing": [
+      "U+017F"
+    ],
+    "requested_count": 319,
+    "requested_ranges": [
+      [
+        32,
+        126
+      ],
+      [
+        160,
+        255
+      ],
+      [
+        256,
+        383
+      ]
+    ],
+    "supported_count": 318
+  },
+  "display_name": "Jersey 10 Mono Bitmap 56/3 (Ravenhollow native cut)",
+  "glyphs": {
+    "U+0020": {
+      "advance": 4,
+      "char": " ",
+      "codepoint": 32,
+      "ink_bounds": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "offset": [
+        0,
+        0
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        1,
+        1,
+        0,
+        0
+      ]
+    },
+    "U+0021": {
+      "advance": 3,
+      "char": "!",
+      "codepoint": 33,
+      "ink_bounds": [
+        0,
+        -10,
+        2,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        18,
+        1,
+        2,
+        10
+      ]
+    },
+    "U+0022": {
+      "advance": 6,
+      "char": "\"",
+      "codepoint": 34,
+      "ink_bounds": [
+        0,
+        -10,
+        5,
+        -7
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        35,
+        1,
+        5,
+        3
+      ]
+    },
+    "U+0023": {
+      "advance": 12,
+      "char": "#",
+      "codepoint": 35,
+      "ink_bounds": [
+        0,
+        -10,
+        11,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        52,
+        1,
+        11,
+        10
+      ]
+    },
+    "U+0024": {
+      "advance": 8,
+      "char": "$",
+      "codepoint": 36,
+      "ink_bounds": [
+        0,
+        -12,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -12
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        69,
+        1,
+        7,
+        12
+      ]
+    },
+    "U+0025": {
+      "advance": 12,
+      "char": "%",
+      "codepoint": 37,
+      "ink_bounds": [
+        0,
+        -10,
+        11,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        86,
+        1,
+        11,
+        10
+      ]
+    },
+    "U+0026": {
+      "advance": 11,
+      "char": "&",
+      "codepoint": 38,
+      "ink_bounds": [
+        0,
+        -10,
+        10,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        103,
+        1,
+        10,
+        10
+      ]
+    },
+    "U+0027": {
+      "advance": 3,
+      "char": "'",
+      "codepoint": 39,
+      "ink_bounds": [
+        0,
+        -10,
+        2,
+        -7
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        120,
+        1,
+        2,
+        3
+      ]
+    },
+    "U+0028": {
+      "advance": 5,
+      "char": "(",
+      "codepoint": 40,
+      "ink_bounds": [
+        0,
+        -10,
+        4,
+        2
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        137,
+        1,
+        4,
+        12
+      ]
+    },
+    "U+0029": {
+      "advance": 5,
+      "char": ")",
+      "codepoint": 41,
+      "ink_bounds": [
+        0,
+        -10,
+        4,
+        2
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        154,
+        1,
+        4,
+        12
+      ]
+    },
+    "U+002A": {
+      "advance": 6,
+      "char": "*",
+      "codepoint": 42,
+      "ink_bounds": [
+        0,
+        -10,
+        5,
+        -6
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        171,
+        1,
+        5,
+        4
+      ]
+    },
+    "U+002B": {
+      "advance": 7,
+      "char": "+",
+      "codepoint": 43,
+      "ink_bounds": [
+        0,
+        -8,
+        6,
+        -2
+      ],
+      "offset": [
+        0,
+        -8
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        188,
+        1,
+        6,
+        6
+      ]
+    },
+    "U+002C": {
+      "advance": 3,
+      "char": ",",
+      "codepoint": 44,
+      "ink_bounds": [
+        0,
+        -2,
+        2,
+        2
+      ],
+      "offset": [
+        0,
+        -2
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        205,
+        1,
+        2,
+        4
+      ]
+    },
+    "U+002D": {
+      "advance": 7,
+      "char": "-",
+      "codepoint": 45,
+      "ink_bounds": [
+        0,
+        -6,
+        6,
+        -4
+      ],
+      "offset": [
+        0,
+        -6
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        222,
+        1,
+        6,
+        2
+      ]
+    },
+    "U+002E": {
+      "advance": 3,
+      "char": ".",
+      "codepoint": 46,
+      "ink_bounds": [
+        0,
+        -2,
+        2,
+        0
+      ],
+      "offset": [
+        0,
+        -2
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        239,
+        1,
+        2,
+        2
+      ]
+    },
+    "U+002F": {
+      "advance": 6,
+      "char": "/",
+      "codepoint": 47,
+      "ink_bounds": [
+        0,
+        -10,
+        5,
+        2
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        256,
+        1,
+        5,
+        12
+      ]
+    },
+    "U+0030": {
+      "advance": 7,
+      "char": "0",
+      "codepoint": 48,
+      "ink_bounds": [
+        0,
+        -10,
+        6,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        1,
+        18,
+        6,
+        10
+      ]
+    },
+    "U+0031": {
+      "advance": 4,
+      "char": "1",
+      "codepoint": 49,
+      "ink_bounds": [
+        0,
+        -10,
+        3,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        18,
+        18,
+        3,
+        10
+      ]
+    },
+    "U+0032": {
+      "advance": 8,
+      "char": "2",
+      "codepoint": 50,
+      "ink_bounds": [
+        0,
+        -10,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        35,
+        18,
+        7,
+        10
+      ]
+    },
+    "U+0033": {
+      "advance": 8,
+      "char": "3",
+      "codepoint": 51,
+      "ink_bounds": [
+        0,
+        -10,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        52,
+        18,
+        7,
+        10
+      ]
+    },
+    "U+0034": {
+      "advance": 7,
+      "char": "4",
+      "codepoint": 52,
+      "ink_bounds": [
+        0,
+        -10,
+        6,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        69,
+        18,
+        6,
+        10
+      ]
+    },
+    "U+0035": {
+      "advance": 7,
+      "char": "5",
+      "codepoint": 53,
+      "ink_bounds": [
+        0,
+        -10,
+        6,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        86,
+        18,
+        6,
+        10
+      ]
+    },
+    "U+0036": {
+      "advance": 8,
+      "char": "6",
+      "codepoint": 54,
+      "ink_bounds": [
+        0,
+        -10,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        103,
+        18,
+        7,
+        10
+      ]
+    },
+    "U+0037": {
+      "advance": 7,
+      "char": "7",
+      "codepoint": 55,
+      "ink_bounds": [
+        0,
+        -10,
+        6,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        120,
+        18,
+        6,
+        10
+      ]
+    },
+    "U+0038": {
+      "advance": 8,
+      "char": "8",
+      "codepoint": 56,
+      "ink_bounds": [
+        0,
+        -10,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        137,
+        18,
+        7,
+        10
+      ]
+    },
+    "U+0039": {
+      "advance": 8,
+      "char": "9",
+      "codepoint": 57,
+      "ink_bounds": [
+        0,
+        -10,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        154,
+        18,
+        7,
+        10
+      ]
+    },
+    "U+003A": {
+      "advance": 3,
+      "char": ":",
+      "codepoint": 58,
+      "ink_bounds": [
+        0,
+        -8,
+        2,
+        0
+      ],
+      "offset": [
+        0,
+        -8
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        171,
+        18,
+        2,
+        8
+      ]
+    },
+    "U+003B": {
+      "advance": 3,
+      "char": ";",
+      "codepoint": 59,
+      "ink_bounds": [
+        0,
+        -8,
+        2,
+        2
+      ],
+      "offset": [
+        0,
+        -8
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        188,
+        18,
+        2,
+        10
+      ]
+    },
+    "U+003C": {
+      "advance": 9,
+      "char": "<",
+      "codepoint": 60,
+      "ink_bounds": [
+        0,
+        -9,
+        8,
+        0
+      ],
+      "offset": [
+        0,
+        -9
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        205,
+        18,
+        8,
+        9
+      ]
+    },
+    "U+003D": {
+      "advance": 7,
+      "char": "=",
+      "codepoint": 61,
+      "ink_bounds": [
+        0,
+        -7,
+        6,
+        -2
+      ],
+      "offset": [
+        0,
+        -7
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        222,
+        18,
+        6,
+        5
+      ]
+    },
+    "U+003E": {
+      "advance": 9,
+      "char": ">",
+      "codepoint": 62,
+      "ink_bounds": [
+        0,
+        -9,
+        8,
+        0
+      ],
+      "offset": [
+        0,
+        -9
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        239,
+        18,
+        8,
+        9
+      ]
+    },
+    "U+003F": {
+      "advance": 7,
+      "char": "?",
+      "codepoint": 63,
+      "ink_bounds": [
+        0,
+        -10,
+        6,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        256,
+        18,
+        6,
+        10
+      ]
+    },
+    "U+0040": {
+      "advance": 12,
+      "char": "@",
+      "codepoint": 64,
+      "ink_bounds": [
+        0,
+        -10,
+        11,
+        1
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        1,
+        35,
+        11,
+        11
+      ]
+    },
+    "U+0041": {
+      "advance": 8,
+      "char": "A",
+      "codepoint": 65,
+      "ink_bounds": [
+        0,
+        -10,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        18,
+        35,
+        7,
+        10
+      ]
+    },
+    "U+0042": {
+      "advance": 8,
+      "char": "B",
+      "codepoint": 66,
+      "ink_bounds": [
+        0,
+        -10,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        35,
+        35,
+        7,
+        10
+      ]
+    },
+    "U+0043": {
+      "advance": 8,
+      "char": "C",
+      "codepoint": 67,
+      "ink_bounds": [
+        0,
+        -10,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        52,
+        35,
+        7,
+        10
+      ]
+    },
+    "U+0044": {
+      "advance": 8,
+      "char": "D",
+      "codepoint": 68,
+      "ink_bounds": [
+        0,
+        -10,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        69,
+        35,
+        7,
+        10
+      ]
+    },
+    "U+0045": {
+      "advance": 7,
+      "char": "E",
+      "codepoint": 69,
+      "ink_bounds": [
+        0,
+        -10,
+        6,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        86,
+        35,
+        6,
+        10
+      ]
+    },
+    "U+0046": {
+      "advance": 7,
+      "char": "F",
+      "codepoint": 70,
+      "ink_bounds": [
+        0,
+        -10,
+        6,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        103,
+        35,
+        6,
+        10
+      ]
+    },
+    "U+0047": {
+      "advance": 8,
+      "char": "G",
+      "codepoint": 71,
+      "ink_bounds": [
+        0,
+        -10,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        120,
+        35,
+        7,
+        10
+      ]
+    },
+    "U+0048": {
+      "advance": 8,
+      "char": "H",
+      "codepoint": 72,
+      "ink_bounds": [
+        0,
+        -10,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        137,
+        35,
+        7,
+        10
+      ]
+    },
+    "U+0049": {
+      "advance": 3,
+      "char": "I",
+      "codepoint": 73,
+      "ink_bounds": [
+        0,
+        -10,
+        2,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        154,
+        35,
+        2,
+        10
+      ]
+    },
+    "U+004A": {
+      "advance": 7,
+      "char": "J",
+      "codepoint": 74,
+      "ink_bounds": [
+        0,
+        -10,
+        6,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        171,
+        35,
+        6,
+        10
+      ]
+    },
+    "U+004B": {
+      "advance": 7,
+      "char": "K",
+      "codepoint": 75,
+      "ink_bounds": [
+        0,
+        -10,
+        6,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        188,
+        35,
+        6,
+        10
+      ]
+    },
+    "U+004C": {
+      "advance": 6,
+      "char": "L",
+      "codepoint": 76,
+      "ink_bounds": [
+        0,
+        -10,
+        5,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        205,
+        35,
+        5,
+        10
+      ]
+    },
+    "U+004D": {
+      "advance": 10,
+      "char": "M",
+      "codepoint": 77,
+      "ink_bounds": [
+        0,
+        -10,
+        9,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        222,
+        35,
+        9,
+        10
+      ]
+    },
+    "U+004E": {
+      "advance": 9,
+      "char": "N",
+      "codepoint": 78,
+      "ink_bounds": [
+        0,
+        -10,
+        8,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        239,
+        35,
+        8,
+        10
+      ]
+    },
+    "U+004F": {
+      "advance": 8,
+      "char": "O",
+      "codepoint": 79,
+      "ink_bounds": [
+        0,
+        -10,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        256,
+        35,
+        7,
+        10
+      ]
+    },
+    "U+0050": {
+      "advance": 8,
+      "char": "P",
+      "codepoint": 80,
+      "ink_bounds": [
+        0,
+        -10,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        1,
+        52,
+        7,
+        10
+      ]
+    },
+    "U+0051": {
+      "advance": 8,
+      "char": "Q",
+      "codepoint": 81,
+      "ink_bounds": [
+        0,
+        -10,
+        7,
+        2
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        18,
+        52,
+        7,
+        12
+      ]
+    },
+    "U+0052": {
+      "advance": 8,
+      "char": "R",
+      "codepoint": 82,
+      "ink_bounds": [
+        0,
+        -10,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        35,
+        52,
+        7,
+        10
+      ]
+    },
+    "U+0053": {
+      "advance": 8,
+      "char": "S",
+      "codepoint": 83,
+      "ink_bounds": [
+        0,
+        -10,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        52,
+        52,
+        7,
+        10
+      ]
+    },
+    "U+0054": {
+      "advance": 7,
+      "char": "T",
+      "codepoint": 84,
+      "ink_bounds": [
+        0,
+        -10,
+        6,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        69,
+        52,
+        6,
+        10
+      ]
+    },
+    "U+0055": {
+      "advance": 8,
+      "char": "U",
+      "codepoint": 85,
+      "ink_bounds": [
+        0,
+        -10,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        86,
+        52,
+        7,
+        10
+      ]
+    },
+    "U+0056": {
+      "advance": 8,
+      "char": "V",
+      "codepoint": 86,
+      "ink_bounds": [
+        0,
+        -10,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        103,
+        52,
+        7,
+        10
+      ]
+    },
+    "U+0057": {
+      "advance": 11,
+      "char": "W",
+      "codepoint": 87,
+      "ink_bounds": [
+        0,
+        -10,
+        10,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        120,
+        52,
+        10,
+        10
+      ]
+    },
+    "U+0058": {
+      "advance": 8,
+      "char": "X",
+      "codepoint": 88,
+      "ink_bounds": [
+        0,
+        -10,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        137,
+        52,
+        7,
+        10
+      ]
+    },
+    "U+0059": {
+      "advance": 9,
+      "char": "Y",
+      "codepoint": 89,
+      "ink_bounds": [
+        0,
+        -10,
+        8,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        154,
+        52,
+        8,
+        10
+      ]
+    },
+    "U+005A": {
+      "advance": 9,
+      "char": "Z",
+      "codepoint": 90,
+      "ink_bounds": [
+        0,
+        -10,
+        8,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        171,
+        52,
+        8,
+        10
+      ]
+    },
+    "U+005B": {
+      "advance": 5,
+      "char": "[",
+      "codepoint": 91,
+      "ink_bounds": [
+        0,
+        -10,
+        4,
+        1
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        188,
+        52,
+        4,
+        11
+      ]
+    },
+    "U+005C": {
+      "advance": 6,
+      "char": "\\",
+      "codepoint": 92,
+      "ink_bounds": [
+        0,
+        -10,
+        5,
+        2
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        205,
+        52,
+        5,
+        12
+      ]
+    },
+    "U+005D": {
+      "advance": 5,
+      "char": "]",
+      "codepoint": 93,
+      "ink_bounds": [
+        0,
+        -10,
+        4,
+        1
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        222,
+        52,
+        4,
+        11
+      ]
+    },
+    "U+005E": {
+      "advance": 8,
+      "char": "^",
+      "codepoint": 94,
+      "ink_bounds": [
+        0,
+        -9,
+        7,
+        -5
+      ],
+      "offset": [
+        0,
+        -9
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        239,
+        52,
+        7,
+        4
+      ]
+    },
+    "U+005F": {
+      "advance": 8,
+      "char": "_",
+      "codepoint": 95,
+      "ink_bounds": [
+        0,
+        0,
+        7,
+        2
+      ],
+      "offset": [
+        0,
+        0
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        256,
+        52,
+        7,
+        2
+      ]
+    },
+    "U+0060": {
+      "advance": 3,
+      "char": "`",
+      "codepoint": 96,
+      "ink_bounds": [
+        0,
+        -12,
+        3,
+        -9
+      ],
+      "offset": [
+        0,
+        -12
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        1,
+        69,
+        3,
+        3
+      ]
+    },
+    "U+0061": {
+      "advance": 8,
+      "char": "a",
+      "codepoint": 97,
+      "ink_bounds": [
+        0,
+        -8,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -8
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        18,
+        69,
+        7,
+        8
+      ]
+    },
+    "U+0062": {
+      "advance": 8,
+      "char": "b",
+      "codepoint": 98,
+      "ink_bounds": [
+        0,
+        -10,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        35,
+        69,
+        7,
+        10
+      ]
+    },
+    "U+0063": {
+      "advance": 8,
+      "char": "c",
+      "codepoint": 99,
+      "ink_bounds": [
+        0,
+        -8,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -8
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        52,
+        69,
+        7,
+        8
+      ]
+    },
+    "U+0064": {
+      "advance": 8,
+      "char": "d",
+      "codepoint": 100,
+      "ink_bounds": [
+        0,
+        -10,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        69,
+        69,
+        7,
+        10
+      ]
+    },
+    "U+0065": {
+      "advance": 8,
+      "char": "e",
+      "codepoint": 101,
+      "ink_bounds": [
+        0,
+        -8,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -8
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        86,
+        69,
+        7,
+        8
+      ]
+    },
+    "U+0066": {
+      "advance": 6,
+      "char": "f",
+      "codepoint": 102,
+      "ink_bounds": [
+        0,
+        -10,
+        5,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        103,
+        69,
+        5,
+        10
+      ]
+    },
+    "U+0067": {
+      "advance": 8,
+      "char": "g",
+      "codepoint": 103,
+      "ink_bounds": [
+        0,
+        -8,
+        7,
+        2
+      ],
+      "offset": [
+        0,
+        -8
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        120,
+        69,
+        7,
+        10
+      ]
+    },
+    "U+0068": {
+      "advance": 8,
+      "char": "h",
+      "codepoint": 104,
+      "ink_bounds": [
+        0,
+        -10,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        137,
+        69,
+        7,
+        10
+      ]
+    },
+    "U+0069": {
+      "advance": 3,
+      "char": "i",
+      "codepoint": 105,
+      "ink_bounds": [
+        0,
+        -10,
+        2,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        154,
+        69,
+        2,
+        10
+      ]
+    },
+    "U+006A": {
+      "advance": 4,
+      "char": "j",
+      "codepoint": 106,
+      "ink_bounds": [
+        0,
+        -10,
+        3,
+        2
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        171,
+        69,
+        3,
+        12
+      ]
+    },
+    "U+006B": {
+      "advance": 7,
+      "char": "k",
+      "codepoint": 107,
+      "ink_bounds": [
+        0,
+        -10,
+        6,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        188,
+        69,
+        6,
+        10
+      ]
+    },
+    "U+006C": {
+      "advance": 3,
+      "char": "l",
+      "codepoint": 108,
+      "ink_bounds": [
+        0,
+        -10,
+        2,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        205,
+        69,
+        2,
+        10
+      ]
+    },
+    "U+006D": {
+      "advance": 11,
+      "char": "m",
+      "codepoint": 109,
+      "ink_bounds": [
+        0,
+        -8,
+        10,
+        0
+      ],
+      "offset": [
+        0,
+        -8
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        222,
+        69,
+        10,
+        8
+      ]
+    },
+    "U+006E": {
+      "advance": 8,
+      "char": "n",
+      "codepoint": 110,
+      "ink_bounds": [
+        0,
+        -8,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -8
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        239,
+        69,
+        7,
+        8
+      ]
+    },
+    "U+006F": {
+      "advance": 8,
+      "char": "o",
+      "codepoint": 111,
+      "ink_bounds": [
+        0,
+        -8,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -8
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        256,
+        69,
+        7,
+        8
+      ]
+    },
+    "U+0070": {
+      "advance": 8,
+      "char": "p",
+      "codepoint": 112,
+      "ink_bounds": [
+        0,
+        -8,
+        7,
+        2
+      ],
+      "offset": [
+        0,
+        -8
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        1,
+        86,
+        7,
+        10
+      ]
+    },
+    "U+0071": {
+      "advance": 8,
+      "char": "q",
+      "codepoint": 113,
+      "ink_bounds": [
+        0,
+        -8,
+        7,
+        2
+      ],
+      "offset": [
+        0,
+        -8
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        18,
+        86,
+        7,
+        10
+      ]
+    },
+    "U+0072": {
+      "advance": 7,
+      "char": "r",
+      "codepoint": 114,
+      "ink_bounds": [
+        0,
+        -8,
+        6,
+        0
+      ],
+      "offset": [
+        0,
+        -8
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        35,
+        86,
+        6,
+        8
+      ]
+    },
+    "U+0073": {
+      "advance": 7,
+      "char": "s",
+      "codepoint": 115,
+      "ink_bounds": [
+        0,
+        -8,
+        6,
+        0
+      ],
+      "offset": [
+        0,
+        -8
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        52,
+        86,
+        6,
+        8
+      ]
+    },
+    "U+0074": {
+      "advance": 6,
+      "char": "t",
+      "codepoint": 116,
+      "ink_bounds": [
+        0,
+        -10,
+        5,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        69,
+        86,
+        5,
+        10
+      ]
+    },
+    "U+0075": {
+      "advance": 8,
+      "char": "u",
+      "codepoint": 117,
+      "ink_bounds": [
+        0,
+        -8,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -8
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        86,
+        86,
+        7,
+        8
+      ]
+    },
+    "U+0076": {
+      "advance": 8,
+      "char": "v",
+      "codepoint": 118,
+      "ink_bounds": [
+        0,
+        -8,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -8
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        103,
+        86,
+        7,
+        8
+      ]
+    },
+    "U+0077": {
+      "advance": 11,
+      "char": "w",
+      "codepoint": 119,
+      "ink_bounds": [
+        0,
+        -8,
+        10,
+        0
+      ],
+      "offset": [
+        0,
+        -8
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        120,
+        86,
+        10,
+        8
+      ]
+    },
+    "U+0078": {
+      "advance": 8,
+      "char": "x",
+      "codepoint": 120,
+      "ink_bounds": [
+        0,
+        -8,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -8
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        137,
+        86,
+        7,
+        8
+      ]
+    },
+    "U+0079": {
+      "advance": 7,
+      "char": "y",
+      "codepoint": 121,
+      "ink_bounds": [
+        0,
+        -8,
+        6,
+        2
+      ],
+      "offset": [
+        0,
+        -8
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        154,
+        86,
+        6,
+        10
+      ]
+    },
+    "U+007A": {
+      "advance": 8,
+      "char": "z",
+      "codepoint": 122,
+      "ink_bounds": [
+        0,
+        -8,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -8
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        171,
+        86,
+        7,
+        8
+      ]
+    },
+    "U+007B": {
+      "advance": 5,
+      "char": "{",
+      "codepoint": 123,
+      "ink_bounds": [
+        0,
+        -10,
+        4,
+        2
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        188,
+        86,
+        4,
+        12
+      ]
+    },
+    "U+007C": {
+      "advance": 3,
+      "char": "|",
+      "codepoint": 124,
+      "ink_bounds": [
+        0,
+        -10,
+        2,
+        2
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        205,
+        86,
+        2,
+        12
+      ]
+    },
+    "U+007D": {
+      "advance": 5,
+      "char": "}",
+      "codepoint": 125,
+      "ink_bounds": [
+        0,
+        -10,
+        4,
+        2
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        222,
+        86,
+        4,
+        12
+      ]
+    },
+    "U+007E": {
+      "advance": 8,
+      "char": "~",
+      "codepoint": 126,
+      "ink_bounds": [
+        0,
+        -7,
+        7,
+        -3
+      ],
+      "offset": [
+        0,
+        -7
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        239,
+        86,
+        7,
+        4
+      ]
+    },
+    "U+00A0": {
+      "advance": 4,
+      "char": " ",
+      "codepoint": 160,
+      "ink_bounds": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "offset": [
+        0,
+        0
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        256,
+        86,
+        0,
+        0
+      ]
+    },
+    "U+00A1": {
+      "advance": 3,
+      "char": "¡",
+      "codepoint": 161,
+      "ink_bounds": [
+        0,
+        -10,
+        2,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        1,
+        103,
+        2,
+        10
+      ]
+    },
+    "U+00A2": {
+      "advance": 8,
+      "char": "¢",
+      "codepoint": 162,
+      "ink_bounds": [
+        0,
+        -9,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -9
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        18,
+        103,
+        7,
+        9
+      ]
+    },
+    "U+00A3": {
+      "advance": 7,
+      "char": "£",
+      "codepoint": 163,
+      "ink_bounds": [
+        0,
+        -10,
+        6,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        35,
+        103,
+        6,
+        10
+      ]
+    },
+    "U+00A4": {
+      "advance": 9,
+      "char": "¤",
+      "codepoint": 164,
+      "ink_bounds": [
+        0,
+        -8,
+        8,
+        0
+      ],
+      "offset": [
+        0,
+        -8
+      ],
+      "origin": "pack-addition",
+      "rect": [
+        52,
+        103,
+        8,
+        8
+      ]
+    },
+    "U+00A5": {
+      "advance": 9,
+      "char": "¥",
+      "codepoint": 165,
+      "ink_bounds": [
+        0,
+        -10,
+        8,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        69,
+        103,
+        8,
+        10
+      ]
+    },
+    "U+00A6": {
+      "advance": 3,
+      "char": "¦",
+      "codepoint": 166,
+      "ink_bounds": [
+        0,
+        -10,
+        2,
+        2
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "pack-addition",
+      "rect": [
+        86,
+        103,
+        2,
+        12
+      ]
+    },
+    "U+00A7": {
+      "advance": 7,
+      "char": "§",
+      "codepoint": 167,
+      "ink_bounds": [
+        0,
+        -10,
+        6,
+        2
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        103,
+        103,
+        6,
+        12
+      ]
+    },
+    "U+00A8": {
+      "advance": 5,
+      "char": "¨",
+      "codepoint": 168,
+      "ink_bounds": [
+        0,
+        -11,
+        5,
+        -9
+      ],
+      "offset": [
+        0,
+        -11
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        120,
+        103,
+        5,
+        2
+      ]
+    },
+    "U+00A9": {
+      "advance": 12,
+      "char": "©",
+      "codepoint": 169,
+      "ink_bounds": [
+        0,
+        -10,
+        11,
+        1
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        137,
+        103,
+        11,
+        11
+      ]
+    },
+    "U+00AA": {
+      "advance": 8,
+      "char": "ª",
+      "codepoint": 170,
+      "ink_bounds": [
+        0,
+        -8,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -8
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        154,
+        103,
+        7,
+        8
+      ]
+    },
+    "U+00AB": {
+      "advance": 11,
+      "char": "«",
+      "codepoint": 171,
+      "ink_bounds": [
+        0,
+        -8,
+        10,
+        -1
+      ],
+      "offset": [
+        0,
+        -8
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        171,
+        103,
+        10,
+        7
+      ]
+    },
+    "U+00AC": {
+      "advance": 7,
+      "char": "¬",
+      "codepoint": 172,
+      "ink_bounds": [
+        0,
+        -7,
+        6,
+        -3
+      ],
+      "offset": [
+        0,
+        -7
+      ],
+      "origin": "pack-addition",
+      "rect": [
+        188,
+        103,
+        6,
+        4
+      ]
+    },
+    "U+00AD": {
+      "advance": 0,
+      "char": "­",
+      "codepoint": 173,
+      "ink_bounds": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "offset": [
+        0,
+        0
+      ],
+      "origin": "pack-addition",
+      "rect": [
+        205,
+        103,
+        0,
+        0
+      ]
+    },
+    "U+00AE": {
+      "advance": 9,
+      "char": "®",
+      "codepoint": 174,
+      "ink_bounds": [
+        0,
+        -10,
+        8,
+        -2
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        222,
+        103,
+        8,
+        8
+      ]
+    },
+    "U+00AF": {
+      "advance": 5,
+      "char": "¯",
+      "codepoint": 175,
+      "ink_bounds": [
+        0,
+        -12,
+        5,
+        -10
+      ],
+      "offset": [
+        0,
+        -12
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        239,
+        103,
+        5,
+        2
+      ]
+    },
+    "U+00B0": {
+      "advance": 7,
+      "char": "°",
+      "codepoint": 176,
+      "ink_bounds": [
+        0,
+        -12,
+        6,
+        -6
+      ],
+      "offset": [
+        0,
+        -12
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        256,
+        103,
+        6,
+        6
+      ]
+    },
+    "U+00B1": {
+      "advance": 7,
+      "char": "±",
+      "codepoint": 177,
+      "ink_bounds": [
+        0,
+        -9,
+        6,
+        0
+      ],
+      "offset": [
+        0,
+        -9
+      ],
+      "origin": "pack-addition",
+      "rect": [
+        1,
+        120,
+        6,
+        9
+      ]
+    },
+    "U+00B2": {
+      "advance": 6,
+      "char": "²",
+      "codepoint": 178,
+      "ink_bounds": [
+        0,
+        -10,
+        5,
+        -3
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "pack-addition",
+      "rect": [
+        18,
+        120,
+        5,
+        7
+      ]
+    },
+    "U+00B3": {
+      "advance": 6,
+      "char": "³",
+      "codepoint": 179,
+      "ink_bounds": [
+        0,
+        -10,
+        5,
+        -3
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "pack-addition",
+      "rect": [
+        35,
+        120,
+        5,
+        7
+      ]
+    },
+    "U+00B4": {
+      "advance": 3,
+      "char": "´",
+      "codepoint": 180,
+      "ink_bounds": [
+        0,
+        -12,
+        3,
+        -9
+      ],
+      "offset": [
+        0,
+        -12
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        52,
+        120,
+        3,
+        3
+      ]
+    },
+    "U+00B5": {
+      "advance": 8,
+      "char": "µ",
+      "codepoint": 181,
+      "ink_bounds": [
+        0,
+        -8,
+        7,
+        2
+      ],
+      "offset": [
+        0,
+        -8
+      ],
+      "origin": "pack-addition",
+      "rect": [
+        69,
+        120,
+        7,
+        10
+      ]
+    },
+    "U+00B6": {
+      "advance": 7,
+      "char": "¶",
+      "codepoint": 182,
+      "ink_bounds": [
+        0,
+        -10,
+        6,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        86,
+        120,
+        6,
+        10
+      ]
+    },
+    "U+00B7": {
+      "advance": 3,
+      "char": "·",
+      "codepoint": 183,
+      "ink_bounds": [
+        0,
+        -6,
+        2,
+        -4
+      ],
+      "offset": [
+        0,
+        -6
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        103,
+        120,
+        2,
+        2
+      ]
+    },
+    "U+00B8": {
+      "advance": 2,
+      "char": "¸",
+      "codepoint": 184,
+      "ink_bounds": [
+        0,
+        0,
+        2,
+        4
+      ],
+      "offset": [
+        0,
+        0
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        120,
+        120,
+        2,
+        4
+      ]
+    },
+    "U+00B9": {
+      "advance": 4,
+      "char": "¹",
+      "codepoint": 185,
+      "ink_bounds": [
+        0,
+        -10,
+        3,
+        -3
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "pack-addition",
+      "rect": [
+        137,
+        120,
+        3,
+        7
+      ]
+    },
+    "U+00BA": {
+      "advance": 8,
+      "char": "º",
+      "codepoint": 186,
+      "ink_bounds": [
+        0,
+        -9,
+        7,
+        -1
+      ],
+      "offset": [
+        0,
+        -9
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        154,
+        120,
+        7,
+        8
+      ]
+    },
+    "U+00BB": {
+      "advance": 11,
+      "char": "»",
+      "codepoint": 187,
+      "ink_bounds": [
+        0,
+        -8,
+        10,
+        -1
+      ],
+      "offset": [
+        0,
+        -8
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        171,
+        120,
+        10,
+        7
+      ]
+    },
+    "U+00BC": {
+      "advance": 14,
+      "char": "¼",
+      "codepoint": 188,
+      "ink_bounds": [
+        0,
+        -10,
+        13,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "pack-addition",
+      "rect": [
+        188,
+        120,
+        13,
+        10
+      ]
+    },
+    "U+00BD": {
+      "advance": 14,
+      "char": "½",
+      "codepoint": 189,
+      "ink_bounds": [
+        0,
+        -10,
+        13,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "pack-addition",
+      "rect": [
+        205,
+        120,
+        13,
+        10
+      ]
+    },
+    "U+00BE": {
+      "advance": 16,
+      "char": "¾",
+      "codepoint": 190,
+      "ink_bounds": [
+        0,
+        -10,
+        15,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "pack-addition",
+      "rect": [
+        222,
+        120,
+        15,
+        10
+      ]
+    },
+    "U+00BF": {
+      "advance": 7,
+      "char": "¿",
+      "codepoint": 191,
+      "ink_bounds": [
+        0,
+        -10,
+        6,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        239,
+        120,
+        6,
+        10
+      ]
+    },
+    "U+00C0": {
+      "advance": 8,
+      "char": "À",
+      "codepoint": 192,
+      "ink_bounds": [
+        0,
+        -14,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -14
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        256,
+        120,
+        7,
+        14
+      ]
+    },
+    "U+00C1": {
+      "advance": 8,
+      "char": "Á",
+      "codepoint": 193,
+      "ink_bounds": [
+        0,
+        -14,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -14
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        1,
+        137,
+        7,
+        14
+      ]
+    },
+    "U+00C2": {
+      "advance": 8,
+      "char": "Â",
+      "codepoint": 194,
+      "ink_bounds": [
+        0,
+        -14,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -14
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        18,
+        137,
+        7,
+        14
+      ]
+    },
+    "U+00C3": {
+      "advance": 8,
+      "char": "Ã",
+      "codepoint": 195,
+      "ink_bounds": [
+        0,
+        -15,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -15
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        35,
+        137,
+        7,
+        15
+      ]
+    },
+    "U+00C4": {
+      "advance": 8,
+      "char": "Ä",
+      "codepoint": 196,
+      "ink_bounds": [
+        0,
+        -13,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -13
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        52,
+        137,
+        7,
+        13
+      ]
+    },
+    "U+00C5": {
+      "advance": 8,
+      "char": "Å",
+      "codepoint": 197,
+      "ink_bounds": [
+        0,
+        -14,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -14
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        69,
+        137,
+        7,
+        14
+      ]
+    },
+    "U+00C6": {
+      "advance": 13,
+      "char": "Æ",
+      "codepoint": 198,
+      "ink_bounds": [
+        0,
+        -10,
+        12,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        86,
+        137,
+        12,
+        10
+      ]
+    },
+    "U+00C7": {
+      "advance": 8,
+      "char": "Ç",
+      "codepoint": 199,
+      "ink_bounds": [
+        0,
+        -10,
+        7,
+        4
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        103,
+        137,
+        7,
+        14
+      ]
+    },
+    "U+00C8": {
+      "advance": 7,
+      "char": "È",
+      "codepoint": 200,
+      "ink_bounds": [
+        0,
+        -14,
+        6,
+        0
+      ],
+      "offset": [
+        0,
+        -14
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        120,
+        137,
+        6,
+        14
+      ]
+    },
+    "U+00C9": {
+      "advance": 7,
+      "char": "É",
+      "codepoint": 201,
+      "ink_bounds": [
+        0,
+        -14,
+        6,
+        0
+      ],
+      "offset": [
+        0,
+        -14
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        137,
+        137,
+        6,
+        14
+      ]
+    },
+    "U+00CA": {
+      "advance": 7,
+      "char": "Ê",
+      "codepoint": 202,
+      "ink_bounds": [
+        0,
+        -14,
+        6,
+        0
+      ],
+      "offset": [
+        0,
+        -14
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        154,
+        137,
+        6,
+        14
+      ]
+    },
+    "U+00CB": {
+      "advance": 7,
+      "char": "Ë",
+      "codepoint": 203,
+      "ink_bounds": [
+        0,
+        -13,
+        6,
+        0
+      ],
+      "offset": [
+        0,
+        -13
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        171,
+        137,
+        6,
+        13
+      ]
+    },
+    "U+00CC": {
+      "advance": 3,
+      "char": "Ì",
+      "codepoint": 204,
+      "ink_bounds": [
+        0,
+        -14,
+        3,
+        0
+      ],
+      "offset": [
+        0,
+        -14
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        188,
+        137,
+        3,
+        14
+      ]
+    },
+    "U+00CD": {
+      "advance": 3,
+      "char": "Í",
+      "codepoint": 205,
+      "ink_bounds": [
+        0,
+        -14,
+        3,
+        0
+      ],
+      "offset": [
+        0,
+        -14
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        205,
+        137,
+        3,
+        14
+      ]
+    },
+    "U+00CE": {
+      "advance": 4,
+      "char": "Î",
+      "codepoint": 206,
+      "ink_bounds": [
+        0,
+        -14,
+        4,
+        0
+      ],
+      "offset": [
+        0,
+        -14
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        222,
+        137,
+        4,
+        14
+      ]
+    },
+    "U+00CF": {
+      "advance": 4,
+      "char": "Ï",
+      "codepoint": 207,
+      "ink_bounds": [
+        -2,
+        -13,
+        4,
+        0
+      ],
+      "offset": [
+        -2,
+        -13
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        239,
+        137,
+        6,
+        13
+      ]
+    },
+    "U+00D0": {
+      "advance": 9,
+      "char": "Ð",
+      "codepoint": 208,
+      "ink_bounds": [
+        0,
+        -10,
+        8,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        256,
+        137,
+        8,
+        10
+      ]
+    },
+    "U+00D1": {
+      "advance": 9,
+      "char": "Ñ",
+      "codepoint": 209,
+      "ink_bounds": [
+        0,
+        -15,
+        8,
+        0
+      ],
+      "offset": [
+        0,
+        -15
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        1,
+        154,
+        8,
+        15
+      ]
+    },
+    "U+00D2": {
+      "advance": 8,
+      "char": "Ò",
+      "codepoint": 210,
+      "ink_bounds": [
+        0,
+        -14,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -14
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        18,
+        154,
+        7,
+        14
+      ]
+    },
+    "U+00D3": {
+      "advance": 8,
+      "char": "Ó",
+      "codepoint": 211,
+      "ink_bounds": [
+        0,
+        -14,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -14
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        35,
+        154,
+        7,
+        14
+      ]
+    },
+    "U+00D4": {
+      "advance": 8,
+      "char": "Ô",
+      "codepoint": 212,
+      "ink_bounds": [
+        0,
+        -14,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -14
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        52,
+        154,
+        7,
+        14
+      ]
+    },
+    "U+00D5": {
+      "advance": 8,
+      "char": "Õ",
+      "codepoint": 213,
+      "ink_bounds": [
+        0,
+        -15,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -15
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        69,
+        154,
+        7,
+        15
+      ]
+    },
+    "U+00D6": {
+      "advance": 8,
+      "char": "Ö",
+      "codepoint": 214,
+      "ink_bounds": [
+        0,
+        -13,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -13
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        86,
+        154,
+        7,
+        13
+      ]
+    },
+    "U+00D7": {
+      "advance": 8,
+      "char": "×",
+      "codepoint": 215,
+      "ink_bounds": [
+        0,
+        -8,
+        7,
+        -1
+      ],
+      "offset": [
+        0,
+        -8
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        103,
+        154,
+        7,
+        7
+      ]
+    },
+    "U+00D8": {
+      "advance": 12,
+      "char": "Ø",
+      "codepoint": 216,
+      "ink_bounds": [
+        0,
+        -10,
+        11,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        120,
+        154,
+        11,
+        10
+      ]
+    },
+    "U+00D9": {
+      "advance": 8,
+      "char": "Ù",
+      "codepoint": 217,
+      "ink_bounds": [
+        0,
+        -14,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -14
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        137,
+        154,
+        7,
+        14
+      ]
+    },
+    "U+00DA": {
+      "advance": 8,
+      "char": "Ú",
+      "codepoint": 218,
+      "ink_bounds": [
+        0,
+        -14,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -14
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        154,
+        154,
+        7,
+        14
+      ]
+    },
+    "U+00DB": {
+      "advance": 8,
+      "char": "Û",
+      "codepoint": 219,
+      "ink_bounds": [
+        0,
+        -14,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -14
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        171,
+        154,
+        7,
+        14
+      ]
+    },
+    "U+00DC": {
+      "advance": 8,
+      "char": "Ü",
+      "codepoint": 220,
+      "ink_bounds": [
+        0,
+        -13,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -13
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        188,
+        154,
+        7,
+        13
+      ]
+    },
+    "U+00DD": {
+      "advance": 9,
+      "char": "Ý",
+      "codepoint": 221,
+      "ink_bounds": [
+        0,
+        -14,
+        8,
+        0
+      ],
+      "offset": [
+        0,
+        -14
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        205,
+        154,
+        8,
+        14
+      ]
+    },
+    "U+00DE": {
+      "advance": 8,
+      "char": "Þ",
+      "codepoint": 222,
+      "ink_bounds": [
+        0,
+        -10,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        222,
+        154,
+        7,
+        10
+      ]
+    },
+    "U+00DF": {
+      "advance": 8,
+      "char": "ß",
+      "codepoint": 223,
+      "ink_bounds": [
+        0,
+        -10,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        239,
+        154,
+        7,
+        10
+      ]
+    },
+    "U+00E0": {
+      "advance": 8,
+      "char": "à",
+      "codepoint": 224,
+      "ink_bounds": [
+        0,
+        -12,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -12
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        256,
+        154,
+        7,
+        12
+      ]
+    },
+    "U+00E1": {
+      "advance": 8,
+      "char": "á",
+      "codepoint": 225,
+      "ink_bounds": [
+        0,
+        -12,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -12
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        1,
+        171,
+        7,
+        12
+      ]
+    },
+    "U+00E2": {
+      "advance": 8,
+      "char": "â",
+      "codepoint": 226,
+      "ink_bounds": [
+        0,
+        -12,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -12
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        18,
+        171,
+        7,
+        12
+      ]
+    },
+    "U+00E3": {
+      "advance": 8,
+      "char": "ã",
+      "codepoint": 227,
+      "ink_bounds": [
+        0,
+        -13,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -13
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        35,
+        171,
+        7,
+        13
+      ]
+    },
+    "U+00E4": {
+      "advance": 8,
+      "char": "ä",
+      "codepoint": 228,
+      "ink_bounds": [
+        0,
+        -11,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -11
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        52,
+        171,
+        7,
+        11
+      ]
+    },
+    "U+00E5": {
+      "advance": 8,
+      "char": "å",
+      "codepoint": 229,
+      "ink_bounds": [
+        0,
+        -12,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -12
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        69,
+        171,
+        7,
+        12
+      ]
+    },
+    "U+00E6": {
+      "advance": 12,
+      "char": "æ",
+      "codepoint": 230,
+      "ink_bounds": [
+        0,
+        -8,
+        11,
+        0
+      ],
+      "offset": [
+        0,
+        -8
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        86,
+        171,
+        11,
+        8
+      ]
+    },
+    "U+00E7": {
+      "advance": 8,
+      "char": "ç",
+      "codepoint": 231,
+      "ink_bounds": [
+        0,
+        -8,
+        7,
+        4
+      ],
+      "offset": [
+        0,
+        -8
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        103,
+        171,
+        7,
+        12
+      ]
+    },
+    "U+00E8": {
+      "advance": 8,
+      "char": "è",
+      "codepoint": 232,
+      "ink_bounds": [
+        0,
+        -12,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -12
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        120,
+        171,
+        7,
+        12
+      ]
+    },
+    "U+00E9": {
+      "advance": 8,
+      "char": "é",
+      "codepoint": 233,
+      "ink_bounds": [
+        0,
+        -12,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -12
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        137,
+        171,
+        7,
+        12
+      ]
+    },
+    "U+00EA": {
+      "advance": 8,
+      "char": "ê",
+      "codepoint": 234,
+      "ink_bounds": [
+        0,
+        -12,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -12
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        154,
+        171,
+        7,
+        12
+      ]
+    },
+    "U+00EB": {
+      "advance": 8,
+      "char": "ë",
+      "codepoint": 235,
+      "ink_bounds": [
+        0,
+        -11,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -11
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        171,
+        171,
+        7,
+        11
+      ]
+    },
+    "U+00EC": {
+      "advance": 3,
+      "char": "ì",
+      "codepoint": 236,
+      "ink_bounds": [
+        0,
+        -12,
+        3,
+        0
+      ],
+      "offset": [
+        0,
+        -12
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        188,
+        171,
+        3,
+        12
+      ]
+    },
+    "U+00ED": {
+      "advance": 3,
+      "char": "í",
+      "codepoint": 237,
+      "ink_bounds": [
+        0,
+        -12,
+        3,
+        0
+      ],
+      "offset": [
+        0,
+        -12
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        205,
+        171,
+        3,
+        12
+      ]
+    },
+    "U+00EE": {
+      "advance": 4,
+      "char": "î",
+      "codepoint": 238,
+      "ink_bounds": [
+        0,
+        -12,
+        4,
+        0
+      ],
+      "offset": [
+        0,
+        -12
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        222,
+        171,
+        4,
+        12
+      ]
+    },
+    "U+00EF": {
+      "advance": 4,
+      "char": "ï",
+      "codepoint": 239,
+      "ink_bounds": [
+        -2,
+        -11,
+        4,
+        0
+      ],
+      "offset": [
+        -2,
+        -11
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        239,
+        171,
+        6,
+        11
+      ]
+    },
+    "U+00F0": {
+      "advance": 8,
+      "char": "ð",
+      "codepoint": 240,
+      "ink_bounds": [
+        0,
+        -10,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        256,
+        171,
+        7,
+        10
+      ]
+    },
+    "U+00F1": {
+      "advance": 8,
+      "char": "ñ",
+      "codepoint": 241,
+      "ink_bounds": [
+        0,
+        -13,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -13
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        1,
+        188,
+        7,
+        13
+      ]
+    },
+    "U+00F2": {
+      "advance": 8,
+      "char": "ò",
+      "codepoint": 242,
+      "ink_bounds": [
+        0,
+        -12,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -12
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        18,
+        188,
+        7,
+        12
+      ]
+    },
+    "U+00F3": {
+      "advance": 8,
+      "char": "ó",
+      "codepoint": 243,
+      "ink_bounds": [
+        0,
+        -12,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -12
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        35,
+        188,
+        7,
+        12
+      ]
+    },
+    "U+00F4": {
+      "advance": 8,
+      "char": "ô",
+      "codepoint": 244,
+      "ink_bounds": [
+        0,
+        -12,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -12
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        52,
+        188,
+        7,
+        12
+      ]
+    },
+    "U+00F5": {
+      "advance": 8,
+      "char": "õ",
+      "codepoint": 245,
+      "ink_bounds": [
+        0,
+        -13,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -13
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        69,
+        188,
+        7,
+        13
+      ]
+    },
+    "U+00F6": {
+      "advance": 8,
+      "char": "ö",
+      "codepoint": 246,
+      "ink_bounds": [
+        0,
+        -11,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -11
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        86,
+        188,
+        7,
+        11
+      ]
+    },
+    "U+00F7": {
+      "advance": 7,
+      "char": "÷",
+      "codepoint": 247,
+      "ink_bounds": [
+        0,
+        -9,
+        6,
+        -1
+      ],
+      "offset": [
+        0,
+        -9
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        103,
+        188,
+        6,
+        8
+      ]
+    },
+    "U+00F8": {
+      "advance": 10,
+      "char": "ø",
+      "codepoint": 248,
+      "ink_bounds": [
+        0,
+        -8,
+        9,
+        0
+      ],
+      "offset": [
+        0,
+        -8
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        120,
+        188,
+        9,
+        8
+      ]
+    },
+    "U+00F9": {
+      "advance": 8,
+      "char": "ù",
+      "codepoint": 249,
+      "ink_bounds": [
+        0,
+        -12,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -12
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        137,
+        188,
+        7,
+        12
+      ]
+    },
+    "U+00FA": {
+      "advance": 8,
+      "char": "ú",
+      "codepoint": 250,
+      "ink_bounds": [
+        0,
+        -12,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -12
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        154,
+        188,
+        7,
+        12
+      ]
+    },
+    "U+00FB": {
+      "advance": 8,
+      "char": "û",
+      "codepoint": 251,
+      "ink_bounds": [
+        0,
+        -12,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -12
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        171,
+        188,
+        7,
+        12
+      ]
+    },
+    "U+00FC": {
+      "advance": 8,
+      "char": "ü",
+      "codepoint": 252,
+      "ink_bounds": [
+        0,
+        -11,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -11
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        188,
+        188,
+        7,
+        11
+      ]
+    },
+    "U+00FD": {
+      "advance": 7,
+      "char": "ý",
+      "codepoint": 253,
+      "ink_bounds": [
+        0,
+        -12,
+        6,
+        2
+      ],
+      "offset": [
+        0,
+        -12
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        205,
+        188,
+        6,
+        14
+      ]
+    },
+    "U+00FE": {
+      "advance": 8,
+      "char": "þ",
+      "codepoint": 254,
+      "ink_bounds": [
+        0,
+        -10,
+        7,
+        2
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        222,
+        188,
+        7,
+        12
+      ]
+    },
+    "U+00FF": {
+      "advance": 7,
+      "char": "ÿ",
+      "codepoint": 255,
+      "ink_bounds": [
+        0,
+        -12,
+        6,
+        2
+      ],
+      "offset": [
+        0,
+        -12
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        239,
+        188,
+        6,
+        14
+      ]
+    },
+    "U+0100": {
+      "advance": 8,
+      "char": "Ā",
+      "codepoint": 256,
+      "ink_bounds": [
+        0,
+        -13,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -13
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        256,
+        188,
+        7,
+        13
+      ]
+    },
+    "U+0101": {
+      "advance": 8,
+      "char": "ā",
+      "codepoint": 257,
+      "ink_bounds": [
+        0,
+        -12,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -12
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        1,
+        205,
+        7,
+        12
+      ]
+    },
+    "U+0102": {
+      "advance": 8,
+      "char": "Ă",
+      "codepoint": 258,
+      "ink_bounds": [
+        0,
+        -14,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -14
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        18,
+        205,
+        7,
+        14
+      ]
+    },
+    "U+0103": {
+      "advance": 8,
+      "char": "ă",
+      "codepoint": 259,
+      "ink_bounds": [
+        0,
+        -12,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -12
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        35,
+        205,
+        7,
+        12
+      ]
+    },
+    "U+0104": {
+      "advance": 8,
+      "char": "Ą",
+      "codepoint": 260,
+      "ink_bounds": [
+        0,
+        -10,
+        7,
+        4
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        52,
+        205,
+        7,
+        14
+      ]
+    },
+    "U+0105": {
+      "advance": 8,
+      "char": "ą",
+      "codepoint": 261,
+      "ink_bounds": [
+        0,
+        -8,
+        7,
+        4
+      ],
+      "offset": [
+        0,
+        -8
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        69,
+        205,
+        7,
+        12
+      ]
+    },
+    "U+0106": {
+      "advance": 8,
+      "char": "Ć",
+      "codepoint": 262,
+      "ink_bounds": [
+        0,
+        -14,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -14
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        86,
+        205,
+        7,
+        14
+      ]
+    },
+    "U+0107": {
+      "advance": 8,
+      "char": "ć",
+      "codepoint": 263,
+      "ink_bounds": [
+        0,
+        -12,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -12
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        103,
+        205,
+        7,
+        12
+      ]
+    },
+    "U+0108": {
+      "advance": 8,
+      "char": "Ĉ",
+      "codepoint": 264,
+      "ink_bounds": [
+        0,
+        -14,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -14
+      ],
+      "origin": "pack-addition",
+      "rect": [
+        120,
+        205,
+        7,
+        14
+      ]
+    },
+    "U+0109": {
+      "advance": 8,
+      "char": "ĉ",
+      "codepoint": 265,
+      "ink_bounds": [
+        0,
+        -12,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -12
+      ],
+      "origin": "pack-addition",
+      "rect": [
+        137,
+        205,
+        7,
+        12
+      ]
+    },
+    "U+010A": {
+      "advance": 8,
+      "char": "Ċ",
+      "codepoint": 266,
+      "ink_bounds": [
+        0,
+        -13,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -13
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        154,
+        205,
+        7,
+        13
+      ]
+    },
+    "U+010B": {
+      "advance": 8,
+      "char": "ċ",
+      "codepoint": 267,
+      "ink_bounds": [
+        0,
+        -11,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -11
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        171,
+        205,
+        7,
+        11
+      ]
+    },
+    "U+010C": {
+      "advance": 8,
+      "char": "Č",
+      "codepoint": 268,
+      "ink_bounds": [
+        0,
+        -14,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -14
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        188,
+        205,
+        7,
+        14
+      ]
+    },
+    "U+010D": {
+      "advance": 8,
+      "char": "č",
+      "codepoint": 269,
+      "ink_bounds": [
+        0,
+        -12,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -12
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        205,
+        205,
+        7,
+        12
+      ]
+    },
+    "U+010E": {
+      "advance": 8,
+      "char": "Ď",
+      "codepoint": 270,
+      "ink_bounds": [
+        0,
+        -14,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -14
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        222,
+        205,
+        7,
+        14
+      ]
+    },
+    "U+010F": {
+      "advance": 10,
+      "char": "ď",
+      "codepoint": 271,
+      "ink_bounds": [
+        0,
+        -12,
+        9,
+        0
+      ],
+      "offset": [
+        0,
+        -12
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        239,
+        205,
+        9,
+        12
+      ]
+    },
+    "U+0110": {
+      "advance": 9,
+      "char": "Đ",
+      "codepoint": 272,
+      "ink_bounds": [
+        0,
+        -10,
+        8,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        256,
+        205,
+        8,
+        10
+      ]
+    },
+    "U+0111": {
+      "advance": 9,
+      "char": "đ",
+      "codepoint": 273,
+      "ink_bounds": [
+        0,
+        -10,
+        8,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        1,
+        222,
+        8,
+        10
+      ]
+    },
+    "U+0112": {
+      "advance": 7,
+      "char": "Ē",
+      "codepoint": 274,
+      "ink_bounds": [
+        0,
+        -13,
+        6,
+        0
+      ],
+      "offset": [
+        0,
+        -13
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        18,
+        222,
+        6,
+        13
+      ]
+    },
+    "U+0113": {
+      "advance": 8,
+      "char": "ē",
+      "codepoint": 275,
+      "ink_bounds": [
+        0,
+        -12,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -12
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        35,
+        222,
+        7,
+        12
+      ]
+    },
+    "U+0114": {
+      "advance": 7,
+      "char": "Ĕ",
+      "codepoint": 276,
+      "ink_bounds": [
+        0,
+        -14,
+        6,
+        0
+      ],
+      "offset": [
+        0,
+        -14
+      ],
+      "origin": "pack-addition",
+      "rect": [
+        52,
+        222,
+        6,
+        14
+      ]
+    },
+    "U+0115": {
+      "advance": 8,
+      "char": "ĕ",
+      "codepoint": 277,
+      "ink_bounds": [
+        0,
+        -12,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -12
+      ],
+      "origin": "pack-addition",
+      "rect": [
+        69,
+        222,
+        7,
+        12
+      ]
+    },
+    "U+0116": {
+      "advance": 7,
+      "char": "Ė",
+      "codepoint": 278,
+      "ink_bounds": [
+        0,
+        -13,
+        6,
+        0
+      ],
+      "offset": [
+        0,
+        -13
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        86,
+        222,
+        6,
+        13
+      ]
+    },
+    "U+0117": {
+      "advance": 8,
+      "char": "ė",
+      "codepoint": 279,
+      "ink_bounds": [
+        0,
+        -11,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -11
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        103,
+        222,
+        7,
+        11
+      ]
+    },
+    "U+0118": {
+      "advance": 7,
+      "char": "Ę",
+      "codepoint": 280,
+      "ink_bounds": [
+        0,
+        -10,
+        6,
+        4
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        120,
+        222,
+        6,
+        14
+      ]
+    },
+    "U+0119": {
+      "advance": 8,
+      "char": "ę",
+      "codepoint": 281,
+      "ink_bounds": [
+        0,
+        -8,
+        7,
+        4
+      ],
+      "offset": [
+        0,
+        -8
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        137,
+        222,
+        7,
+        12
+      ]
+    },
+    "U+011A": {
+      "advance": 7,
+      "char": "Ě",
+      "codepoint": 282,
+      "ink_bounds": [
+        0,
+        -14,
+        6,
+        0
+      ],
+      "offset": [
+        0,
+        -14
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        154,
+        222,
+        6,
+        14
+      ]
+    },
+    "U+011B": {
+      "advance": 8,
+      "char": "ě",
+      "codepoint": 283,
+      "ink_bounds": [
+        0,
+        -12,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -12
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        171,
+        222,
+        7,
+        12
+      ]
+    },
+    "U+011C": {
+      "advance": 8,
+      "char": "Ĝ",
+      "codepoint": 284,
+      "ink_bounds": [
+        0,
+        -14,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -14
+      ],
+      "origin": "pack-addition",
+      "rect": [
+        188,
+        222,
+        7,
+        14
+      ]
+    },
+    "U+011D": {
+      "advance": 8,
+      "char": "ĝ",
+      "codepoint": 285,
+      "ink_bounds": [
+        0,
+        -12,
+        7,
+        2
+      ],
+      "offset": [
+        0,
+        -12
+      ],
+      "origin": "pack-addition",
+      "rect": [
+        205,
+        222,
+        7,
+        14
+      ]
+    },
+    "U+011E": {
+      "advance": 8,
+      "char": "Ğ",
+      "codepoint": 286,
+      "ink_bounds": [
+        0,
+        -14,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -14
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        222,
+        222,
+        7,
+        14
+      ]
+    },
+    "U+011F": {
+      "advance": 8,
+      "char": "ğ",
+      "codepoint": 287,
+      "ink_bounds": [
+        0,
+        -12,
+        7,
+        2
+      ],
+      "offset": [
+        0,
+        -12
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        239,
+        222,
+        7,
+        14
+      ]
+    },
+    "U+0120": {
+      "advance": 8,
+      "char": "Ġ",
+      "codepoint": 288,
+      "ink_bounds": [
+        0,
+        -13,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -13
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        256,
+        222,
+        7,
+        13
+      ]
+    },
+    "U+0121": {
+      "advance": 8,
+      "char": "ġ",
+      "codepoint": 289,
+      "ink_bounds": [
+        0,
+        -11,
+        7,
+        2
+      ],
+      "offset": [
+        0,
+        -11
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        1,
+        239,
+        7,
+        13
+      ]
+    },
+    "U+0122": {
+      "advance": 8,
+      "char": "Ģ",
+      "codepoint": 290,
+      "ink_bounds": [
+        0,
+        -10,
+        7,
+        5
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        18,
+        239,
+        7,
+        15
+      ]
+    },
+    "U+0123": {
+      "advance": 8,
+      "char": "ģ",
+      "codepoint": 291,
+      "ink_bounds": [
+        0,
+        -13,
+        7,
+        2
+      ],
+      "offset": [
+        0,
+        -13
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        35,
+        239,
+        7,
+        15
+      ]
+    },
+    "U+0124": {
+      "advance": 8,
+      "char": "Ĥ",
+      "codepoint": 292,
+      "ink_bounds": [
+        0,
+        -14,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -14
+      ],
+      "origin": "pack-addition",
+      "rect": [
+        52,
+        239,
+        7,
+        14
+      ]
+    },
+    "U+0125": {
+      "advance": 8,
+      "char": "ĥ",
+      "codepoint": 293,
+      "ink_bounds": [
+        0,
+        -14,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -14
+      ],
+      "origin": "pack-addition",
+      "rect": [
+        69,
+        239,
+        7,
+        14
+      ]
+    },
+    "U+0126": {
+      "advance": 10,
+      "char": "Ħ",
+      "codepoint": 294,
+      "ink_bounds": [
+        0,
+        -10,
+        9,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        86,
+        239,
+        9,
+        10
+      ]
+    },
+    "U+0127": {
+      "advance": 9,
+      "char": "ħ",
+      "codepoint": 295,
+      "ink_bounds": [
+        0,
+        -10,
+        8,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        103,
+        239,
+        8,
+        10
+      ]
+    },
+    "U+0128": {
+      "advance": 4,
+      "char": "Ĩ",
+      "codepoint": 296,
+      "ink_bounds": [
+        -1,
+        -15,
+        4,
+        0
+      ],
+      "offset": [
+        -1,
+        -15
+      ],
+      "origin": "pack-addition",
+      "rect": [
+        120,
+        239,
+        5,
+        15
+      ]
+    },
+    "U+0129": {
+      "advance": 4,
+      "char": "ĩ",
+      "codepoint": 297,
+      "ink_bounds": [
+        -1,
+        -13,
+        4,
+        0
+      ],
+      "offset": [
+        -1,
+        -13
+      ],
+      "origin": "pack-addition",
+      "rect": [
+        137,
+        239,
+        5,
+        13
+      ]
+    },
+    "U+012A": {
+      "advance": 4,
+      "char": "Ī",
+      "codepoint": 298,
+      "ink_bounds": [
+        0,
+        -13,
+        4,
+        0
+      ],
+      "offset": [
+        0,
+        -13
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        154,
+        239,
+        4,
+        13
+      ]
+    },
+    "U+012B": {
+      "advance": 4,
+      "char": "ī",
+      "codepoint": 299,
+      "ink_bounds": [
+        0,
+        -12,
+        4,
+        0
+      ],
+      "offset": [
+        0,
+        -12
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        171,
+        239,
+        4,
+        12
+      ]
+    },
+    "U+012C": {
+      "advance": 4,
+      "char": "Ĭ",
+      "codepoint": 300,
+      "ink_bounds": [
+        -1,
+        -14,
+        4,
+        0
+      ],
+      "offset": [
+        -1,
+        -14
+      ],
+      "origin": "pack-addition",
+      "rect": [
+        188,
+        239,
+        5,
+        14
+      ]
+    },
+    "U+012D": {
+      "advance": 4,
+      "char": "ĭ",
+      "codepoint": 301,
+      "ink_bounds": [
+        -1,
+        -12,
+        4,
+        0
+      ],
+      "offset": [
+        -1,
+        -12
+      ],
+      "origin": "pack-addition",
+      "rect": [
+        205,
+        239,
+        5,
+        12
+      ]
+    },
+    "U+012E": {
+      "advance": 3,
+      "char": "Į",
+      "codepoint": 302,
+      "ink_bounds": [
+        0,
+        -10,
+        2,
+        4
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        222,
+        239,
+        2,
+        14
+      ]
+    },
+    "U+012F": {
+      "advance": 3,
+      "char": "į",
+      "codepoint": 303,
+      "ink_bounds": [
+        0,
+        -10,
+        2,
+        4
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        239,
+        239,
+        2,
+        14
+      ]
+    },
+    "U+0130": {
+      "advance": 3,
+      "char": "İ",
+      "codepoint": 304,
+      "ink_bounds": [
+        0,
+        -13,
+        2,
+        0
+      ],
+      "offset": [
+        0,
+        -13
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        256,
+        239,
+        2,
+        13
+      ]
+    },
+    "U+0131": {
+      "advance": 3,
+      "char": "ı",
+      "codepoint": 305,
+      "ink_bounds": [
+        0,
+        -7,
+        2,
+        0
+      ],
+      "offset": [
+        0,
+        -7
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        1,
+        256,
+        2,
+        7
+      ]
+    },
+    "U+0132": {
+      "advance": 10,
+      "char": "Ĳ",
+      "codepoint": 306,
+      "ink_bounds": [
+        0,
+        -10,
+        9,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        18,
+        256,
+        9,
+        10
+      ]
+    },
+    "U+0133": {
+      "advance": 7,
+      "char": "ĳ",
+      "codepoint": 307,
+      "ink_bounds": [
+        0,
+        -10,
+        6,
+        2
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        35,
+        256,
+        6,
+        12
+      ]
+    },
+    "U+0134": {
+      "advance": 7,
+      "char": "Ĵ",
+      "codepoint": 308,
+      "ink_bounds": [
+        0,
+        -14,
+        6,
+        0
+      ],
+      "offset": [
+        0,
+        -14
+      ],
+      "origin": "pack-addition",
+      "rect": [
+        52,
+        256,
+        6,
+        14
+      ]
+    },
+    "U+0135": {
+      "advance": 6,
+      "char": "ĵ",
+      "codepoint": 309,
+      "ink_bounds": [
+        0,
+        -12,
+        5,
+        2
+      ],
+      "offset": [
+        0,
+        -12
+      ],
+      "origin": "pack-addition",
+      "rect": [
+        69,
+        256,
+        5,
+        14
+      ]
+    },
+    "U+0136": {
+      "advance": 7,
+      "char": "Ķ",
+      "codepoint": 310,
+      "ink_bounds": [
+        0,
+        -10,
+        6,
+        5
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        86,
+        256,
+        6,
+        15
+      ]
+    },
+    "U+0137": {
+      "advance": 7,
+      "char": "ķ",
+      "codepoint": 311,
+      "ink_bounds": [
+        0,
+        -10,
+        6,
+        5
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        103,
+        256,
+        6,
+        15
+      ]
+    },
+    "U+0138": {
+      "advance": 7,
+      "char": "ĸ",
+      "codepoint": 312,
+      "ink_bounds": [
+        0,
+        -8,
+        6,
+        0
+      ],
+      "offset": [
+        0,
+        -8
+      ],
+      "origin": "pack-addition",
+      "rect": [
+        120,
+        256,
+        6,
+        8
+      ]
+    },
+    "U+0139": {
+      "advance": 6,
+      "char": "Ĺ",
+      "codepoint": 313,
+      "ink_bounds": [
+        0,
+        -14,
+        5,
+        0
+      ],
+      "offset": [
+        0,
+        -14
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        137,
+        256,
+        5,
+        14
+      ]
+    },
+    "U+013A": {
+      "advance": 3,
+      "char": "ĺ",
+      "codepoint": 314,
+      "ink_bounds": [
+        -2,
+        -14,
+        1,
+        0
+      ],
+      "offset": [
+        -2,
+        -14
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        154,
+        256,
+        3,
+        14
+      ]
+    },
+    "U+013B": {
+      "advance": 6,
+      "char": "Ļ",
+      "codepoint": 315,
+      "ink_bounds": [
+        0,
+        -10,
+        5,
+        5
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        171,
+        256,
+        5,
+        15
+      ]
+    },
+    "U+013C": {
+      "advance": 3,
+      "char": "ļ",
+      "codepoint": 316,
+      "ink_bounds": [
+        0,
+        -10,
+        2,
+        5
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        188,
+        256,
+        2,
+        15
+      ]
+    },
+    "U+013D": {
+      "advance": 7,
+      "char": "Ľ",
+      "codepoint": 317,
+      "ink_bounds": [
+        0,
+        -11,
+        6,
+        0
+      ],
+      "offset": [
+        0,
+        -11
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        205,
+        256,
+        6,
+        11
+      ]
+    },
+    "U+013E": {
+      "advance": 5,
+      "char": "ľ",
+      "codepoint": 318,
+      "ink_bounds": [
+        0,
+        -12,
+        4,
+        0
+      ],
+      "offset": [
+        0,
+        -12
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        222,
+        256,
+        4,
+        12
+      ]
+    },
+    "U+013F": {
+      "advance": 7,
+      "char": "Ŀ",
+      "codepoint": 319,
+      "ink_bounds": [
+        0,
+        -10,
+        6,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "pack-addition",
+      "rect": [
+        239,
+        256,
+        6,
+        10
+      ]
+    },
+    "U+0140": {
+      "advance": 6,
+      "char": "ŀ",
+      "codepoint": 320,
+      "ink_bounds": [
+        0,
+        -10,
+        5,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "pack-addition",
+      "rect": [
+        256,
+        256,
+        5,
+        10
+      ]
+    },
+    "U+0141": {
+      "advance": 7,
+      "char": "Ł",
+      "codepoint": 321,
+      "ink_bounds": [
+        0,
+        -10,
+        6,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        1,
+        273,
+        6,
+        10
+      ]
+    },
+    "U+0142": {
+      "advance": 7,
+      "char": "ł",
+      "codepoint": 322,
+      "ink_bounds": [
+        0,
+        -10,
+        6,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        18,
+        273,
+        6,
+        10
+      ]
+    },
+    "U+0143": {
+      "advance": 9,
+      "char": "Ń",
+      "codepoint": 323,
+      "ink_bounds": [
+        0,
+        -14,
+        8,
+        0
+      ],
+      "offset": [
+        0,
+        -14
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        35,
+        273,
+        8,
+        14
+      ]
+    },
+    "U+0144": {
+      "advance": 8,
+      "char": "ń",
+      "codepoint": 324,
+      "ink_bounds": [
+        0,
+        -12,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -12
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        52,
+        273,
+        7,
+        12
+      ]
+    },
+    "U+0145": {
+      "advance": 9,
+      "char": "Ņ",
+      "codepoint": 325,
+      "ink_bounds": [
+        0,
+        -10,
+        8,
+        5
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        69,
+        273,
+        8,
+        15
+      ]
+    },
+    "U+0146": {
+      "advance": 8,
+      "char": "ņ",
+      "codepoint": 326,
+      "ink_bounds": [
+        0,
+        -8,
+        7,
+        5
+      ],
+      "offset": [
+        0,
+        -8
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        86,
+        273,
+        7,
+        13
+      ]
+    },
+    "U+0147": {
+      "advance": 9,
+      "char": "Ň",
+      "codepoint": 327,
+      "ink_bounds": [
+        0,
+        -14,
+        8,
+        0
+      ],
+      "offset": [
+        0,
+        -14
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        103,
+        273,
+        8,
+        14
+      ]
+    },
+    "U+0148": {
+      "advance": 8,
+      "char": "ň",
+      "codepoint": 328,
+      "ink_bounds": [
+        0,
+        -12,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -12
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        120,
+        273,
+        7,
+        12
+      ]
+    },
+    "U+0149": {
+      "advance": 11,
+      "char": "ŉ",
+      "codepoint": 329,
+      "ink_bounds": [
+        0,
+        -10,
+        10,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "pack-addition",
+      "rect": [
+        137,
+        273,
+        10,
+        10
+      ]
+    },
+    "U+014A": {
+      "advance": 9,
+      "char": "Ŋ",
+      "codepoint": 330,
+      "ink_bounds": [
+        0,
+        -10,
+        8,
+        3
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        154,
+        273,
+        8,
+        13
+      ]
+    },
+    "U+014B": {
+      "advance": 8,
+      "char": "ŋ",
+      "codepoint": 331,
+      "ink_bounds": [
+        0,
+        -8,
+        7,
+        2
+      ],
+      "offset": [
+        0,
+        -8
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        171,
+        273,
+        7,
+        10
+      ]
+    },
+    "U+014C": {
+      "advance": 8,
+      "char": "Ō",
+      "codepoint": 332,
+      "ink_bounds": [
+        0,
+        -13,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -13
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        188,
+        273,
+        7,
+        13
+      ]
+    },
+    "U+014D": {
+      "advance": 8,
+      "char": "ō",
+      "codepoint": 333,
+      "ink_bounds": [
+        0,
+        -12,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -12
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        205,
+        273,
+        7,
+        12
+      ]
+    },
+    "U+014E": {
+      "advance": 8,
+      "char": "Ŏ",
+      "codepoint": 334,
+      "ink_bounds": [
+        0,
+        -14,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -14
+      ],
+      "origin": "pack-addition",
+      "rect": [
+        222,
+        273,
+        7,
+        14
+      ]
+    },
+    "U+014F": {
+      "advance": 8,
+      "char": "ŏ",
+      "codepoint": 335,
+      "ink_bounds": [
+        0,
+        -12,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -12
+      ],
+      "origin": "pack-addition",
+      "rect": [
+        239,
+        273,
+        7,
+        12
+      ]
+    },
+    "U+0150": {
+      "advance": 8,
+      "char": "Ő",
+      "codepoint": 336,
+      "ink_bounds": [
+        0,
+        -14,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -14
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        256,
+        273,
+        7,
+        14
+      ]
+    },
+    "U+0151": {
+      "advance": 8,
+      "char": "ő",
+      "codepoint": 337,
+      "ink_bounds": [
+        0,
+        -12,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -12
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        1,
+        290,
+        7,
+        12
+      ]
+    },
+    "U+0152": {
+      "advance": 11,
+      "char": "Œ",
+      "codepoint": 338,
+      "ink_bounds": [
+        0,
+        -10,
+        10,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        18,
+        290,
+        10,
+        10
+      ]
+    },
+    "U+0153": {
+      "advance": 12,
+      "char": "œ",
+      "codepoint": 339,
+      "ink_bounds": [
+        0,
+        -8,
+        11,
+        0
+      ],
+      "offset": [
+        0,
+        -8
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        35,
+        290,
+        11,
+        8
+      ]
+    },
+    "U+0154": {
+      "advance": 8,
+      "char": "Ŕ",
+      "codepoint": 340,
+      "ink_bounds": [
+        0,
+        -14,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -14
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        52,
+        290,
+        7,
+        14
+      ]
+    },
+    "U+0155": {
+      "advance": 7,
+      "char": "ŕ",
+      "codepoint": 341,
+      "ink_bounds": [
+        0,
+        -12,
+        6,
+        0
+      ],
+      "offset": [
+        0,
+        -12
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        69,
+        290,
+        6,
+        12
+      ]
+    },
+    "U+0156": {
+      "advance": 8,
+      "char": "Ŗ",
+      "codepoint": 342,
+      "ink_bounds": [
+        0,
+        -10,
+        7,
+        5
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        86,
+        290,
+        7,
+        15
+      ]
+    },
+    "U+0157": {
+      "advance": 7,
+      "char": "ŗ",
+      "codepoint": 343,
+      "ink_bounds": [
+        0,
+        -8,
+        6,
+        5
+      ],
+      "offset": [
+        0,
+        -8
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        103,
+        290,
+        6,
+        13
+      ]
+    },
+    "U+0158": {
+      "advance": 8,
+      "char": "Ř",
+      "codepoint": 344,
+      "ink_bounds": [
+        0,
+        -14,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -14
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        120,
+        290,
+        7,
+        14
+      ]
+    },
+    "U+0159": {
+      "advance": 7,
+      "char": "ř",
+      "codepoint": 345,
+      "ink_bounds": [
+        0,
+        -12,
+        6,
+        0
+      ],
+      "offset": [
+        0,
+        -12
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        137,
+        290,
+        6,
+        12
+      ]
+    },
+    "U+015A": {
+      "advance": 8,
+      "char": "Ś",
+      "codepoint": 346,
+      "ink_bounds": [
+        0,
+        -14,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -14
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        154,
+        290,
+        7,
+        14
+      ]
+    },
+    "U+015B": {
+      "advance": 7,
+      "char": "ś",
+      "codepoint": 347,
+      "ink_bounds": [
+        0,
+        -12,
+        6,
+        0
+      ],
+      "offset": [
+        0,
+        -12
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        171,
+        290,
+        6,
+        12
+      ]
+    },
+    "U+015C": {
+      "advance": 8,
+      "char": "Ŝ",
+      "codepoint": 348,
+      "ink_bounds": [
+        0,
+        -14,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -14
+      ],
+      "origin": "pack-addition",
+      "rect": [
+        188,
+        290,
+        7,
+        14
+      ]
+    },
+    "U+015D": {
+      "advance": 7,
+      "char": "ŝ",
+      "codepoint": 349,
+      "ink_bounds": [
+        0,
+        -12,
+        6,
+        0
+      ],
+      "offset": [
+        0,
+        -12
+      ],
+      "origin": "pack-addition",
+      "rect": [
+        205,
+        290,
+        6,
+        12
+      ]
+    },
+    "U+015E": {
+      "advance": 8,
+      "char": "Ş",
+      "codepoint": 350,
+      "ink_bounds": [
+        0,
+        -10,
+        7,
+        4
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        222,
+        290,
+        7,
+        14
+      ]
+    },
+    "U+015F": {
+      "advance": 7,
+      "char": "ş",
+      "codepoint": 351,
+      "ink_bounds": [
+        0,
+        -8,
+        6,
+        4
+      ],
+      "offset": [
+        0,
+        -8
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        239,
+        290,
+        6,
+        12
+      ]
+    },
+    "U+0160": {
+      "advance": 8,
+      "char": "Š",
+      "codepoint": 352,
+      "ink_bounds": [
+        0,
+        -14,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -14
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        256,
+        290,
+        7,
+        14
+      ]
+    },
+    "U+0161": {
+      "advance": 7,
+      "char": "š",
+      "codepoint": 353,
+      "ink_bounds": [
+        0,
+        -12,
+        6,
+        0
+      ],
+      "offset": [
+        0,
+        -12
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        1,
+        307,
+        6,
+        12
+      ]
+    },
+    "U+0162": {
+      "advance": 7,
+      "char": "Ţ",
+      "codepoint": 354,
+      "ink_bounds": [
+        0,
+        -10,
+        6,
+        4
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "pack-addition",
+      "rect": [
+        18,
+        307,
+        6,
+        14
+      ]
+    },
+    "U+0163": {
+      "advance": 6,
+      "char": "ţ",
+      "codepoint": 355,
+      "ink_bounds": [
+        0,
+        -10,
+        5,
+        4
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "pack-addition",
+      "rect": [
+        35,
+        307,
+        5,
+        14
+      ]
+    },
+    "U+0164": {
+      "advance": 7,
+      "char": "Ť",
+      "codepoint": 356,
+      "ink_bounds": [
+        0,
+        -14,
+        6,
+        0
+      ],
+      "offset": [
+        0,
+        -14
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        52,
+        307,
+        6,
+        14
+      ]
+    },
+    "U+0165": {
+      "advance": 6,
+      "char": "ť",
+      "codepoint": 357,
+      "ink_bounds": [
+        0,
+        -12,
+        6,
+        0
+      ],
+      "offset": [
+        0,
+        -12
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        69,
+        307,
+        6,
+        12
+      ]
+    },
+    "U+0166": {
+      "advance": 7,
+      "char": "Ŧ",
+      "codepoint": 358,
+      "ink_bounds": [
+        0,
+        -10,
+        6,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "pack-addition",
+      "rect": [
+        86,
+        307,
+        6,
+        10
+      ]
+    },
+    "U+0167": {
+      "advance": 6,
+      "char": "ŧ",
+      "codepoint": 359,
+      "ink_bounds": [
+        0,
+        -10,
+        5,
+        0
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "pack-addition",
+      "rect": [
+        103,
+        307,
+        5,
+        10
+      ]
+    },
+    "U+0168": {
+      "advance": 8,
+      "char": "Ũ",
+      "codepoint": 360,
+      "ink_bounds": [
+        0,
+        -15,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -15
+      ],
+      "origin": "pack-addition",
+      "rect": [
+        120,
+        307,
+        7,
+        15
+      ]
+    },
+    "U+0169": {
+      "advance": 8,
+      "char": "ũ",
+      "codepoint": 361,
+      "ink_bounds": [
+        0,
+        -13,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -13
+      ],
+      "origin": "pack-addition",
+      "rect": [
+        137,
+        307,
+        7,
+        13
+      ]
+    },
+    "U+016A": {
+      "advance": 8,
+      "char": "Ū",
+      "codepoint": 362,
+      "ink_bounds": [
+        0,
+        -13,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -13
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        154,
+        307,
+        7,
+        13
+      ]
+    },
+    "U+016B": {
+      "advance": 8,
+      "char": "ū",
+      "codepoint": 363,
+      "ink_bounds": [
+        0,
+        -12,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -12
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        171,
+        307,
+        7,
+        12
+      ]
+    },
+    "U+016C": {
+      "advance": 8,
+      "char": "Ŭ",
+      "codepoint": 364,
+      "ink_bounds": [
+        0,
+        -14,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -14
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        188,
+        307,
+        7,
+        14
+      ]
+    },
+    "U+016D": {
+      "advance": 8,
+      "char": "ŭ",
+      "codepoint": 365,
+      "ink_bounds": [
+        0,
+        -12,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -12
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        205,
+        307,
+        7,
+        12
+      ]
+    },
+    "U+016E": {
+      "advance": 8,
+      "char": "Ů",
+      "codepoint": 366,
+      "ink_bounds": [
+        0,
+        -14,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -14
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        222,
+        307,
+        7,
+        14
+      ]
+    },
+    "U+016F": {
+      "advance": 8,
+      "char": "ů",
+      "codepoint": 367,
+      "ink_bounds": [
+        0,
+        -12,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -12
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        239,
+        307,
+        7,
+        12
+      ]
+    },
+    "U+0170": {
+      "advance": 8,
+      "char": "Ű",
+      "codepoint": 368,
+      "ink_bounds": [
+        0,
+        -14,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -14
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        256,
+        307,
+        7,
+        14
+      ]
+    },
+    "U+0171": {
+      "advance": 8,
+      "char": "ű",
+      "codepoint": 369,
+      "ink_bounds": [
+        0,
+        -12,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -12
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        1,
+        324,
+        7,
+        12
+      ]
+    },
+    "U+0172": {
+      "advance": 8,
+      "char": "Ų",
+      "codepoint": 370,
+      "ink_bounds": [
+        0,
+        -10,
+        7,
+        4
+      ],
+      "offset": [
+        0,
+        -10
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        18,
+        324,
+        7,
+        14
+      ]
+    },
+    "U+0173": {
+      "advance": 8,
+      "char": "ų",
+      "codepoint": 371,
+      "ink_bounds": [
+        0,
+        -8,
+        7,
+        4
+      ],
+      "offset": [
+        0,
+        -8
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        35,
+        324,
+        7,
+        12
+      ]
+    },
+    "U+0174": {
+      "advance": 11,
+      "char": "Ŵ",
+      "codepoint": 372,
+      "ink_bounds": [
+        0,
+        -14,
+        10,
+        0
+      ],
+      "offset": [
+        0,
+        -14
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        52,
+        324,
+        10,
+        14
+      ]
+    },
+    "U+0175": {
+      "advance": 11,
+      "char": "ŵ",
+      "codepoint": 373,
+      "ink_bounds": [
+        0,
+        -13,
+        10,
+        0
+      ],
+      "offset": [
+        0,
+        -13
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        69,
+        324,
+        10,
+        13
+      ]
+    },
+    "U+0176": {
+      "advance": 9,
+      "char": "Ŷ",
+      "codepoint": 374,
+      "ink_bounds": [
+        0,
+        -14,
+        8,
+        0
+      ],
+      "offset": [
+        0,
+        -14
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        86,
+        324,
+        8,
+        14
+      ]
+    },
+    "U+0177": {
+      "advance": 7,
+      "char": "ŷ",
+      "codepoint": 375,
+      "ink_bounds": [
+        0,
+        -13,
+        6,
+        2
+      ],
+      "offset": [
+        0,
+        -13
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        103,
+        324,
+        6,
+        15
+      ]
+    },
+    "U+0178": {
+      "advance": 9,
+      "char": "Ÿ",
+      "codepoint": 376,
+      "ink_bounds": [
+        0,
+        -13,
+        8,
+        0
+      ],
+      "offset": [
+        0,
+        -13
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        120,
+        324,
+        8,
+        13
+      ]
+    },
+    "U+0179": {
+      "advance": 9,
+      "char": "Ź",
+      "codepoint": 377,
+      "ink_bounds": [
+        0,
+        -14,
+        8,
+        0
+      ],
+      "offset": [
+        0,
+        -14
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        137,
+        324,
+        8,
+        14
+      ]
+    },
+    "U+017A": {
+      "advance": 8,
+      "char": "ź",
+      "codepoint": 378,
+      "ink_bounds": [
+        0,
+        -12,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -12
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        154,
+        324,
+        7,
+        12
+      ]
+    },
+    "U+017B": {
+      "advance": 9,
+      "char": "Ż",
+      "codepoint": 379,
+      "ink_bounds": [
+        0,
+        -13,
+        8,
+        0
+      ],
+      "offset": [
+        0,
+        -13
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        171,
+        324,
+        8,
+        13
+      ]
+    },
+    "U+017C": {
+      "advance": 8,
+      "char": "ż",
+      "codepoint": 380,
+      "ink_bounds": [
+        0,
+        -11,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -11
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        188,
+        324,
+        7,
+        11
+      ]
+    },
+    "U+017D": {
+      "advance": 9,
+      "char": "Ž",
+      "codepoint": 381,
+      "ink_bounds": [
+        0,
+        -14,
+        8,
+        0
+      ],
+      "offset": [
+        0,
+        -14
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        205,
+        324,
+        8,
+        14
+      ]
+    },
+    "U+017E": {
+      "advance": 8,
+      "char": "ž",
+      "codepoint": 382,
+      "ink_bounds": [
+        0,
+        -12,
+        7,
+        0
+      ],
+      "offset": [
+        0,
+        -12
+      ],
+      "origin": "original-ttf-mono",
+      "rect": [
+        222,
+        324,
+        7,
+        12
+      ]
+    }
+  },
+  "id": "ravenhollow_bitmap_jersey10",
+  "layout": {
+    "body_negative_bearings": "preserve per-glyph helper pixels and advances; FreeType whole-string mono bearing heuristics are not emulated",
+    "heading_digits": "reject decimal digits; use body font for numerals",
+    "kerning": "none; explicit per-glyph advances, no pair/shaping inference",
+    "missing_glyph": "error; no tofu or substitution",
+    "newline": "baseline += line_height; reset pen_x",
+    "normalization": "none; callers may explicitly NFC-normalize before lookup",
+    "origin": "pen_x, baseline_y; x right, y down",
+    "placement": "crop rect; paste at (pen_x + offset[0], baseline_y + offset[1]); pen_x += advance",
+    "units": "native integer pixels"
+  },
+  "metrics": {
+    "baseline_from_cap_top": 11,
+    "centre_on_ink": true,
+    "ink_ascent": 15,
+    "ink_descent": 5,
+    "line_height": 20,
+    "ttf_ascent": 15,
+    "ttf_descent": 5
+  },
+  "modified_bitmap": true,
+  "native_size_px": 18.666666666666668,
+  "original_ttf_modified": false,
+  "pack_additions": [
+    "U+00A4",
+    "U+00A6",
+    "U+00AC",
+    "U+00AD",
+    "U+00B1",
+    "U+00B2",
+    "U+00B3",
+    "U+00B5",
+    "U+00B9",
+    "U+00BC",
+    "U+00BD",
+    "U+00BE",
+    "U+0108",
+    "U+0109",
+    "U+0114",
+    "U+0115",
+    "U+011C",
+    "U+011D",
+    "U+0124",
+    "U+0125",
+    "U+0128",
+    "U+0129",
+    "U+012C",
+    "U+012D",
+    "U+0134",
+    "U+0135",
+    "U+0138",
+    "U+013F",
+    "U+0140",
+    "U+0149",
+    "U+014E",
+    "U+014F",
+    "U+015C",
+    "U+015D",
+    "U+0162",
+    "U+0163",
+    "U+0166",
+    "U+0167",
+    "U+0168",
+    "U+0169"
+  ],
+  "raster": "FreeType mono at the font's own grid size; no resampling",
+  "role": "body",
+  "schema": "ravenhollow.bitmap-font.v1",
+  "source": {
+    "helper": "FreeType monochrome rasteriser (Jersey 10, 56/3 px = its 18.667 px design grid, no resampling)",
+    "license": "originals/jersey10/OFL.txt",
+    "license_id": "OFL-1.1",
+    "license_sha256": "436d5836064cec796c7ddde6fb4faeabdb6f2f17443a24a30d0c38b75d13f922",
+    "sha256": "db9cbd091617048a145d249daa2b815fe7083be6ab66ac26626e21a4e01c3e82",
+    "ttf": "originals/jersey10/Jersey10-Regular.ttf"
+  }
+}

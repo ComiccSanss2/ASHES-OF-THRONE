@@ -1,0 +1,103 @@
+{
+  "artifacts": [
+    {
+      "path": "fonts/ravenhollow_bitmap_jacquard12_21.OFL.txt",
+      "sha256": "dea0ea45c7835a51c20d24b9ef2ac03f5beec858995f5eda085540f1f7c713b7"
+    },
+    {
+      "path": "fonts/ravenhollow_bitmap_jacquard12_21.json",
+      "sha256": "94f9ebfb4305d026140dc074f46de6f1302a75ec9cbc949937be0b41c19c7f10"
+    },
+    {
+      "path": "fonts/ravenhollow_bitmap_jacquard12_21.png",
+      "sha256": "929df32a30dfa1ccf77a6b1606f0e8578c6c9e974ab7cec8876c2cb31ecae354"
+    },
+    {
+      "path": "fonts/ravenhollow_bitmap_jersey10.OFL.txt",
+      "sha256": "436d5836064cec796c7ddde6fb4faeabdb6f2f17443a24a30d0c38b75d13f922"
+    },
+    {
+      "path": "fonts/ravenhollow_bitmap_jersey10.json",
+      "sha256": "8a4c68afd332ade341bad1f7b5ef849f0f98da1dd67f8f4d2f78abe80223ed2f"
+    },
+    {
+      "path": "fonts/ravenhollow_bitmap_jersey10.png",
+      "sha256": "5be319e8466d5e4148b0257c18b56b00735d9320c020e9150a9e8fb0e6ad7c1b"
+    },
+    {
+      "path": "originals/jacquard12/Jacquard12-Regular.ttf",
+      "sha256": "b1560583565a37f3d3a25cf2572df3efd2d773ecdcbb459dcd7ea0398cb840d1"
+    },
+    {
+      "path": "originals/jacquard12/OFL.txt",
+      "sha256": "dea0ea45c7835a51c20d24b9ef2ac03f5beec858995f5eda085540f1f7c713b7"
+    },
+    {
+      "path": "originals/jersey10/Jersey10-Regular.ttf",
+      "sha256": "db9cbd091617048a145d249daa2b815fe7083be6ab66ac26626e21a4e01c3e82"
+    },
+    {
+      "path": "originals/jersey10/OFL.txt",
+      "sha256": "436d5836064cec796c7ddde6fb4faeabdb6f2f17443a24a30d0c38b75d13f922"
+    },
+    {
+      "path": "proofs/body_1x.png",
+      "sha256": "147af30bd95cf31c0a4a4c69169f4997ccf8dd0ffe4a0d4b626b43593a029d62"
+    },
+    {
+      "path": "proofs/headings_1x.png",
+      "sha256": "55919d6f67e6bb212d5902b94cdb986b8e0fde60cd4d513cf7a947e8c883b133"
+    },
+    {
+      "path": "proofs/layout.json",
+      "sha256": "e02981d3974d59028fdc70e38ce24e606a964c22b2ad1ed41a353cc36afd6032"
+    }
+  ],
+  "fonts": [
+    {
+      "atlas": "fonts/ravenhollow_bitmap_jacquard12_21.png",
+      "id": "ravenhollow_bitmap_jacquard12_21",
+      "license": "fonts/ravenhollow_bitmap_jacquard12_21.OFL.txt",
+      "metadata": "fonts/ravenhollow_bitmap_jacquard12_21.json",
+      "original_license": "originals/jacquard12/OFL.txt",
+      "original_ttf": "originals/jacquard12/Jacquard12-Regular.ttf",
+      "proof": "proofs/headings_1x.png",
+      "role": "headings",
+      "verification": {
+        "advance_matches": 319,
+        "binary_alpha": true,
+        "errors": [],
+        "glyph_roundtrips": 319,
+        "missing": [],
+        "pair_layout": "pair layout adds advances"
+      }
+    },
+    {
+      "atlas": "fonts/ravenhollow_bitmap_jersey10.png",
+      "id": "ravenhollow_bitmap_jersey10",
+      "license": "fonts/ravenhollow_bitmap_jersey10.OFL.txt",
+      "metadata": "fonts/ravenhollow_bitmap_jersey10.json",
+      "original_license": "originals/jersey10/OFL.txt",
+      "original_ttf": "originals/jersey10/Jersey10-Regular.ttf",
+      "proof": "proofs/body_1x.png",
+      "role": "body",
+      "verification": {
+        "advance_matches": 318,
+        "binary_alpha": true,
+        "errors": [],
+        "glyph_roundtrips": 318,
+        "missing": [
+          "U+017F"
+        ],
+        "pair_advance_mismatches": 0,
+        "pairs_checked": 77284
+      }
+    }
+  ],
+  "generator": "Ravenhollow font export",
+  "raster_environment": {
+    "freetype": "2.14.3",
+    "pillow": "12.3.0"
+  },
+  "schema": "ravenhollow.font-bundle.v1"
+}

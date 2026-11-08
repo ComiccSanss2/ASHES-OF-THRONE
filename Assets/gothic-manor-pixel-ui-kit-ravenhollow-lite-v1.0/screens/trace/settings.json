@@ -1,0 +1,626 @@
+{
+  "elements": [
+    {
+      "asset": "containers/window_fleur.png",
+      "box": [
+        112,
+        48,
+        736,
+        440
+      ],
+      "clip": [
+        0,
+        0,
+        960,
+        540
+      ],
+      "kind": "sprite",
+      "layer": 0,
+      "purpose": "",
+      "source_rgba_sha256": "c26d58d4468d51b670134b2792a3857edbff10162552c49f7977b4b9a46d41f2",
+      "state": "idle"
+    },
+    {
+      "align": "center",
+      "box": [
+        136,
+        75,
+        686,
+        23
+      ],
+      "font": "ravenhollow_bitmap_jacquard12_21",
+      "ink": [
+        447,
+        77,
+        511,
+        92
+      ],
+      "kind": "text",
+      "layer": 1,
+      "outline": null,
+      "text": "Settings",
+      "token": "bone-0"
+    },
+    {
+      "asset": "inputs/tab_top_selected.png",
+      "box": [
+        152,
+        120,
+        104,
+        26
+      ],
+      "clip": [
+        0,
+        0,
+        960,
+        540
+      ],
+      "kind": "sprite",
+      "layer": 2,
+      "purpose": "",
+      "source_rgba_sha256": "6f8fa97fb952c0b1a711e9d07763f48ebe682020f7fefabd7e2f39896d624105",
+      "state": "selected"
+    },
+    {
+      "align": "center",
+      "box": [
+        156,
+        126,
+        96,
+        16
+      ],
+      "font": "ravenhollow_bitmap_jersey10",
+      "ink": [
+        179,
+        129,
+        228,
+        139
+      ],
+      "kind": "text",
+      "layer": 3,
+      "outline": null,
+      "text": "General",
+      "token": "bone-0"
+    },
+    {
+      "asset": "inputs/tab_top_normal.png",
+      "box": [
+        264,
+        120,
+        104,
+        26
+      ],
+      "clip": [
+        0,
+        0,
+        960,
+        540
+      ],
+      "kind": "sprite",
+      "layer": 4,
+      "purpose": "",
+      "source_rgba_sha256": "c5b961096efb876ce5c5a1c680403ce796565cff773749a2b3fadc499c524a12",
+      "state": "normal"
+    },
+    {
+      "align": "center",
+      "box": [
+        268,
+        126,
+        96,
+        16
+      ],
+      "font": "ravenhollow_bitmap_jersey10",
+      "ink": [
+        299,
+        129,
+        333,
+        139
+      ],
+      "kind": "text",
+      "layer": 5,
+      "outline": null,
+      "text": "Audio",
+      "token": "bone-0"
+    },
+    {
+      "asset": "inputs/tab_top_normal.png",
+      "box": [
+        376,
+        120,
+        104,
+        26
+      ],
+      "clip": [
+        0,
+        0,
+        960,
+        540
+      ],
+      "kind": "sprite",
+      "layer": 6,
+      "purpose": "",
+      "source_rgba_sha256": "c5b961096efb876ce5c5a1c680403ce796565cff773749a2b3fadc499c524a12",
+      "state": "normal"
+    },
+    {
+      "align": "center",
+      "box": [
+        380,
+        126,
+        96,
+        16
+      ],
+      "font": "ravenhollow_bitmap_jersey10",
+      "ink": [
+        401,
+        129,
+        455,
+        139
+      ],
+      "kind": "text",
+      "layer": 7,
+      "outline": null,
+      "text": "Controls",
+      "token": "bone-0"
+    },
+    {
+      "align": "left",
+      "box": [
+        152,
+        184,
+        240,
+        20
+      ],
+      "font": "ravenhollow_bitmap_jersey10",
+      "ink": [
+        152,
+        187,
+        234,
+        199
+      ],
+      "kind": "text",
+      "layer": 8,
+      "outline": null,
+      "text": "Display mode",
+      "token": "bone-0"
+    },
+    {
+      "asset": "inputs/dropdown_normal.png",
+      "box": [
+        448,
+        176,
+        312,
+        28
+      ],
+      "clip": [
+        0,
+        0,
+        960,
+        540
+      ],
+      "kind": "sprite",
+      "layer": 9,
+      "purpose": "",
+      "source_rgba_sha256": "03d05fd0fcda5f0c3b67571e8bb4997a81482969b211fdab155554277e651f7a",
+      "state": "normal"
+    },
+    {
+      "align": "left",
+      "box": [
+        461,
+        182,
+        260,
+        18
+      ],
+      "font": "ravenhollow_bitmap_jersey10",
+      "ink": [
+        461,
+        185,
+        531,
+        195
+      ],
+      "kind": "text",
+      "layer": 10,
+      "outline": null,
+      "text": "Borderless",
+      "token": "bone-1"
+    },
+    {
+      "align": "left",
+      "box": [
+        152,
+        240,
+        240,
+        20
+      ],
+      "font": "ravenhollow_bitmap_jersey10",
+      "ink": [
+        152,
+        243,
+        237,
+        253
+      ],
+      "kind": "text",
+      "layer": 11,
+      "outline": null,
+      "text": "Music volume",
+      "token": "bone-0"
+    },
+    {
+      "asset": "inputs/slider_track_normal.png",
+      "box": [
+        448,
+        246,
+        256,
+        9
+      ],
+      "clip": [
+        0,
+        0,
+        960,
+        540
+      ],
+      "kind": "sprite",
+      "layer": 12,
+      "purpose": "",
+      "source_rgba_sha256": "ec6ee5c6443a1716f8be8ea2c0e747753438b36e59c2bef3b7a818d59dc797f9",
+      "state": "normal"
+    },
+    {
+      "asset": "inputs/slider_fill_normal.png",
+      "box": [
+        451,
+        249,
+        180,
+        4
+      ],
+      "clip": [
+        0,
+        0,
+        960,
+        540
+      ],
+      "kind": "sprite",
+      "layer": 13,
+      "purpose": "",
+      "source_rgba_sha256": "fdee74c358bccabe71c99ce5656975dde45c771e5a6506fc522a4f2776891f63",
+      "state": "normal"
+    },
+    {
+      "asset": "inputs/slider_knob_round_normal.png",
+      "box": [
+        621,
+        240,
+        20,
+        20
+      ],
+      "clip": [
+        0,
+        0,
+        960,
+        540
+      ],
+      "kind": "sprite",
+      "layer": 14,
+      "purpose": "",
+      "source_rgba_sha256": "609a5e6b73f31dc0736720bfce1f80434ae8b1f33d1395f67cab82aa498bf235",
+      "state": "normal"
+    },
+    {
+      "align": "right",
+      "box": [
+        720,
+        240,
+        40,
+        20
+      ],
+      "font": "ravenhollow_bitmap_jersey10",
+      "ink": [
+        733,
+        243,
+        759,
+        253
+      ],
+      "kind": "text",
+      "layer": 15,
+      "outline": null,
+      "text": "72%",
+      "token": "bone-0"
+    },
+    {
+      "align": "left",
+      "box": [
+        152,
+        292,
+        240,
+        20
+      ],
+      "font": "ravenhollow_bitmap_jersey10",
+      "ink": [
+        152,
+        295,
+        209,
+        305
+      ],
+      "kind": "text",
+      "layer": 16,
+      "outline": null,
+      "text": "Shadows",
+      "token": "bone-0"
+    },
+    {
+      "asset": "slice/checkbox_on_idle.png",
+      "box": [
+        448,
+        290,
+        20,
+        20
+      ],
+      "clip": [
+        0,
+        0,
+        960,
+        540
+      ],
+      "kind": "sprite",
+      "layer": 17,
+      "purpose": "",
+      "source_rgba_sha256": "737c25ff62f83890124ea86f7bfd7b40ffdfc53280746fb46e76443199f490ed",
+      "state": "idle"
+    },
+    {
+      "align": "left",
+      "box": [
+        484,
+        292,
+        276,
+        20
+      ],
+      "font": "ravenhollow_bitmap_jersey10",
+      "ink": [
+        484,
+        295,
+        533,
+        305
+      ],
+      "kind": "text",
+      "layer": 18,
+      "outline": null,
+      "text": "Enabled",
+      "token": "bone-0"
+    },
+    {
+      "align": "left",
+      "box": [
+        152,
+        336,
+        240,
+        20
+      ],
+      "font": "ravenhollow_bitmap_jersey10",
+      "ink": [
+        152,
+        339,
+        251,
+        349
+      ],
+      "kind": "text",
+      "layer": 19,
+      "outline": null,
+      "text": "Online features",
+      "token": "bone-4"
+    },
+    {
+      "asset": "slice/toggle_off_disabled.png",
+      "box": [
+        448,
+        334,
+        36,
+        20
+      ],
+      "clip": [
+        0,
+        0,
+        960,
+        540
+      ],
+      "kind": "sprite",
+      "layer": 20,
+      "purpose": "Unavailable while offline",
+      "source_rgba_sha256": "3ae46efa14782c1fc3ec4403ca367ca56be733067373285462cf4335ed8f9d9b",
+      "state": "disabled"
+    },
+    {
+      "align": "left",
+      "box": [
+        500,
+        336,
+        260,
+        20
+      ],
+      "font": "ravenhollow_bitmap_jersey10",
+      "ink": [
+        500,
+        339,
+        541,
+        349
+      ],
+      "kind": "text",
+      "layer": 21,
+      "outline": null,
+      "text": "Offline",
+      "token": "bone-4"
+    },
+    {
+      "align": "left",
+      "box": [
+        152,
+        380,
+        240,
+        20
+      ],
+      "font": "ravenhollow_bitmap_jersey10",
+      "ink": [
+        152,
+        383,
+        233,
+        395
+      ],
+      "kind": "text",
+      "layer": 22,
+      "outline": null,
+      "text": "Open journal",
+      "token": "bone-0"
+    },
+    {
+      "asset": "inputs/keycap_normal.png",
+      "box": [
+        448,
+        374,
+        52,
+        28
+      ],
+      "clip": [
+        0,
+        0,
+        960,
+        540
+      ],
+      "kind": "sprite",
+      "layer": 23,
+      "purpose": "",
+      "source_rgba_sha256": "9427364e942fac0947267c8e94e0143724b2584f5b7f1d680218a9af66e94826",
+      "state": "normal"
+    },
+    {
+      "align": "center",
+      "box": [
+        456,
+        380,
+        36,
+        16
+      ],
+      "font": "ravenhollow_bitmap_jersey10",
+      "ink": [
+        471,
+        383,
+        477,
+        393
+      ],
+      "kind": "text",
+      "layer": 24,
+      "outline": null,
+      "text": "J",
+      "token": "bone-0"
+    },
+    {
+      "asset": "slice/button_secondary_normal.png",
+      "box": [
+        488,
+        432,
+        128,
+        28
+      ],
+      "clip": [
+        0,
+        0,
+        960,
+        540
+      ],
+      "kind": "sprite",
+      "layer": 25,
+      "purpose": "",
+      "source_rgba_sha256": "dbb6c6835252e0c200535605a8a8676237e24ae4035a09b42197ac1ac445799b",
+      "state": "normal"
+    },
+    {
+      "align": "center",
+      "box": [
+        496,
+        438,
+        112,
+        16
+      ],
+      "font": "ravenhollow_bitmap_jersey10",
+      "ink": [
+        531,
+        441,
+        573,
+        451
+      ],
+      "kind": "text",
+      "layer": 26,
+      "outline": null,
+      "text": "Cancel",
+      "token": "bone-0"
+    },
+    {
+      "asset": "slice/button_primary_focus.png",
+      "box": [
+        640,
+        432,
+        128,
+        28
+      ],
+      "clip": [
+        0,
+        0,
+        960,
+        540
+      ],
+      "kind": "sprite",
+      "layer": 27,
+      "purpose": "Keyboard focus",
+      "source_rgba_sha256": "b6e7b5033c4937923db44108a2652f09222ace960bde6d050d41ccdc70e3b7f5",
+      "state": "focus"
+    },
+    {
+      "align": "center",
+      "box": [
+        648,
+        438,
+        112,
+        16
+      ],
+      "font": "ravenhollow_bitmap_jersey10",
+      "ink": [
+        687,
+        441,
+        720,
+        453
+      ],
+      "kind": "text",
+      "layer": 28,
+      "outline": null,
+      "text": "Apply",
+      "token": "bone-0"
+    },
+    {
+      "align": "center",
+      "box": [
+        120,
+        504,
+        720,
+        20
+      ],
+      "font": "ravenhollow_bitmap_jersey10",
+      "ink": [
+        276,
+        507,
+        683,
+        519
+      ],
+      "kind": "text",
+      "layer": 29,
+      "outline": null,
+      "text": "Tab: next control     Arrows: adjust     Enter: apply     Esc: close",
+      "token": "bone-3"
+    }
+  ],
+  "name": "settings",
+  "size": [
+    960,
+    540
+  ]
+}

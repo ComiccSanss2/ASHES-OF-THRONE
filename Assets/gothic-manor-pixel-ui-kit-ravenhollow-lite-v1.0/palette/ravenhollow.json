@@ -1,0 +1,482 @@
+[
+  {
+    "hex": "#050408",
+    "role": "screen ground; deepest line under every frame (drop shadow)",
+    "token": "void-0",
+    "rgb": [
+      5,
+      4,
+      8
+    ]
+  },
+  {
+    "hex": "#0c0a0f",
+    "role": "deep wells: bar tracks and field fills (slots on velvet windows use velvet-0/1)",
+    "token": "void-1",
+    "rgb": [
+      12,
+      10,
+      15
+    ]
+  },
+  {
+    "hex": "#181214",
+    "role": "idle secondary surfaces (unselected tab, disabled button)",
+    "token": "void-2",
+    "rgb": [
+      24,
+      18,
+      20
+    ]
+  },
+  {
+    "hex": "#23191c",
+    "role": "hover surface for void-2 bodies (one step up)",
+    "token": "void-3",
+    "rgb": [
+      35,
+      25,
+      28
+    ]
+  },
+  {
+    "hex": "#180e0d",
+    "role": "oak shade: bottom/right inner edge of oak bands, pressed body",
+    "token": "oak-0",
+    "rgb": [
+      24,
+      14,
+      13
+    ]
+  },
+  {
+    "hex": "#231714",
+    "role": "oak body (frame band fill, secondary button fill)",
+    "token": "oak-1",
+    "rgb": [
+      35,
+      23,
+      20
+    ]
+  },
+  {
+    "hex": "#36221c",
+    "role": "oak grain / hover body",
+    "token": "oak-2",
+    "rgb": [
+      54,
+      34,
+      28
+    ]
+  },
+  {
+    "hex": "#49332b",
+    "role": "oak bevel highlight (top/left inner edge)",
+    "token": "oak-3",
+    "rgb": [
+      73,
+      51,
+      43
+    ]
+  },
+  {
+    "hex": "#634736",
+    "role": "oak brightest edge pixel, carved-detail light",
+    "token": "oak-4",
+    "rgb": [
+      99,
+      71,
+      54
+    ]
+  },
+  {
+    "hex": "#2b2427",
+    "role": "iron outline: outer 1 px of every frame and slot",
+    "token": "iron-0",
+    "rgb": [
+      43,
+      36,
+      39
+    ]
+  },
+  {
+    "hex": "#4e4548",
+    "role": "iron body: brackets, slot borders, bar frames",
+    "token": "iron-1",
+    "rgb": [
+      78,
+      69,
+      72
+    ]
+  },
+  {
+    "hex": "#665d5f",
+    "role": "iron light: bracket bevel, hover border",
+    "token": "iron-2",
+    "rgb": [
+      102,
+      93,
+      95
+    ]
+  },
+  {
+    "hex": "#877f81",
+    "role": "iron highlight: bracket top-left pixels, idle tab border",
+    "token": "iron-3",
+    "rgb": [
+      135,
+      127,
+      129
+    ]
+  },
+  {
+    "hex": "#a49c9d",
+    "role": "tarnished silver body: rose window tracery, rivets",
+    "token": "silver-0",
+    "rgb": [
+      164,
+      156,
+      157
+    ]
+  },
+  {
+    "hex": "#c5bebc",
+    "role": "silver light: top-left glints on brackets (one pixel)",
+    "token": "silver-1",
+    "rgb": [
+      197,
+      190,
+      188
+    ]
+  },
+  {
+    "hex": "#1f070c",
+    "role": "velvet shade: slot interiors and detail cards on velvet windows (crimson-black)",
+    "token": "velvet-0",
+    "rgb": [
+      31,
+      7,
+      12
+    ]
+  },
+  {
+    "hex": "#30050e",
+    "role": "velvet body: window interior fill; hover slot interior",
+    "token": "velvet-1",
+    "rgb": [
+      48,
+      5,
+      14
+    ]
+  },
+  {
+    "hex": "#3f0710",
+    "role": "velvet lit: title band, selected tab body, primary button fill",
+    "token": "velvet-2",
+    "rgb": [
+      63,
+      7,
+      16
+    ]
+  },
+  {
+    "hex": "#590c17",
+    "role": "velvet highlight: primary button top row, title band edge",
+    "token": "velvet-3",
+    "rgb": [
+      89,
+      12,
+      23
+    ]
+  },
+  {
+    "hex": "#7c3939",
+    "role": "velvet sheen pixel; hover lift on primary button rim",
+    "token": "velvet-4",
+    "rgb": [
+      124,
+      57,
+      57
+    ]
+  },
+  {
+    "hex": "#fbebcf",
+    "role": "brightest text: titles, selected labels, values",
+    "token": "bone-0",
+    "rgb": [
+      251,
+      235,
+      207
+    ]
+  },
+  {
+    "hex": "#e8d0b5",
+    "role": "body text, button labels",
+    "token": "bone-1",
+    "rgb": [
+      232,
+      208,
+      181
+    ]
+  },
+  {
+    "hex": "#cbac95",
+    "role": "secondary text, idle tab labels, captions",
+    "token": "bone-2",
+    "rgb": [
+      203,
+      172,
+      149
+    ]
+  },
+  {
+    "hex": "#a88a76",
+    "role": "dim text, placeholder, slot numbers (>= 4.5:1 on every panel ground)",
+    "token": "bone-3",
+    "rgb": [
+      168,
+      138,
+      118
+    ]
+  },
+  {
+    "hex": "#5b4a43",
+    "role": "disabled text and glyphs",
+    "token": "bone-4",
+    "rgb": [
+      91,
+      74,
+      67
+    ]
+  },
+  {
+    "hex": "#7c3818",
+    "role": "gold shade: under-line of the selected mark",
+    "token": "gold-0",
+    "rgb": [
+      124,
+      56,
+      24
+    ]
+  },
+  {
+    "hex": "#df7d20",
+    "role": "gold body: selected border, active marks",
+    "token": "gold-1",
+    "rgb": [
+      223,
+      125,
+      32
+    ]
+  },
+  {
+    "hex": "#f8b74c",
+    "role": "gold light: focus ring, selected highlight pixel",
+    "token": "gold-2",
+    "rgb": [
+      248,
+      183,
+      76
+    ]
+  },
+  {
+    "hex": "#ffe2a0",
+    "role": "candle tip: one pixel per selected mark, never a fill",
+    "token": "gold-3",
+    "rgb": [
+      255,
+      226,
+      160
+    ]
+  },
+  {
+    "hex": "#7c1120",
+    "role": "HP bar shade row",
+    "token": "hp-0",
+    "rgb": [
+      124,
+      17,
+      32
+    ]
+  },
+  {
+    "hex": "#be2532",
+    "role": "HP bar body",
+    "token": "hp-1",
+    "rgb": [
+      190,
+      37,
+      50
+    ]
+  },
+  {
+    "hex": "#ea6068",
+    "role": "HP bar light row",
+    "token": "hp-2",
+    "rgb": [
+      234,
+      96,
+      104
+    ]
+  },
+  {
+    "hex": "#153d6f",
+    "role": "mana bar shade row",
+    "token": "mana-0",
+    "rgb": [
+      21,
+      61,
+      111
+    ]
+  },
+  {
+    "hex": "#1d6fc0",
+    "role": "mana bar body",
+    "token": "mana-1",
+    "rgb": [
+      29,
+      111,
+      192
+    ]
+  },
+  {
+    "hex": "#58b3ee",
+    "role": "mana bar light row",
+    "token": "mana-2",
+    "rgb": [
+      88,
+      179,
+      238
+    ]
+  },
+  {
+    "hex": "#7e8197",
+    "role": "XP / souls bar (ghost silver-violet): shade row",
+    "token": "xp-0",
+    "rgb": [
+      126,
+      129,
+      151
+    ]
+  },
+  {
+    "hex": "#c0c4e3",
+    "role": "XP / souls bar (ghost silver-violet): body",
+    "token": "xp-1",
+    "rgb": [
+      192,
+      196,
+      227
+    ]
+  },
+  {
+    "hex": "#d4d8f3",
+    "role": "XP / souls bar (ghost silver-violet): light row",
+    "token": "xp-2",
+    "rgb": [
+      212,
+      216,
+      243
+    ]
+  },
+  {
+    "hex": "#275858",
+    "role": "success (verdigris): positive deltas, 'saved' mark: shade row",
+    "token": "ok-0",
+    "rgb": [
+      39,
+      88,
+      88
+    ]
+  },
+  {
+    "hex": "#5c9c9b",
+    "role": "success (verdigris): positive deltas, 'saved' mark: body",
+    "token": "ok-1",
+    "rgb": [
+      92,
+      156,
+      155
+    ]
+  },
+  {
+    "hex": "#7bb4b3",
+    "role": "success (verdigris): positive deltas, 'saved' mark: light row",
+    "token": "ok-2",
+    "rgb": [
+      123,
+      180,
+      179
+    ]
+  },
+  {
+    "hex": "#13003b",
+    "role": "curse / danger (dark violet-plum): cursed-item border, curse mark; bad-2 = curse text: shade row",
+    "token": "bad-0",
+    "rgb": [
+      19,
+      0,
+      59
+    ]
+  },
+  {
+    "hex": "#430289",
+    "role": "curse / danger (dark violet-plum): cursed-item border, curse mark; bad-2 = curse text: body",
+    "token": "bad-1",
+    "rgb": [
+      67,
+      2,
+      137
+    ]
+  },
+  {
+    "hex": "#8473b8",
+    "role": "curse / danger (dark violet-plum): cursed-item border, curse mark; bad-2 = curse text: light row",
+    "token": "bad-2",
+    "rgb": [
+      132,
+      115,
+      184
+    ]
+  },
+  {
+    "hex": "#2a0c25",
+    "role": "plum shade: danger button face shade and pressed face",
+    "token": "plum-1",
+    "rgb": [
+      42,
+      12,
+      37
+    ]
+  },
+  {
+    "hex": "#3a1133",
+    "role": "plum body: danger button face",
+    "token": "plum-2",
+    "rgb": [
+      58,
+      17,
+      51
+    ]
+  },
+  {
+    "hex": "#55204b",
+    "role": "plum light: danger button lit edge and hover face",
+    "token": "plum-3",
+    "rgb": [
+      85,
+      32,
+      75
+    ]
+  },
+  {
+    "hex": "#764067",
+    "role": "plum sheen: danger lit edge / hover top row",
+    "token": "plum-4",
+    "rgb": [
+      118,
+      64,
+      103
+    ]
+  }
+]
