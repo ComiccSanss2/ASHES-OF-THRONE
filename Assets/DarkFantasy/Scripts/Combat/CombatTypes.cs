@@ -52,7 +52,7 @@ namespace DarkFantasy
     }
 
     /// <summary>Playable classes (chosen in the menu / lobby).</summary>
-    public enum PlayerClass : byte { Knight, Archer, Bard }
+    public enum PlayerClass : byte { Knight, Archer, Bard, Reaper, Smoker }
 
     [Flags]
     public enum HitFlags : byte
@@ -62,6 +62,7 @@ namespace DarkFantasy
         Unblockable = 2,
         Heavy = 4,     // knockdown instead of a flinch
         AreaOfEffect = 8,
+        Dark = 16,     // death magic: a raised guard only stops part of it
     }
 
     /// <summary>Actions replicated to other clients.</summary>
@@ -79,6 +80,7 @@ namespace DarkFantasy
         BossPhase2,
         Recover,        // back to locomotion (an attack/parry/flinch ended or was cancelled on the owner)
         Spell,          // bard: param = spell index
+        Ultimate,       // knight / archer / reaper: the class ultimate (key 1)
     }
 
     public static class CombatUtil

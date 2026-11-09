@@ -38,7 +38,8 @@ namespace DarkFantasy
         public float flightInterval = 38f;
 
         [Header("Damage")]
-        public float biteDamage = 34f, sweepDamage = 28f, stompDamage = 30f, chargeDamage = 32f;
+        public float biteDamage = 34f, sweepDamage = 28f, stompDamage = 30f, chargeDamage = 32f, pounceDamage = 40f;
+        Vector3 _pounceFrom, _pounceTo, _pounceMark;
         public float breathTickDamage = 9f, breathRange = 15f, breathHalfAngle = 15f;
         public float fireballDamage = 26f, fireballRadius = 2.8f, fireballFlight = 1.25f;
         public float landDamage = 30f, landRadius = 7f;
@@ -80,7 +81,7 @@ namespace DarkFantasy
         readonly HashSet<ulong> _hitOnce = new HashSet<ulong>();
         readonly List<(double time, Vector3 pos)> _fireballs = new List<(double, Vector3)>();
         readonly Dictionary<DragonMove, float> _cooldown = new Dictionary<DragonMove, float>();
-        float _recover, _nextBreathTick, _nextFireball, _sinceFlight;
+        float _recover, _nextBreathTick, _nextFireball, _sinceFlight, _sinceTail = 99f;
         bool _resolved, _resolved2, _flying, _transition;
         int _fireballIndex;
         float _groundY;
@@ -158,6 +159,10 @@ namespace DarkFantasy
             if (m != DragonMove.None) netLocoSpeed.Value = 0f;
             if (m == DragonMove.Roar || m == DragonMove.Awaken) RoarRpc();
             if (m == DragonMove.Bite || m == DragonMove.DoubleBite) SnarlRpc();
+            // readable tells even from under its belly: a glint on the jaws, the arc of the tail, the claw's mark
+            if (m == DragonMove.Bite || m == DragonMove.DoubleBite) TellRpc(0, HeadPoint(0.8f), 0f, DragonMoves.BiteHit);
+            else if (m == DragonMove.TailSweep) TellRpc(1, transform.position, 10f * S, DragonMoves.SweepSpinStart);
+            else if (m == DragonMove.Stomp) TellRpc(2, transform.position + transform.forward * 2f * S, 2.8f, DragonMoves.StompHit);
         }
 
         void EndMove(DragonMove m)
@@ -166,6 +171,7 @@ namespace DarkFantasy
             if (_queue.Count > 0) { StartQueued(); return; }
             SetMove(DragonMove.None);
             _recover = m == DragonMove.Stagger ? 0.4f : P2 ? Random.Range(0.35f, 0.8f) : Random.Range(0.6f, 1.2f);
+            if (m == DragonMove.Bite || m == DragonMove.DoubleBite || m == DragonMove.Stomp || m == DragonMove.TailSweep) _recover += P2 ? 0.45f : 0.8f;
         }
 
         void StartQueued()
@@ -197,6 +203,7 @@ namespace DarkFantasy
             ulong tid = target ? target.NetworkObjectId : ulong.MaxValue;
             if (_netTarget.Value != tid) _netTarget.Value = tid;
             if (P2 && !_flying) _sinceFlight += dt;
+            _sinceTail += dt;
 
             var m = CurrentMove;
             if (m != DragonMove.None)
@@ -233,22 +240,23 @@ namespace DarkFantasy
             foreach (var p in PlayerController.All)
                 if (p && !p.IsDead && InArena(p) && Vector3.Distance(p.transform.position, transform.position) < 9f * S + 2f
                     && Mathf.Abs(MathUtil.SignedAngleY(transform.forward, p.transform.position - transform.position)) > 95f) behind++;
-            if (behind > 0 && Ready(DragonMove.TailSweep) && Random.value < 0.75f) { Cool(DragonMove.TailSweep, 4.5f); SetMove(DragonMove.TailSweep); return; }
+            if (behind > 0 && _sinceTail > 2.5f && Ready(DragonMove.TailSweep) && Random.value < 0.4f) { Cool(DragonMove.TailSweep, 9f); _sinceTail = 0f; SetMove(DragonMove.TailSweep); return; }
 
             if (d < headReach + 3.2f && ang < 40f)
             {
                 float r = Random.value;
-                if (r < 0.3f && Ready(DragonMove.Stomp)) { Cool(DragonMove.Stomp, 6f); SetMove(DragonMove.Stomp); return; }
+                if (r < 0.2f && Ready(DragonMove.Stomp)) { Cool(DragonMove.Stomp, 10f); SetMove(DragonMove.Stomp); return; }
                 if (P2 && r < 0.65f) { SetMove(DragonMove.DoubleBite, Random.value < 0.5f ? -30f : 30f); return; }
                 SetMove(DragonMove.Bite); return;
             }
-            if (d < 6f * S + 2f && ang >= 40f && Ready(DragonMove.Stomp)) { Cool(DragonMove.Stomp, 6f); SetMove(DragonMove.Stomp); return; }
+            if (d < 6f * S + 2f && ang >= 40f && Ready(DragonMove.Stomp) && Random.value < 0.5f) { Cool(DragonMove.Stomp, 10f); SetMove(DragonMove.Stomp); return; }
             if (d > 7f && d < breathRange && ang < 45f && Ready(DragonMove.Breath) && Random.value < 0.6f)
             {
                 Cool(DragonMove.Breath, P2 ? 7f : 10f);
                 var (a, b) = BreathSweep(); SetMove(DragonMove.Breath, a, b); return;
             }
-            if (d > 16f && ang < 25f && Ready(DragonMove.Charge) && Random.value < 0.5f) { Cool(DragonMove.Charge, 9f); SetMove(DragonMove.Charge); return; }
+            // (the straight charge is gone) a leaping slam onto distant prey
+            if (d > 10f && d < 26f && ang < 35f && Ready(DragonMove.Pounce) && Random.value < 0.55f) { Cool(DragonMove.Pounce, P2 ? 8f : 11f); SetMove(DragonMove.Pounce); return; }
 
             // walk toward the target
             FaceTowards(target.transform.position, dt, ang > 60f ? 1.2f : 0.8f);
@@ -276,7 +284,7 @@ namespace DarkFantasy
                 case DragonMove.Bite:
                 case DragonMove.DoubleBite:
                     if (target && t < 0.62f) FaceTowards(target.transform.position, dt, 0.9f);
-                    if (!_resolved && t >= DragonMoves.BiteHit) { _resolved = true; HitSphere(HeadPoint(1.4f), 2.6f, biteDamage, HitFlags.Heavy); }
+                    if (!_resolved && t >= DragonMoves.BiteHit) { _resolved = true; HitSphere(HeadPoint(1.4f), 2.6f, biteDamage, HitFlags.None); }
                     if (m == DragonMove.DoubleBite)
                     {
                         if (target && t > 1.0f && t < 1.4f) FaceTowards(target.transform.position, dt, 0.9f);
@@ -295,7 +303,8 @@ namespace DarkFantasy
                             Vector3 to = p.transform.position - transform.position;
                             if (Mathf.Abs(to.y) > 3f || MathUtil.Flat(to).magnitude > 10f * S + 1.5f) continue;
                             if (Mathf.Abs(MathUtil.SignedAngleY(transform.forward, to)) < 55f) continue;
-                            DeliverHit(p, sweepDamage, HitFlags.Heavy, true);
+                            bool tip = MathUtil.Flat(to).magnitude > 5.5f * S;
+                            DeliverHit(p, tip ? sweepDamage : sweepDamage * 0.7f, tip ? HitFlags.Heavy : HitFlags.None, true);
                         }
                     }
                     break;
@@ -339,8 +348,9 @@ namespace DarkFantasy
                     {
                         _resolved = true;
                         Vector3 c = transform.position + transform.forward * 2f * S;
-                        SlamRpc(c, 6.5f);
-                        HitSphere(c, 6.5f, stompDamage, HitFlags.Heavy | HitFlags.AreaOfEffect);
+                        SlamRpc(c, 5.5f);
+                        HitSphere(c, 2.8f, stompDamage, HitFlags.Heavy | HitFlags.AreaOfEffect);                 // under the claw: thrown
+                        HitRing(c, 2.8f, 5.5f, stompDamage * 0.55f, HitFlags.AreaOfEffect);                   // the shock: only staggered
                         if (P2)
                         {
                             // the slam cracks the floor: a line of eruptions racing toward the target
@@ -355,6 +365,42 @@ namespace DarkFantasy
                         }
                     }
                     break;
+
+                case DragonMove.Pounce:
+                {
+                    if (t < DragonMoves.PounceLock) { if (target) FaceTowards(target.transform.position, dt, 1.2f); break; }
+                    if (!_resolved2)
+                    {
+                        _resolved2 = true;
+                        Vector3 aim = target ? target.transform.position : transform.position + transform.forward * 10f;
+                        Vector3 dir = MathUtil.Flat(aim - transform.position);
+                        float dist = Mathf.Clamp(dir.magnitude, 4f, 18f);
+                        dir = dir.sqrMagnitude > 0.01f ? dir.normalized : transform.forward;
+                        _pounceFrom = transform.position;
+                        // the body lands so that its chest comes down on the marked spot
+                        _pounceTo = transform.position + dir * Mathf.Max(0f, dist - headForward * 0.45f);
+                        if (Physics.SphereCast(transform.position + Vector3.up * 1.5f, 1.4f, dir, out var wall, (_pounceTo - _pounceFrom).magnitude + 4f * S, Layers.EnvironmentMask, QueryTriggerInteraction.Ignore))
+                            _pounceTo = _pounceFrom + dir * Mathf.Max(0f, wall.distance - 4.5f * S);
+                        _pounceMark = _pounceTo + dir * headForward * 0.45f;
+                        TellRpc(3, _pounceMark, 5.2f * S, DragonMoves.PounceLand - t);
+                    }
+                    if (t < DragonMoves.PounceLand)
+                    {
+                        float u = Mathf.Clamp01((t - DragonMoves.PounceLock) / (DragonMoves.PounceLand - DragonMoves.PounceLock));
+                        Vector3 want = Vector3.Lerp(_pounceFrom, _pounceTo, u);
+                        Vector3 delta = MathUtil.Flat(want - transform.position);
+                        cc.Move(delta);
+                        break;
+                    }
+                    if (!_resolved)
+                    {
+                        _resolved = true;
+                        SlamRpc(_pounceMark, 7f * S);
+                        HitSphere(_pounceMark, 3.6f * S, pounceDamage, HitFlags.Heavy | HitFlags.AreaOfEffect);
+                        HitRing(_pounceMark, 3.6f * S, 7f * S, pounceDamage * 0.5f, HitFlags.AreaOfEffect);
+                    }
+                    break;
+                }
 
                 case DragonMove.Charge:
                 {
@@ -528,6 +574,9 @@ namespace DarkFantasy
             }
         }
 
+        /// <summary>Players between inner and outer radius (those already hit by this move are skipped).</summary>
+        void HitRing(Vector3 c, float inner, float outer, float damage, HitFlags flags) => HitSphere(c, outer, damage, flags);
+
         void HitSphere(Vector3 c, float radius, float damage, HitFlags flags)
         {
             foreach (var p in PlayerController.All)
@@ -585,6 +634,9 @@ namespace DarkFantasy
             _queue.Clear();
             SetMove(DragonMove.Stagger);
         }
+
+        protected override int SoulReward => 2000;
+        protected override bool IsBossReward => true;
 
         protected override void Die()
         {
@@ -673,6 +725,39 @@ namespace DarkFantasy
                 Fx.SpawnScaled(FxId.Dust, BossFx.Ground(transform.position + side) + Vector3.up * 0.2f, 2.2f);
                 if (k % 3 == 0) Fx.Spawn(FxId.ShockDust, BossFx.Ground(transform.position - transform.forward * 2f));
                 yield return new WaitForSeconds(0.09f);
+            }
+        }
+
+        /// <summary>Everyone: the tell of a melee move (0 jaws glint, 1 tail arc, 2 claw mark, 3 leap target).</summary>
+        [Rpc(SendTo.Everyone)]
+        void TellRpc(byte kind, Vector3 at, float radius, float until)
+        {
+            until = Mathf.Max(0.3f, until);
+            switch (kind)
+            {
+                case 0:
+                    BossFx.Flash(at, new Color(1f, 0.55f, 0.2f), 6f, 6f, 0.35f);
+                    Sfx.Play(SfxId.EnemyGrunt, at, 1.2f, 0.5f);
+                    break;
+                case 1:
+                    // the arc behind it, where the tail will pass
+                    for (int i = 0; i < 7; i++)
+                    {
+                        float a = (110f + i * 23f) * Mathf.Deg2Rad;
+                        Vector3 dir = transform.rotation * new Vector3(Mathf.Sin(a), 0f, Mathf.Cos(a));
+                        BossFx.GroundWarning(at + dir * radius * 0.65f, radius * 0.28f, until, BossFx.DangerRed);
+                    }
+                    Sfx.Play(SfxId.DragonTail, at, 0.8f, 0.8f);
+                    break;
+                case 2:
+                    BossFx.GroundWarning(at, radius, until, BossFx.DangerRed);
+                    Sfx.Play(SfxId.EnemyGrunt, at + Vector3.up * 3f, 1.1f, 0.45f);
+                    break;
+                case 3:
+                    BossFx.GroundWarning(at, radius, until, BossFx.DangerRed);
+                    Sfx.Play(SfxId.Roar, at, 1.3f, 0.75f);
+                    Sfx.Play(SfxId.DragonSwoop, transform.position + Vector3.up * 3f, 1.4f, 0.9f);
+                    break;
             }
         }
 

@@ -1,0 +1,185 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!319 &31900000
+AvatarMask:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: BardBody
+  m_Mask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+  m_Elements:
+  - m_Path: 
+    m_Weight: 0
+  - m_Path: Bard
+    m_Weight: 0
+  - m_Path: BardStaff
+    m_Weight: 0
+  - m_Path: BardStaffDragon
+    m_Weight: 0
+  - m_Path: BardStaffRelic
+    m_Weight: 0
+  - m_Path: Rig
+    m_Weight: 0
+  - m_Path: Rig/Hips
+    m_Weight: 1
+  - m_Path: Rig/Hips/Spine
+    m_Weight: 1
+  - m_Path: Rig/Hips/Spine/Spine 1
+    m_Weight: 1
+  - m_Path: Rig/Hips/Spine/Spine 1/Chest
+    m_Weight: 1
+  - m_Path: Rig/Hips/Spine/Spine 1/Chest/Neck
+    m_Weight: 1
+  - m_Path: Rig/Hips/Spine/Spine 1/Chest/Neck/Head
+    m_Weight: 1
+  - m_Path: Rig/Hips/Spine/Spine 1/Chest/Neck/Head/Eye_L
+    m_Weight: 1
+  - m_Path: Rig/Hips/Spine/Spine 1/Chest/Neck/Head/Eye_R
+    m_Weight: 1
+  - m_Path: Rig/Hips/Spine/Spine 1/Chest/Neck/Head/Eyebrow_L
+    m_Weight: 1
+  - m_Path: Rig/Hips/Spine/Spine 1/Chest/Neck/Head/Eyebrow_L/Eyebrow_1_L
+    m_Weight: 1
+  - m_Path: Rig/Hips/Spine/Spine 1/Chest/Neck/Head/Eyebrow_R
+    m_Weight: 1
+  - m_Path: Rig/Hips/Spine/Spine 1/Chest/Neck/Head/Eyebrow_R/Eyebrow_1_R
+    m_Weight: 1
+  - m_Path: Rig/Hips/Spine/Spine 1/Chest/Neck/Head/Jaw
+    m_Weight: 1
+  - m_Path: Rig/Hips/Spine/Spine 1/Chest/Neck/Head/Jaw/Lower_Lip
+    m_Weight: 1
+  - m_Path: Rig/Hips/Spine/Spine 1/Chest/Neck/Head/Jaw/Lower_Lip/Lower_Lip_L
+    m_Weight: 1
+  - m_Path: Rig/Hips/Spine/Spine 1/Chest/Neck/Head/Jaw/Lower_Lip/Lower_Lip_R
+    m_Weight: 1
+  - m_Path: Rig/Hips/Spine/Spine 1/Chest/Neck/Head/Lower_Eye_Lid_L
+    m_Weight: 1
+  - m_Path: Rig/Hips/Spine/Spine 1/Chest/Neck/Head/Lower_Eye_Lid_R
+    m_Weight: 1
+  - m_Path: Rig/Hips/Spine/Spine 1/Chest/Neck/Head/Nose
+    m_Weight: 1
+  - m_Path: Rig/Hips/Spine/Spine 1/Chest/Neck/Head/Nose/muscle_buccinator_L
+    m_Weight: 1
+  - m_Path: Rig/Hips/Spine/Spine 1/Chest/Neck/Head/Nose/muscle_buccinator_R
+    m_Weight: 1
+  - m_Path: Rig/Hips/Spine/Spine 1/Chest/Neck/Head/Nose/Nose_L
+    m_Weight: 1
+  - m_Path: Rig/Hips/Spine/Spine 1/Chest/Neck/Head/Nose/Nose_R
+    m_Weight: 1
+  - m_Path: Rig/Hips/Spine/Spine 1/Chest/Neck/Head/tongue
+    m_Weight: 1
+  - m_Path: Rig/Hips/Spine/Spine 1/Chest/Neck/Head/Upper_Eye_Lid_L
+    m_Weight: 1
+  - m_Path: Rig/Hips/Spine/Spine 1/Chest/Neck/Head/Upper_Eye_Lid_R
+    m_Weight: 1
+  - m_Path: Rig/Hips/Spine/Spine 1/Chest/Neck/Head/Upper_LIp
+    m_Weight: 1
+  - m_Path: Rig/Hips/Spine/Spine 1/Chest/Neck/Head/Upper_LIp/Upper_LIp_L
+    m_Weight: 1
+  - m_Path: Rig/Hips/Spine/Spine 1/Chest/Neck/Head/Upper_LIp/Upper_LIp_R
+    m_Weight: 1
+  - m_Path: Rig/Hips/Spine/Spine 1/Chest/Shoulder_L
+    m_Weight: 0
+  - m_Path: Rig/Hips/Spine/Spine 1/Chest/Shoulder_L/Upper_Arm_L
+    m_Weight: 0
+  - m_Path: Rig/Hips/Spine/Spine 1/Chest/Shoulder_L/Upper_Arm_L/Lower_Arm_L
+    m_Weight: 0
+  - m_Path: Rig/Hips/Spine/Spine 1/Chest/Shoulder_L/Upper_Arm_L/Lower_Arm_L/hand_L
+    m_Weight: 0
+  - m_Path: Rig/Hips/Spine/Spine 1/Chest/Shoulder_L/Upper_Arm_L/Lower_Arm_L/hand_L/Index_L
+    m_Weight: 0
+  - m_Path: Rig/Hips/Spine/Spine 1/Chest/Shoulder_L/Upper_Arm_L/Lower_Arm_L/hand_L/Index_L/Index_1_L
+    m_Weight: 0
+  - m_Path: Rig/Hips/Spine/Spine 1/Chest/Shoulder_L/Upper_Arm_L/Lower_Arm_L/hand_L/Index_L/Index_1_L/Index_2_L
+    m_Weight: 0
+  - m_Path: Rig/Hips/Spine/Spine 1/Chest/Shoulder_L/Upper_Arm_L/Lower_Arm_L/hand_L/Middle_L
+    m_Weight: 0
+  - m_Path: Rig/Hips/Spine/Spine 1/Chest/Shoulder_L/Upper_Arm_L/Lower_Arm_L/hand_L/Middle_L/Middle_1_L
+    m_Weight: 0
+  - m_Path: Rig/Hips/Spine/Spine 1/Chest/Shoulder_L/Upper_Arm_L/Lower_Arm_L/hand_L/Middle_L/Middle_1_L/Middle_2_L
+    m_Weight: 0
+  - m_Path: Rig/Hips/Spine/Spine 1/Chest/Shoulder_L/Upper_Arm_L/Lower_Arm_L/hand_L/Pinky_L
+    m_Weight: 0
+  - m_Path: Rig/Hips/Spine/Spine 1/Chest/Shoulder_L/Upper_Arm_L/Lower_Arm_L/hand_L/Pinky_L/Pinky_1_L
+    m_Weight: 0
+  - m_Path: Rig/Hips/Spine/Spine 1/Chest/Shoulder_L/Upper_Arm_L/Lower_Arm_L/hand_L/Pinky_L/Pinky_1_L/Pinky_2_L
+    m_Weight: 0
+  - m_Path: Rig/Hips/Spine/Spine 1/Chest/Shoulder_L/Upper_Arm_L/Lower_Arm_L/hand_L/Ring_L
+    m_Weight: 0
+  - m_Path: Rig/Hips/Spine/Spine 1/Chest/Shoulder_L/Upper_Arm_L/Lower_Arm_L/hand_L/Ring_L/Ring_1_L
+    m_Weight: 0
+  - m_Path: Rig/Hips/Spine/Spine 1/Chest/Shoulder_L/Upper_Arm_L/Lower_Arm_L/hand_L/Ring_L/Ring_1_L/Ring_2_L
+    m_Weight: 0
+  - m_Path: Rig/Hips/Spine/Spine 1/Chest/Shoulder_L/Upper_Arm_L/Lower_Arm_L/hand_L/StaffSocket
+    m_Weight: 0
+  - m_Path: Rig/Hips/Spine/Spine 1/Chest/Shoulder_L/Upper_Arm_L/Lower_Arm_L/hand_L/StaffSocket/StaffButt
+    m_Weight: 0
+  - m_Path: Rig/Hips/Spine/Spine 1/Chest/Shoulder_L/Upper_Arm_L/Lower_Arm_L/hand_L/StaffSocket/StaffTip
+    m_Weight: 0
+  - m_Path: Rig/Hips/Spine/Spine 1/Chest/Shoulder_L/Upper_Arm_L/Lower_Arm_L/hand_L/Thumb_L
+    m_Weight: 0
+  - m_Path: Rig/Hips/Spine/Spine 1/Chest/Shoulder_L/Upper_Arm_L/Lower_Arm_L/hand_L/Thumb_L/Thumb_1_L
+    m_Weight: 0
+  - m_Path: Rig/Hips/Spine/Spine 1/Chest/Shoulder_L/Upper_Arm_L/Lower_Arm_L/hand_L/Thumb_L/Thumb_1_L/Thumb_2_L
+    m_Weight: 0
+  - m_Path: Rig/Hips/Spine/Spine 1/Chest/Shoulder_R
+    m_Weight: 0
+  - m_Path: Rig/Hips/Spine/Spine 1/Chest/Shoulder_R/Upper_Arm_R
+    m_Weight: 0
+  - m_Path: Rig/Hips/Spine/Spine 1/Chest/Shoulder_R/Upper_Arm_R/Lower_Arm_R
+    m_Weight: 0
+  - m_Path: Rig/Hips/Spine/Spine 1/Chest/Shoulder_R/Upper_Arm_R/Lower_Arm_R/hand_R
+    m_Weight: 0
+  - m_Path: Rig/Hips/Spine/Spine 1/Chest/Shoulder_R/Upper_Arm_R/Lower_Arm_R/hand_R/Index_R
+    m_Weight: 0
+  - m_Path: Rig/Hips/Spine/Spine 1/Chest/Shoulder_R/Upper_Arm_R/Lower_Arm_R/hand_R/Index_R/Index_1_R
+    m_Weight: 0
+  - m_Path: Rig/Hips/Spine/Spine 1/Chest/Shoulder_R/Upper_Arm_R/Lower_Arm_R/hand_R/Index_R/Index_1_R/Index_2_R
+    m_Weight: 0
+  - m_Path: Rig/Hips/Spine/Spine 1/Chest/Shoulder_R/Upper_Arm_R/Lower_Arm_R/hand_R/Middle_R
+    m_Weight: 0
+  - m_Path: Rig/Hips/Spine/Spine 1/Chest/Shoulder_R/Upper_Arm_R/Lower_Arm_R/hand_R/Middle_R/Middle_1_R
+    m_Weight: 0
+  - m_Path: Rig/Hips/Spine/Spine 1/Chest/Shoulder_R/Upper_Arm_R/Lower_Arm_R/hand_R/Middle_R/Middle_1_R/Middle_2_R
+    m_Weight: 0
+  - m_Path: Rig/Hips/Spine/Spine 1/Chest/Shoulder_R/Upper_Arm_R/Lower_Arm_R/hand_R/Pinky_R
+    m_Weight: 0
+  - m_Path: Rig/Hips/Spine/Spine 1/Chest/Shoulder_R/Upper_Arm_R/Lower_Arm_R/hand_R/Pinky_R/Pinky_1_R
+    m_Weight: 0
+  - m_Path: Rig/Hips/Spine/Spine 1/Chest/Shoulder_R/Upper_Arm_R/Lower_Arm_R/hand_R/Pinky_R/Pinky_1_R/Pinky_2_R
+    m_Weight: 0
+  - m_Path: Rig/Hips/Spine/Spine 1/Chest/Shoulder_R/Upper_Arm_R/Lower_Arm_R/hand_R/Ring_R
+    m_Weight: 0
+  - m_Path: Rig/Hips/Spine/Spine 1/Chest/Shoulder_R/Upper_Arm_R/Lower_Arm_R/hand_R/Ring_R/Ring_1_R
+    m_Weight: 0
+  - m_Path: Rig/Hips/Spine/Spine 1/Chest/Shoulder_R/Upper_Arm_R/Lower_Arm_R/hand_R/Ring_R/Ring_1_R/Ring_2_R
+    m_Weight: 0
+  - m_Path: Rig/Hips/Spine/Spine 1/Chest/Shoulder_R/Upper_Arm_R/Lower_Arm_R/hand_R/SwordSocket
+    m_Weight: 0
+  - m_Path: Rig/Hips/Spine/Spine 1/Chest/Shoulder_R/Upper_Arm_R/Lower_Arm_R/hand_R/SwordSocket/SocketEdge
+    m_Weight: 0
+  - m_Path: Rig/Hips/Spine/Spine 1/Chest/Shoulder_R/Upper_Arm_R/Lower_Arm_R/hand_R/SwordSocket/SocketTip
+    m_Weight: 0
+  - m_Path: Rig/Hips/Spine/Spine 1/Chest/Shoulder_R/Upper_Arm_R/Lower_Arm_R/hand_R/Thumb_R
+    m_Weight: 0
+  - m_Path: Rig/Hips/Spine/Spine 1/Chest/Shoulder_R/Upper_Arm_R/Lower_Arm_R/hand_R/Thumb_R/Thumb_1_R
+    m_Weight: 0
+  - m_Path: Rig/Hips/Spine/Spine 1/Chest/Shoulder_R/Upper_Arm_R/Lower_Arm_R/hand_R/Thumb_R/Thumb_1_R/Thumb_2_R
+    m_Weight: 0
+  - m_Path: Rig/Hips/Upper_Leg_L
+    m_Weight: 1
+  - m_Path: Rig/Hips/Upper_Leg_L/Lower_Leg_L
+    m_Weight: 1
+  - m_Path: Rig/Hips/Upper_Leg_L/Lower_Leg_L/Foot_L
+    m_Weight: 1
+  - m_Path: Rig/Hips/Upper_Leg_L/Lower_Leg_L/Foot_L/Toes_L
+    m_Weight: 1
+  - m_Path: Rig/Hips/Upper_Leg_R
+    m_Weight: 1
+  - m_Path: Rig/Hips/Upper_Leg_R/Lower_Leg_R
+    m_Weight: 1
+  - m_Path: Rig/Hips/Upper_Leg_R/Lower_Leg_R/Foot_R
+    m_Weight: 1
+  - m_Path: Rig/Hips/Upper_Leg_R/Lower_Leg_R/Foot_R/Toes_R
+    m_Weight: 1

@@ -169,9 +169,21 @@ namespace DarkFantasy.UI
             windowRt = Rect("Window_" + title, parent, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), Vector2.zero, size);
             var img = Image(windowRt, Skin.windowFleur);
             img.raycastTarget = true;
+            FitToScreen(windowRt, size);
             var titleRt = Rect("Title", windowRt, new Vector2(0.5f, 1f), new Vector2(0.5f, 1f), new Vector2(0, -25), new Vector2(size.x - 48, 23));
             Text(titleRt, title, 24, Skin.bone0, TextAnchor.MiddleCenter, true);
             return Stretch("Content", windowRt, 24, 60, 24, 24);
+        }
+
+        /// <summary>
+        /// Scales a window down so it always fits the screen with a margin (the canvas is 540 units tall,
+        /// its width follows the aspect ratio); it re-checks when the resolution changes.
+        /// </summary>
+        public static void FitToScreen(RectTransform win, Vector2 size)
+        {
+            var f = win.gameObject.GetComponent<FitWindow>() ?? win.gameObject.AddComponent<FitWindow>();
+            f.size = size;
+            f.Apply();
         }
 
         public static RectTransform Panel(Transform parent, Vector2 anchor, Vector2 pivot, Vector2 pos, Vector2 size)
@@ -179,6 +191,27 @@ namespace DarkFantasy.UI
             var rt = Rect("Panel", parent, anchor, pivot, pos, size);
             Image(rt, Skin.panelClean);
             return rt;
+        }
+    }
+
+    /// <summary>Keeps a window inside the screen (see UIFactory.FitToScreen).</summary>
+    public class FitWindow : MonoBehaviour
+    {
+        public Vector2 size;
+        float _aspect = -1f;
+
+        public void Apply()
+        {
+            _aspect = Screen.height > 0 ? Screen.width / (float)Screen.height : 16f / 9f;
+            float h = 540f, w = h * _aspect;
+            float s = Mathf.Min(1f, (w - 24f) / Mathf.Max(1f, size.x), (h - 24f) / Mathf.Max(1f, size.y));
+            transform.localScale = new Vector3(s, s, 1f);
+        }
+
+        void Update()
+        {
+            float a = Screen.height > 0 ? Screen.width / (float)Screen.height : _aspect;
+            if (Mathf.Abs(a - _aspect) > 0.01f) Apply();
         }
     }
 }

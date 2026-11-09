@@ -233,6 +233,7 @@ namespace DarkFantasy
                 Vector3 from = point - MathUtil.Flat(dir).normalized * 3f;
                 enemy.LocalHitReact(point, _heavy, from, dir);
                 enemy.TakeRangedHitRpc(_damage, _poise, point, from, _knockback);
+                PlayerUltimate.LocalDealt(_damage);
                 if (_heavy) SoulsCamera.Shake(0.04f, 0.12f);
             }
             Destroy(gameObject);

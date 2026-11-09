@@ -465,6 +465,9 @@ namespace DarkFantasy
             SetMove(MirrorMove.Stagger);
         }
 
+        protected override int SoulReward => 2600;
+        protected override bool IsBossReward => true;
+
         protected override void Die()
         {
             _queue.Clear(); _shards.Clear();

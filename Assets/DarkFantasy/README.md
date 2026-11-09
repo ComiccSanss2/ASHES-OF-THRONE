@@ -53,7 +53,11 @@ La finestra della build è ridimensionabile e gira anche in background, così pu
 | A terra: arrenditi e torna al fuoco (tieni) | Spazio | Y / Triangolo |
 | Fiaschetta (4 cariche, +50% vita) | R | X / Quadrato |
 | Interagisci (cancello di nebbia) | E | A / Croce |
-| Inventario (equipaggia le reliquie) | I | Select |
+| Inventario (personaggio, armi, armature, pozioni) | I | Select |
+| Albero delle competenze | K | — |
+| Accovacciati / alzati | Ctrl o C | L3 |
+| Pozioni (Iron Draught / Vigor Tonic / Soul Salve) | 2 / 3 / 4 | — |
+| Ultimate (non bardo) | 1 | Croce su |
 | Pausa · Guida comandi | Esc · F1 | Start |
 | Schermo intero | F11 | — |
 
@@ -370,6 +374,195 @@ Dev menu (F9): *Bard*, *Archer*, *Knight* cambiano classe; *Terrace* porta al dr
 Dev menu (F9): *Mirror: the long bridge*, *Mirror: the Thornwood*, *Mirror: start the fight*,
 *Spawn radiant chest (host)*, *Unlock every weapon*.
 
+### Quarta classe: il Reaper (falce) e le Ultimate
+
+- **Reaper**: il rig del cavaliere in armatura annerita, cappuccio profondo, maschera d'osso con occhi viola, mantello
+  a brandelli e tunica lacera. Arma: la **falce**. Animazioni proprie (fatte in Blender, `Tools/reaper_anim.py` →
+  `Art/Reaper.fbx`): mietitura orizzontale, fendente ascendente di rovescio, piroetta completa, colpo pesante dall'alto.
+  - È più rapido del cavaliere (corsa 4.6 contro 4.1, capriola più lunga e meno costosa, attacchi più veloci) ma ogni
+    colpo fa meno danno (14 / 15 / 19, pesante 34 contro 22 / 24 / 30 / 46) e ha meno vita (112 contro 130).
+  - Falci per ogni livello: *Gravewarden's Scythe* (base), *Widow of the Pyre* (reliquia del Re: manico nero con fasce
+    d'oro, teschio, filo di brace), *Wyrmreaver* (drago: zanna seghettata su un manico di vertebre, braci),
+    *Dawnsickle* (radiosa: mezzaluna d'argento su manico dorato, contro-lama, scintille). Escono anche dai forzieri.
+  - Nel menu del lobby si sceglie come le altre classi (il bottone della classe ora cicla tra 4).
+- **Ultimate (tasto 1 / croce su)** per cavaliere, arciere e reaper (il bardo ha già le sue magie). L'indicatore si
+  riempie piano da solo e in fretta facendo danni; quando è pieno l'icona in basso al centro si accende.
+  Durante l'ultimate non si viene interrotti (armatura) e si subisce il 40% di danno in meno.
+  - **Cavaliere, Cinder Judgement** (icona: spada piantata tra le fiamme): fendente che spacca il terreno, un muro di
+    fuoco corre in avanti per 10 m (danno alto e barcollamento).
+  - **Arciere, Storm of Arrows** (icona: frecce che cadono su un cerchio): una freccia al cielo, poi una pioggia di
+    frecce sul punto mirato per 2 secondi.
+  - **Reaper, Harvest of Souls** (icona: falce sopra un vortice di anime): due giri vorticosi che feriscono tutto
+    intorno, un salto e una mietitura che schiaccia il terreno. Ogni anima presa cura il reaper (fino al 25%).
+- **Drago più giusto con chi combatte da vicino**: il primo morso e la parte vicina della coda ora fanno solo
+  barcollare (non ti scaraventano più via); la coda arriva meno spesso (ogni 9 s al massimo, e non subito);
+  il pestone scaraventa solo sotto la zampa (fuori si barcolla) ed è meno frequente; dopo morsi, pestoni e colpi
+  di coda il drago resta fermo più a lungo, il momento per colpirlo. La spinta quando si viene atterrati è più corta.
+
+### Nomi, PvP, inventario, armature dei boss, competenze, capriola e accovacciamento
+
+- **Nickname sopra i giocatori**: sopra ogni altro giocatore c'è il suo nome (nel colore della classe, rosso se potete
+  combattervi), una barretta della vita e la scritta `PvP` quando il duello tra voi due è possibile. Oltre i 45 m sparisce.
+- **PvP più giusto**: i colpi tra giocatori fanno il 95% del danno (prima molto meno), ogni colpo fa barcollare per
+  un attimo (abbastanza per continuare la combo) con 0.18 s di invulnerabilità per evitare raffiche, e un piccolo
+  spintone. Il lock-on (rotellina) ora aggancia anche i giocatori ostili e la mira assistita li considera.
+- **Inventario nuovo (I)**, tutto in inglese, in tre colonne:
+  - *a sinistra* il tuo personaggio in 3D con l'arma e l'armatura che indossi: **trascina per girarlo, rotellina per
+    avvicinarti**; sotto, vita / stamina / mana e danno subito;
+  - *al centro* gli slot **Helmet, Armour, Legs, Boots, Weapon** (clic su uno slot = filtra i pezzi di quello slot);
+    le anime possedute e il bottone **Skills (K)**;
+  - *a destra* la scorta, in categorie: **Usables** (fiaschetta e pozioni), **Weapons**, **Armour**. Ogni casella mostra
+    l'oggetto vero (è disegnato dal gioco stesso con il modello che porti), e passandoci sopra col mouse esce una
+    scheda con nome, tipo, descrizione ed effetto.
+- **Pozioni** (tasti **2 / 3 / 4**, il bardo le beve cliccandole nell'inventario): *Iron Draught* (−30% danni subiti per
+  30 s), *Vigor Tonic* (stamina +60% più veloce per 30 s), *Soul Salve* (rigenera il 4.5% di vita al secondo per 10 s).
+  Si parte con una per tipo; i nemici ne lasciano a volte, i boss sempre due.
+- **Armature dei boss**: ogni boss sconfitto regala a tutto il gruppo un set di 4 pezzi a tema, da indossare e mostrare
+  (si vedono su tutti i client): *Regalia of the Ashen King* (piastre annerite con bordi d'oro e corona di brace),
+  *Wyrmscale* (scaglie cremisi, corna d'osso, giunture che covano fuoco), *Mirrorborn* (argento lunare e oro, cristalli
+  di vetro luminosi, aureola fluttuante e scintille: il più bello), *Deathshroud* (cappuccio d'ombra con teschio dagli
+  occhi viola, costole d'osso, catene). Un pezzo protegge davvero (dal 3.5% al 6.5% di danno in meno, max 35%)
+  solo se quel boss è stato sconfitto nella lobby in cui sei, altrimenti è solo estetico ("dormant").
+  Le piastre sono **generate dalla pelle stessa di ogni personaggio** (la superficie del corpo attorno alle ossa coperte,
+  gonfiata di 1–2 cm, con gli stessi pesi delle ossa): combaciano col modello e seguono ogni animazione. Sopra ci sono
+  solo piccoli ornamenti (corona, corna, aureola, spallacci, cappuccio).
+- **Albero delle competenze (K)**: ogni nemico e ogni boss lascia **anime** (numero in alto a destra, con "+N souls").
+  Si spendono in 5 rami: *Vitality* (vita), *Endurance* (stamina e recupero), *Strength* (danno fisico), *Mind* (mana e
+  carica dell'ultimate), *Arcana* (danno magico). Il costo sale a ogni livello.
+  **Le competenze e le anime tornano a 0** quando entri in una lobby il cui host ha appena iniziato dal falò iniziale;
+  armi e armature restano sempre tue.
+- **Armi radiose ridisegnate** (più belle di quelle del drago, non più la reliquia ricolorata): *Dawnbreaker* (spadone
+  con ali dorate, cuore di vetro luminoso lungo la lama e due aureole che la circondano), *Starwoven* (arco di costole
+  d'argento, piume d'oro, stelle di cristallo sulle punte e corda di luce), *Dawnsickle* (mezzaluna di vetro luminoso su
+  dorso d'argento, ali dorate e aureola sulla testa della falce), il bastone del bardo porta una corona di luce.
+- **Capriola vera**: il personaggio si raccoglie a palla (clip fatto in Blender) e fa un giro completo di 360° a terra
+  attorno al proprio centro, poi si rialza e **accovacciamento**
+  con **Ctrl** o **C** (L3 sul gamepad): posa da accovacciato, camminata da accovacciato, più lenta; da accovacciato i
+  nemici ti notano solo a metà distanza. Correre, attaccare, parare o bere ti fa rialzare.
+
+### Personaggi (4 slot)
+
+- All'avvio il gioco chiede **quale personaggio giocare**: 4 slot. Uno slot vuoto → **Create** (nome + classe; la classe
+  resta quella del personaggio). **Play** lo sceglie, **Delete** (due clic) lo cancella.
+- Ogni personaggio ha la **sua progressione**: armi e set di armatura ottenuti, armatura equipaggiata, anime e
+  competenze, fuochi sbloccati (punto di partenza della lobby). "Change Character" nel menu torna alla scelta.
+- Il salvataggio di prima degli slot diventa automaticamente il primo personaggio ("Wanderer", rinominabile nel menu).
+
+### Controlli personalizzabili e icone del joystick
+
+- **F1** (o Pausa → Controls) apre la finestra **Controls**: ogni azione con il suo tasto (tastiera/mouse) e il suo
+  tasto del gamepad. **Clicca una casella e premi il nuovo tasto o bottone** (Esc / Start annulla); se il tasto era già
+  usato da un'altra azione le due si scambiano. "Reset to defaults" rimette tutto com'era. Si salva subito.
+- **Icone del joystick automatiche**: appena tocchi il gamepad, i prompt a schermo (interagisci, ultimate, incantesimi
+  del bardo, finestra controlli) mostrano i bottoni veri (A/B/X/Y colorati, LB/RB/LT/RT, L3/R3, croce direzionale; con un
+  pad PlayStation diventano ✕ ○ □ △, L1/R1…). Tornando a mouse e tastiera tornano i tasti.
+- Arciere: la carica della freccia usa il suono `bow_draw_fast`.
+
+### Il Regno della Luna Rossa e la Morte
+
+- Dopo aver sconfitto lo **Specchio**, la sua cornice vuota diventa un **portale** (vortice rosso dove c'era il
+  vetro): avvicinati e premi **E** per attraversarlo. Si arriva nel **Regno della Luna Rossa**, un mondo d'ombra sotto
+  un'enorme luna rossa: una piana di cenere, lapidi storte, alberi morti, lanterne di anime azzurre, una cappella in
+  rovina. Accanto all'arrivo c'è un nuovo fuoco (**The Red Moon**, nuovo punto di partenza della lobby) e un portale per
+  tornare al Tempio di Vetro.
+- **Nuovi nemici**: *Mourning Shade* (vedova di fumo che fluttua, lancia anime che ti inseguono, graffia da vicino) e
+  *Deathless Sentinel* (cavaliere color osso con un anello di anime, più resistente).
+- **Boss finale: Death, the Last Reaper**, il Mietitore alato della cartella `Assets/grim reaper` (l'Alembic è stato
+  cotto in Blender in 8 pose del suo volo stazionario, corpo + falce, riprodotte come flipbook; per i colpi tutta la figura
+  ruota, si inclina e gira su sé stessa):
+  - *movimento*: non tocca mai terra, scivola lasciando una scia di nebbia e anime; si dissolve in fumo e ricompare
+    alle tue spalle; si alza in aria per le magie più forti.
+  - *Reaper's Slash*: fendente lentissimo e devastante (orizzontale ad ampio arco o verticale lungo una linea) con una
+    lama spettrale che allunga la portata; è danno oscuro: **la parata ne ferma solo una parte**.
+  - *Infernal Crescent*: giro rapido che libera un **anello di energia oscura che si allarga**: va saltato con una
+    capriola al momento giusto (non si para). In fase 2 gli anelli sono due.
+  - *Eclipse Lunge*: sparisce e attraversa il bersaglio in un lampo, ricomparendo oltre.
+  - *Call of Souls*: una mano scheletrica di nebbia vola verso di te; se ti prende ti solleva, ti prosciuga la vita,
+    ti scaglia a terra e ti lascia la maledizione della tomba (rallentato).
+  - *Rain of Spectral Scythes*: si alza e fa piovere decine di falci spettrali a schemi (anelli intorno a lui, linee
+    verso i giocatori, poi a caccia): i cerchi a terra mostrano dove cadranno.
+  - *Veil of Darkness*: ogni tanto svanisce nella nebbia che si infittisce; lo tradiscono solo il **ticchettio di un
+    orologio** e il rumore della lama trascinata. Poi riappare alle spalle di qualcuno.
+  - *Fase 1, il Mietitore silenzioso*: tattico, fendenti ampi, brevi teletrasporti; **se bevi da lontano ti punisce**
+    con una mezzaluna di luce d'anima.
+  - *Fase 2, il Giudizio finale (sotto il 40%)*: il mantello brucia e diventa ectoplasma, la falce prende fuoco fatuo
+    blu-viola, è più veloce, fa combo più lunghe ed evoca spettri minori.
+  - Vincere dà il set **Deathshroud** e chiude la storia ("DEATH IS DEAD").
+  - Musica: se metti un file `Assets/reaperboss.mp3` viene usato per lo scontro (altrimenti il tema del Re).
+
+### Build per macOS (da Windows)
+
+1. **Unity Hub ▸ Installs** ▸ sulla 6000.3 l'ingranaggio ▸ **Add modules** ▸ spunta **Mac Build Support (Mono)** e installa.
+2. In Unity: **Dark Fantasy ▸ Build macOS Player (from Windows)**. Esce `Builds/macOS/AshesOfTheThrone.app`
+   (universale: Mac Intel e Apple Silicon). Da Windows si può usare solo il backend **Mono** (IL2CPP per Mac richiede
+   un Mac): il menu lo imposta da solo per la build e poi rimette quello di prima. La cartella
+   `..._BurstDebugInformation_DoNotShip` accanto all'app non va distribuita.
+3. **Portarla sul Mac**: comprimi la cartella `.app` in **.zip** (o meglio `.tar.gz`, che conserva i permessi).
+   Lo zip fatto da Windows perde il permesso di esecuzione: sul Mac, nel Terminale, una volta sola:
+   `chmod +x AshesOfTheThrone.app/Contents/MacOS/*`
+4. **Prima apertura**: l'app non è firmata, quindi macOS la blocca. Clic destro sull'app ▸ **Apri** ▸ Apri
+   (oppure Impostazioni di Sistema ▸ Privacy e sicurezza ▸ "Apri comunque"). Se dice che è "danneggiata":
+   `xattr -cr AshesOfTheThrone.app`
+5. Multiplayer: Mac e PC giocano insieme con le lobby online (Relay), in LAN o con IP diretto, come due PC; serve solo
+   che entrambe le build vengano dallo stesso progetto aggiornato.
+
+### Aree secondarie, arene dei boss uniche, nuovi mostri
+
+- **Aree secondarie** (tunnel nelle pareti della gola, con oggetti `LootPickup`: anime, pozioni, fiasche; ognuno li
+  raccoglie una volta per sessione):
+  - *Tumulo delle Radici* (parete ovest del Bosco di Spine): nicchie funerarie, radici dal soffitto, una Shard Wraith
+    di guardia e **Maelis la Radicata**, la giardiniera della regina cresciuta dentro il muro.
+  - *Grotta del Soffiatore* (parete est, vicino al tempio): fornace a fuoco viola, specchi falliti, **Sorella Calyx**,
+    la vetraia che creò lo Specchio (dà il suggerimento per il cuore del boss).
+  - *Ossario dei Nomi* (Luna Rossa, a est del campo): cripta di teschi, pozza nera, **il Traghettatore che Rimase**
+    (lore sul Reaper e su come schivarne gli attacchi).
+- **Sala dei Riflessi** (arena dello Specchio): anello di specchi ad arco veri (riflettono la scena), la stessa sala
+  capovolta sospesa in alto, oculo da cui cade una colonna di luce, prismi che la spezzano in raggi tra gli specchi,
+  anelli di luce incisi nel pavimento di vetro nero.
+- **Corte dell'Ultima Ora** (arena del Reaper): quadrante di pietra sospeso su un abisso, ponte d'ossa con
+  ringhiere, 11 pietre delle ore con le ore incise in luce rossa, lancette luminose che girano nel pavimento,
+  un orologio colossale nel cielo incatenato alla luna, anime che salgono a spirale dall'abisso illuminato di rosso.
+- **Nuovi mostri della Luna Rossa** (`RealmBeastAI`, animazione procedurale, attacchi telegrafati):
+  - *Gravecrawler*: gabbia toracica su sei zampe d'osso con teschio cornuto; si impenna prima del balzo, morso rapido.
+  - *Lantern Warden*: gigante incappucciato con lanterna su un'asta; porta la lanterna dietro la spalla prima della
+    spazzata, la solleva (si illumina + cerchio a terra) prima del rintocco ad area.
+- **Drago**: la carica in avanti è sostituita dal *Balzo* (si acquatta, salta ad arco, ricade con onda d'urto:
+  il punto di caduta è segnato a terra). Morsi, codate e pestoni hanno ora un segnale visivo (bagliore delle fauci,
+  archi a terra) e la telecamera in lock-on si allontana sui bersagli grandi.
+- **Ultimate in PvP**: le ultimate di Cavaliere e Reaper colpiscono anche i giocatori con PvP attivo (danno ridotto).
+- **Armature**: piastre con texture incise/scaglie/filigrana/sudario con normal map, colori ed emissioni attenuati.
+
+### Quinta classe: lo Smoker · attacco tenendo premuto
+
+- **Tenere premuto il clic sinistro** (o il tasto attacco del pad) continua ad attaccare: combo complete per le
+  classi da mischia, raffica continua per arciere, bardo e smoker. Un clic che apre/chiude un menu non diventa un
+  attacco tenuto.
+- **Smoker** (rig e animazioni del bardo, `SmokerCaster` + `SmokeFx`): vagabondo con cappello a tesa larga e una
+  pipa churchwarden lunga quanto un bastone (procedurale sulla mano destra, brace nel fornello che fuma e sbuffi
+  dalla bocca). Usa il **mana**:
+  - *Clic sinistro* — **Sbuffo**: palla di fumo a ricerca con brace al centro.
+  - *Clic destro tenuto* — **Tirare dalla pipa**: il mana diventa fiato (fino a 3, la brace si accende);
+    rilasciando **espira** uno spirito di fumo per ogni fiato (max 4 vivi, durano 16 s): occhi di brace,
+    cacciano il nemico più vicino e lo artigliano.
+  - *F* — **Folata Soffocante**: cono di fumo nero (danno, poise) e tutti gli spiriti si lanciano sul primo
+    bersaglio colpito (colpo potenziato).
+  - *1* — Ultimate **Il Grande Respiro**: un colosso di fumo alto come una torre si alza dietro di lui per ~9 s,
+    colpisce col pugno i nemici vicini (il punto d'impatto è segnato a terra) e chiude con uno schianto a due mani.
+  - Armi: Old Churchwarden → The King's Last Pipe (reliquia) → Wyrmflue (drago) → Censer of Dawn (radiosa):
+    fumo più economico e più forte. Funziona anche in PvP. HUD: fiato e spiriti sotto la barra del mana.
+  - **Posa della pipa** (`SmokerPose`, IK a due ossa sul braccio destro sopra le clip del bardo): mentre carica
+    tiene il bocchino alle labbra e inspira finché il tasto è premuto; per sbuffo, folata, espirazione e ultimate
+    porta la pipa alla bocca, tira e la abbassa mentre il fumo/gli spiriti escono dalla bocca.
+  - **Carica al centro dello schermo**: pannello "DRAWING SMOKE" con 3 barre (una per spirito) che si riempiono,
+    "LUNGS FULL" quando è pieno; in alto a sinistra suggerimento del tasto, ricariche e spiriti.
+  - **Bilanciamento**: max 3 spiriti (12 s, danno ridotto, colpo ogni 1,1 s), carica più lenta e costosa,
+    4 s di recupero dopo ogni espirazione, Folata 30 mana + 5 s di recupero, mana 100 con rigenerazione 4/s,
+    sbuffo più lento, colosso meno forte.
+- **Musiche**: `MECHANICAL GOD.mp3` per il Reaper, `boss fight.mp3` per lo Specchio (in loop semplice).
+- **Audio senza scatti**: le musiche sono caricate compresse in memoria (non più in streaming da disco), buffer
+  DSP a 1024 ("Good latency") e 48 voci reali; gli effetti hanno un budget (max 26 insieme, lo stesso suono al
+  massimo 3 volte e non due volte entro 40 ms) e priorità più bassa della musica, che non viene mai rubata.
+
 ## 5. Struttura
 
 ```
@@ -384,9 +577,9 @@ Assets/DarkFantasy/
 
 ## 6. Limiti noti / prossimi passi
 
-- Il set di animazioni non ha ancora capriola né strafe dedicati: la schivata è una capriola procedurale
-  (rotazione del `VisualRoot`), lo strafe in lock-on usa la camminata. Aggiungendo clip dedicate basta assegnarle agli
-  stati dell'Animator generato (`Generated/Animation/Knight.controller`).
+- Capriola e accovacciamento sono clip proprie (`Tools/moves_anim.py` → `Art/Moves.fbx`) su un layer "Body" che
+  muove bacino, busto e gambe: le braccia restano quelle della classe (arma in mano). Lo strafe in lock-on usa ancora
+  la camminata.
 - Lo spadone è una mesh procedurale agganciata a `hand_R` con l'orientamento calcolato dal solver: se cambi modello,
   rilancia *Build Everything* (o *Dark Fantasy ▸ Debug ▸ Render Attack Sheets* per controllare i fendenti).
 - Il log `[DF] attack ...` in `PlayerController.StartAttack` è solo Editor: utile per verificare le finestre, rimovibile.

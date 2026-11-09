@@ -78,6 +78,14 @@ namespace DarkFantasy
         [Tooltip("Where the radiant chest rises if the dice want it (the forgotten vault).")]
         public Transform vaultChest;
 
+        [Header("The Red Moon")]
+        public Transform[] mourningShades;
+        public Transform[] deathSentinels;
+        public Transform reaperSpawn;
+        public Transform reaperGate;           // fog gate of the Reaper's court, forward = inside
+        public Bounds reaperArena = new Bounds(new Vector3(0, -150, 940), new Vector3(52, 30, 52));
+        public bool IsInsideReaperArena(Vector3 p) => reaperArena.Contains(p);
+
         [Header("Atmosfera")]
         public Color outdoorFog = new Color(0.4f, 0.42f, 0.38f);
         public float outdoorFogDensity = 0.034f;

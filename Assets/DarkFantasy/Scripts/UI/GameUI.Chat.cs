@@ -53,7 +53,7 @@ namespace DarkFantasy.UI
             LoreNpc.Silence -= OnNpcSilence;
         }
 
-        static string ClassColor(PlayerClass c) => c == PlayerClass.Archer ? "#8fd18a" : c == PlayerClass.Bard ? "#8fc2ff" : "#f8b74c";
+        static string ClassColor(PlayerClass c) => c == PlayerClass.Archer ? "#8fd18a" : c == PlayerClass.Bard ? "#8fc2ff" : c == PlayerClass.Reaper ? "#c79bff" : c == PlayerClass.Smoker ? "#b9b0a2" : "#f8b74c";
 
         void OnChat(PlayerVitals from, string text)
         {

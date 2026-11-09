@@ -1,0 +1,29 @@
+stop
+wait:4
+refresh
+wait:60
+menu:Dark Fantasy/Build Everything (playable scene)
+wait:340
+clear
+play
+wait:30
+msg:GameUI,DevMenuTest,smoker
+msg:GameUI,DevQuickStart,x
+wait:8
+msg:Player_0 (local),DevGod,1
+msg:Player_0 (local),DevTeleport,0;-149.8;834
+wait:4
+render:1.6,-148.2,836.4,0,-148.9,834,40|sp_idle
+msg:Player_0 (local),DevSmoke,hold
+wait:1
+render:1.6,-148.2,836.4,0,-148.9,834,40|sp_draw
+render:2.4,-148.3,834.3,0,-148.6,834.2,40|sp_draw_side
+shot
+msg:Player_0 (local),DevSmoke,release
+wait:0.45
+render:2.4,-148.3,834.3,0,-148.6,834.2,40|sp_exhale
+wait:3
+stop
+wait:5
+menu:Dark Fantasy/Build Windows Player (multiplayer test)
+wait:330

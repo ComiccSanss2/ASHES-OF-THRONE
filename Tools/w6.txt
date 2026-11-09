@@ -1,0 +1,6 @@
+stop
+wait:4
+refresh
+wait:60
+menu:Dark Fantasy/Build Windows Player (multiplayer test)
+wait:330

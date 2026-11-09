@@ -44,10 +44,13 @@ namespace DarkFantasy
         public GameObject dragonPrefab;
         public GameObject dragonArenaPrefab;
         [Header("Beyond the bridge")]
+        public GameObject reaperPrefab;
+        public GameObject smokerPrefab;
         public GameObject radiantChestPrefab;
         [Tooltip("Chance, rolled once when the world is created, that the prison vault holds the radiant weapons.")]
         [Range(0, 1)] public float radiantChance = 0.35f;
         public GameObject wraithPrefab, revenantPrefab, mirrorPrefab, mirrorArenaPrefab;
+        public GameObject shadePrefab, sentinelPrefab, reaperBossPrefab, reaperArenaPrefab;
 
         public ushort defaultPort = 7777;
         public int maxPlayers = 4;
@@ -280,7 +283,9 @@ namespace DarkFantasy
             if (!Manager.IsServer) return;
             if (!Manager.ConnectedClients.TryGetValue(clientId, out var cc) || cc.PlayerObject != null) return;
             var prefab = cls == PlayerClass.Archer && archerPrefab != null ? archerPrefab
-                       : cls == PlayerClass.Bard && bardPrefab != null ? bardPrefab : playerPrefab;
+                       : cls == PlayerClass.Bard && bardPrefab != null ? bardPrefab
+                       : cls == PlayerClass.Reaper && reaperPrefab != null ? reaperPrefab
+                       : cls == PlayerClass.Smoker && smokerPrefab != null ? smokerPrefab : playerPrefab;
             if (prefab == null) return;
             Instantiate(prefab).GetComponent<NetworkObject>().SpawnAsPlayerObject(clientId, true);
             Debug.Log($"[DF] client {clientId} enters as {cls}");
@@ -362,6 +367,12 @@ namespace DarkFantasy
             Many(revenantPrefab, lv.glassRevenants);
             if (mirrorPrefab != null && lv.mirrorSpawn) SpawnNet(mirrorPrefab, lv.mirrorSpawn.position, lv.mirrorSpawn.rotation);
             if (mirrorArenaPrefab != null && lv.mirrorGate) SpawnNet(mirrorArenaPrefab, lv.mirrorGate.position, lv.mirrorGate.rotation);
+
+            // ---- the Realm of the Red Moon
+            Many(shadePrefab, lv.mourningShades);
+            Many(sentinelPrefab, lv.deathSentinels);
+            if (reaperBossPrefab != null && lv.reaperSpawn) SpawnNet(reaperBossPrefab, lv.reaperSpawn.position, lv.reaperSpawn.rotation);
+            if (reaperArenaPrefab != null && lv.reaperGate) SpawnNet(reaperArenaPrefab, lv.reaperGate.position, lv.reaperGate.rotation);
 
             // ---- the dice: does the forgotten vault hold the radiant weapons this time?
             float roll = UnityEngine.Random.value;

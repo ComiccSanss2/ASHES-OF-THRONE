@@ -1,0 +1,8 @@
+stop
+wait:4
+refresh
+wait:45
+menu:Dark Fantasy/Build Windows Player (multiplayer test)
+wait:300
+menu:Dark Fantasy/Build macOS Player (from Windows)
+wait:420

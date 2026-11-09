@@ -91,6 +91,13 @@ namespace DarkFantasy.EditorTools
             fl.EnableKeyword("_EMISSION"); fl.SetColor("_EmissionColor", new Color(0.02f, 0.01f, 0.04f));
             fl.globalIlluminationFlags = MaterialGlobalIlluminationFlags.None;
             SaveMat("TempleFloor", fl);
+            var silver = new Material(Shader.Find("Universal Render Pipeline/Lit"));
+            silver.SetColor("_BaseColor", new Color(0.62f, 0.62f, 0.7f));
+            silver.SetFloat("_Smoothness", 0.97f); silver.SetFloat("_Metallic", 1f);
+            silver.globalIlluminationFlags = MaterialGlobalIlluminationFlags.None;
+            SaveMat("MirrorSilver", silver);
+            TransparentMat("LightBeam", null, new Color(0.8f, 0.72f, 1f, 0.09f), true);
+            TransparentMat("LightBeamPrism", null, new Color(0.55f, 0.85f, 1f, 0.12f), true);
 
             LitMat("WraithRobe", ash, new Color(0.09f, 0.08f, 0.12f), emission: new Color(0.05f, 0.02f, 0.1f));
             LitMat("RevenantGlass", knight, new Color(0.5f, 0.55f, 0.72f), emission: new Color(0.06f, 0.04f, 0.14f));
@@ -497,6 +504,8 @@ namespace DarkFantasy.EditorTools
 
         static void Radiantize(Renderer r)
         {
+            var mf = r.GetComponent<MeshFilter>();
+            if (mf && mf.sharedMesh && (mf.sharedMesh.name == "Dawnbreaker" || mf.sharedMesh.name == "Starwoven" || mf.sharedMesh.name == "ScytheRadiant")) return;   // already radiant
             var mats = r.sharedMaterials;
             for (int i = 0; i < mats.Length; i++)
             {
@@ -533,22 +542,48 @@ namespace DarkFantasy.EditorTools
                 pc.radiantWeapon = go;
                 return go;
             }
+            GameObject Fresh(PlayerController pc, string mesh)
+            {
+                var src = pc.relicWeapon;
+                var go = RelicObject(mesh, mesh, src.transform.parent);
+                go.transform.SetLocalPositionAndRotation(src.transform.localPosition, src.transform.localRotation);
+                go.transform.localScale = src.transform.localScale;
+                go.SetActive(false);
+                pc.radiantWeapon = go;
+                return go;
+            }
             Edit(p.player, (root, pc) =>
             {
-                var w = Twin(pc, "Dawnbreaker");
+                var w = Fresh(pc, "Dawnbreaker");
                 pc.radiantFx = RadiantSparkles(w.transform.parent, new Vector3(0f, 0.95f, 0f), new Vector3(0.03f, 1.4f, 0.16f), 26f, 3.5f);
             });
             Edit(p.archer, (root, pc) =>
             {
-                var w = Twin(pc, "Starwoven");
+                var w = Meshes.ContainsKey("Starwoven") ? Fresh(pc, "Starwoven") : Twin(pc, "Starwoven");
                 var fx = RadiantSparkles(w.transform, Vector3.zero, new Vector3(0.04f, 1.4f, 0.25f), 20f, 3f);
                 fx.transform.SetParent(w.transform.parent, true);
                 pc.radiantFx = fx;
             });
+            Edit(p.smoker, (root, pc) =>
+            {
+                var tw = Twin(pc, "PipeRadiant");
+                var bowl = FindDeep(root.transform, "Bowl");
+                if (bowl) pc.radiantFx = RadiantSparkles(bowl, Vector3.zero, new Vector3(0.12f, 0.12f, 0.12f), 14f, 2.6f);
+            });
             Edit(p.bard, (root, pc) =>
             {
-                Twin(pc, "BardStaffRadiant");
+                var tw = Twin(pc, "BardStaffRadiant");
                 var tip = FindDeep(root.transform, "StaffTip");
+                if (tip && Meshes.ContainsKey("BardRadiantCrown"))
+                {
+                    // a crown of light on the head of the staff, aligned with the staff's axis
+                    var rends = tw.GetComponentsInChildren<Renderer>(true);
+                    Vector3 c = rends.Length > 0 ? rends[0].bounds.center : tw.transform.position;
+                    Vector3 axis = (tip.position - c).sqrMagnitude > 1e-4f ? (tip.position - c).normalized : Vector3.up;
+                    var crown = RelicObject("BardRadiantCrown", "RadiantCrown", null);
+                    crown.transform.SetPositionAndRotation(tip.position, Quaternion.FromToRotation(Vector3.up, axis));
+                    crown.transform.SetParent(tw.transform, true);
+                }
                 pc.radiantFx = RadiantSparkles(tip ? tip : root.transform, Vector3.zero, new Vector3(0.14f, 0.14f, 0.22f), 20f, 2.8f);
             });
         }
@@ -594,9 +629,10 @@ namespace DarkFantasy.EditorTools
             var box = root.AddComponent<BoxCollider>(); box.center = new Vector3(0, 0.3f, 0); box.size = new Vector3(1.12f, 0.62f, 0.72f);
             rc.lidPivot = pivot; rc.glowLight = l;
             RadiantSparkles(root.transform, new Vector3(0f, 0.5f, 0f), new Vector3(1.1f, 0.4f, 0.7f), 26f, 5f).SetActive(true);
-            rc.swordDisplay = BuildRadiantDisplay("CinderOath", "RadiantDisplaySword");
-            rc.bowDisplay = BuildRadiantDisplay("Thornwraith", "RadiantDisplayBow");
+            rc.swordDisplay = BuildRadiantDisplay("Dawnbreaker", "RadiantDisplaySword");
+            rc.bowDisplay = BuildRadiantDisplay(Meshes.ContainsKey("Starwoven") ? "Starwoven" : "Thornwraith", "RadiantDisplayBow");
             if (Meshes.ContainsKey("StaffRelicDisplay")) rc.staffDisplay = BuildRadiantDisplay("StaffRelicDisplay", "RadiantDisplayStaff");
+            if (Meshes.ContainsKey("ScytheRadiant")) rc.scytheDisplay = BuildRadiantDisplay("ScytheRadiant", "RadiantDisplayScythe");
             return SavePrefab(root, "RadiantChest");
         }
 
@@ -836,6 +872,7 @@ namespace DarkFantasy.EditorTools
             BuildStairTower(root);
             BuildThornwood(root, R);
             BuildGlassTemple(root, R);
+            BuildThornSideAreas(root, R);
         }
 
         static void BuildStairTower(Transform root)
@@ -967,13 +1004,19 @@ namespace DarkFantasy.EditorTools
             SaveMesh(gmb.Build("ThornGround"), "ThornGround");
             Place("Ground", "ThornGround", "ThornGround", Vector3.zero, Quaternion.identity, f, true, 1f, false);
             // bounds of the ravine
-            AddBox(f, new Vector3(-44f, ForestY + 10f, 435f), new Vector3(1f, 30f, 220f));
-            AddBox(f, new Vector3(44f, ForestY + 10f, 435f), new Vector3(1f, 30f, 220f));
+            // (two gaps: the barrow in the west wall, the glassblower's grotto in the east)
+            void Bound(float x, float za, float zb) => AddBox(f, new Vector3(x, ForestY + 10f, (za + zb) * 0.5f), new Vector3(1f, 30f, zb - za));
+            Bound(-44f, 325f, BarrowZ - 2.6f); Bound(-44f, BarrowZ + 2.6f, 545f);
+            Bound(44f, 325f, GrottoZ - 2.6f); Bound(44f, GrottoZ + 2.6f, 545f);
             AddBox(f, new Vector3(0f, ForestY + 10f, 541f), new Vector3(90f, 30f, 1f));
             // ravine walls: tall dark rock faces just beyond the bounds
             for (float z = 330f; z < 545f; z += 9f)
                 foreach (int s in new[] { -1, 1 })
-                    Place("RavineRock", "Rock" + Mathf.Abs((int)z % 6), "StoneCastle", new Vector3(s * R(48f, 54f), ForestY - 2f, z + R(-2f, 2f)), Yaw(R(0, 360)), f, false, R(6f, 10f));
+                {
+                    float rx = s * R(48f, 54f), rz = z + R(-2f, 2f);
+                    if (Mathf.Abs(rz - (s < 0 ? BarrowZ : GrottoZ)) < 12f) continue;    // the side areas cut through here
+                    Place("RavineRock", "Rock" + Mathf.Abs((int)z % 6), "StoneCastle", new Vector3(rx, ForestY - 2f, rz), Yaw(R(0, 360)), f, false, R(6f, 10f));
+                }
             for (float x = -40f; x <= 40f; x += 9f)
                 Place("RavineRock", "Rock" + Mathf.Abs((int)x % 6), "StoneCastle", new Vector3(x, ForestY - 2f, R(548f, 553f)), Yaw(R(0, 360)), f, false, R(6f, 10f));
 
@@ -987,6 +1030,7 @@ namespace DarkFantasy.EditorTools
                 if (Mathf.Abs(x - PathX(z)) < 5f) continue;
                 if (Vector2.Distance(new Vector2(x, z), new Vector2(TempleC.x, TempleC.z)) < 30f) continue;
                 if (Vector2.Distance(new Vector2(x, z), new Vector2(TowerC.x, TowerC.z)) < 13f) continue;
+                if (Mathf.Abs(x) > 34f && Mathf.Abs(z - (x < 0f ? BarrowZ : GrottoZ)) < 6f) continue;   // keep the side-area mouths clear
                 var tr = Place("TwistedTree", treeMeshes[placed % treeMeshes.Count], "ThornBark", new Vector3(x, ForestY + GH(x, z) - 0.2f, z), Yaw(R(0, 360)), f, false, R(0.8f, 1.35f));
                 var cap = tr.AddComponent<CapsuleCollider>(); cap.radius = 0.5f; cap.height = 6f; cap.center = new Vector3(0, 3f, 0);
                 placed++;
@@ -1114,18 +1158,106 @@ namespace DarkFantasy.EditorTools
             sr.transform.rotation = Quaternion.Euler(-Mathf.Atan2(TempleFloorY - ForestY, 3.2f) * Mathf.Rad2Deg, 0f, 0f);
             sr.AddComponent<BoxCollider>().size = new Vector3(6.6f, 0.2f, 3.4f);
 
-            // ---- the broken ring of pillars (a gap at the south for the fog gate), the walls are invisible
-            for (int i = 0; i < 14; i++)
+            // ---- the Hall of Reflections: a ring of tall arched mirrors facing in (a gap at the south for the
+            //      fog gate), the same ring hanging upside down above (the reflection of the hall), light
+            //      falling from an oculus and split by prisms into beams that cross between the mirrors
+            float fy = TempleFloorY - ForestY;
+            SaveMesh(ProceduralMeshes.ArchFrame(333, 3.4f, 5f, 9.2f, 0.42f, 0.8f), "MirrorFrame");
+            SaveMesh(ProceduralMeshes.ArchPane(3.4f, 5f, 9.2f, 0f), "MirrorPane");
             {
-                float a = (i + 0.5f) / 14f * Mathf.PI * 2f;
-                if (Mathf.Abs(Mathf.DeltaAngle(a * Mathf.Rad2Deg, 180f)) < 14f) continue;
-                Vector3 p = c + new Vector3(Mathf.Sin(a) * radius, TempleFloorY - ForestY, Mathf.Cos(a) * radius);
-                bool broken = i % 3 != 0;
-                Place("TemplePillar", broken ? "PillarBroken" + (i % 2) : "PillarHall", "TempleStone", p, Yaw(R(0, 360)), t, true, broken ? 1.5f : 1f);
-                // an inverted pillar hangs above each standing one, held by the dark
-                var hang = Place("FloatingPillar", "PillarBroken" + ((i + 1) % 2), "TempleStone", p + Vector3.up * R(13f, 17f), Quaternion.Euler(180f, R(0, 360), R(-8, 8)), t, false, 1.3f);
-                GameObjectUtility.SetStaticEditorFlags(hang, 0);
-                var lev = hang.AddComponent<Levitate>(); lev.bob = 0.6f; lev.period = R(6f, 9f); lev.spin = new Vector3(0f, R(-4f, 4f), 0f); lev.wobble = 2f;
+                var plinth = new MeshBuilder { uvScale = 0.6f };
+                ProceduralMeshes.Box(plinth, new Vector3(0f, 0.25f, 0f), new Vector3(4.6f, 0.5f, 1.4f), 334, 0.05f);
+                plinth.AddPrism(new Vector3(-2.15f, 0.5f, 0f), new Vector3(-2.15f, 9.6f, 0f), 0.32f, 0.26f, 6, false, true, 335, 0f);
+                plinth.AddPrism(new Vector3(2.15f, 0.5f, 0f), new Vector3(2.15f, 9.6f, 0f), 0.32f, 0.26f, 6, false, true, 336, 0f);
+                SaveMesh(plinth.Build("MirrorPlinth"), "MirrorPlinth");
+            }
+            const int mirrors = 13;
+            for (int i = 0; i < mirrors; i++)
+            {
+                float a = (i + 0.5f) / mirrors * Mathf.PI * 2f;
+                if (Mathf.Abs(Mathf.DeltaAngle(a * Mathf.Rad2Deg, 180f)) < 15f) continue;
+                Vector3 o = new Vector3(Mathf.Sin(a), 0f, Mathf.Cos(a));
+                Vector3 p = c + o * (radius - 0.2f) + Vector3.up * fy;
+                var rot = Quaternion.LookRotation(-o);
+                bool cracked = i % 4 == 1;
+                Place("MirrorPlinth", "MirrorPlinth", "TempleStone", p, rot, t, true);
+                Place("MirrorFrame", "MirrorFrame", "TempleStone", p + Vector3.up * 0.5f, rot, t, false);
+                if (!cracked) Place("Mirror", "MirrorPane", "MirrorSilver", p + Vector3.up * 0.5f + o * 0.05f, rot, t, false, 1f, false);
+                else
+                    for (int k = 0; k < 5; k++)   // a shattered mirror: a few shards still in the frame
+                        Place("MirrorShard", "GroundShard" + (k % 4), "MirrorSilver", p + Vector3.up * (1.5f + k * 1.4f) + rot * new Vector3(R(-1f, 1f), 0f, 0f), Quaternion.Euler(R(-20, 20), R(0, 360), R(-30, 30)), t, false, R(0.6f, 1.1f), false);
+                // the reflection: the same mirror hanging upside down in the dark above, slowly turning
+                var up = Place("MirrorAbove", "MirrorFrame", "TempleStone", p + Vector3.up * 30f, Quaternion.Euler(180f, 0f, 0f) * Quaternion.LookRotation(o), t, false, 1f, false);
+                GameObjectUtility.SetStaticEditorFlags(up, 0);
+                var lev = up.AddComponent<Levitate>(); lev.bob = 0.5f; lev.period = R(7f, 11f); lev.spin = Vector3.zero; lev.wobble = 1.5f;
+                var upPane = Place("MirrorAbovePane", "MirrorPane", "MirrorSilver", Vector3.zero, Quaternion.identity, up.transform, false, 1f, false);
+                upPane.transform.localPosition = new Vector3(0f, 0f, 0.05f); upPane.transform.localRotation = Quaternion.identity;
+                var ml = new GameObject("MirrorGlint"); ml.transform.SetParent(t, false); ml.transform.position = p + Vector3.up * 5f - o * 1.2f;
+                var mli = ml.AddComponent<Light>(); mli.type = LightType.Point; mli.color = i % 2 == 0 ? new Color(0.65f, 0.55f, 1f) : new Color(0.5f, 0.85f, 1f); mli.range = 7f; mli.intensity = 2f; mli.shadows = LightShadows.None;
+            }
+            // the inlay: concentric rings of pale light in the black glass
+            {
+                var inl = new MeshBuilder();
+                foreach (float rr in new[] { 6f, 12.5f, 18.5f })
+                    for (int k = 0; k < 72; k++)
+                    {
+                        float a0 = k / 72f * Mathf.PI * 2f, a1 = (k + 1) / 72f * Mathf.PI * 2f;
+                        Vector3 d0 = new Vector3(Mathf.Sin(a0), 0f, Mathf.Cos(a0)), d1 = new Vector3(Mathf.Sin(a1), 0f, Mathf.Cos(a1));
+                        inl.AddQuad(d0 * (rr - 0.07f), d1 * (rr - 0.07f), d1 * (rr + 0.07f), d0 * (rr + 0.07f), Vector3.up);
+                    }
+                for (int k = 0; k < 13; k++)
+                {
+                    float a = (k + 0.5f) / 13f * Mathf.PI * 2f; Vector3 d = new Vector3(Mathf.Sin(a), 0f, Mathf.Cos(a)), sd = Vector3.Cross(Vector3.up, d) * 0.05f;
+                    inl.AddQuad(d * 6f - sd, d * 6f + sd, d * 18.5f + sd, d * 18.5f - sd, Vector3.up);
+                }
+                SaveMesh(inl.Build("TempleInlay"), "TempleInlay");
+                Place("Inlay", "TempleInlay", "GlassShardGlow", c + Vector3.up * (fy + 0.02f), Quaternion.identity, t, false, 1f, false);
+            }
+            // the oculus: a broken stone ring high above, and the shaft of pale light that falls through it
+            {
+                var oc = new MeshBuilder { uvScale = 0.4f };
+                for (int k = 0; k < 24; k++)
+                {
+                    if (k == 7 || k == 8 || k == 17) continue;   // broken
+                    float a0 = k / 24f * Mathf.PI * 2f, a1 = (k + 1) / 24f * Mathf.PI * 2f;
+                    oc.AddPrism(new Vector3(Mathf.Sin(a0), 0f, Mathf.Cos(a0)) * 7f, new Vector3(Mathf.Sin(a1), 0f, Mathf.Cos(a1)) * 7f, 0.9f, 0.9f, 6, true, true, 337 + k, 0.12f);
+                }
+                SaveMesh(oc.Build("TempleOculus"), "TempleOculus");
+                var ocg = Place("Oculus", "TempleOculus", "TempleStone", c + Vector3.up * 34f, Quaternion.identity, t, false, 1f, false);
+                GameObjectUtility.SetStaticEditorFlags(ocg, 0);
+                var olev = ocg.AddComponent<Levitate>(); olev.bob = 0.4f; olev.period = 12f; olev.spin = new Vector3(0f, 2f, 0f); olev.wobble = 1f;
+                var shaft = new MeshBuilder();
+                shaft.AddPrism(new Vector3(0f, 34f, 0f), new Vector3(0f, fy, 0f), 6.2f, 4.2f, 24, false, false, 360, 0f);
+                SaveMesh(shaft.Build("TempleShaft"), "TempleShaft");
+                Place("LightShaft", "TempleShaft", "LightBeam", c, Quaternion.identity, t, false, 1f, false);
+                var sl = new GameObject("OculusLight"); sl.transform.SetParent(t, false); sl.transform.position = c + Vector3.up * 33f; sl.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
+                var sli = sl.AddComponent<Light>(); sli.type = LightType.Spot; sli.spotAngle = 26f; sli.innerSpotAngle = 14f; sli.range = 50f; sli.intensity = 260f; sli.color = new Color(0.86f, 0.8f, 1f); sli.shadows = LightShadows.None;
+                Motes(t, c + Vector3.up * 14f, new Vector3(9f, 26f, 9f), 60f, new Color(1f, 0.95f, 1f, 1f), new Color(0.7f, 0.85f, 1f, 0.8f));
+            }
+            // prisms: three crystals drifting high in the shaft, each splitting the light into beams to the mirrors
+            {
+                var beam = new MeshBuilder();
+                beam.AddPrism(Vector3.zero, Vector3.forward, 0.12f, 0.12f, 6, false, false, 361, 0f);
+                SaveMesh(beam.Build("BeamUnit"), "BeamUnit");
+                for (int k = 0; k < 3; k++)
+                {
+                    float a = k / 3f * Mathf.PI * 2f;
+                    Vector3 pp = c + new Vector3(Mathf.Sin(a) * 2.2f, 17f + k * 2.5f, Mathf.Cos(a) * 2.2f);
+                    var pr = Place("Prism", "ShardSmall", "GlassShardGlow", pp, Quaternion.Euler(R(0, 360), R(0, 360), 0f), t, false, 4.5f, false);
+                    GameObjectUtility.SetStaticEditorFlags(pr, 0);
+                    var plev = pr.AddComponent<Levitate>(); plev.bob = 0.5f; plev.period = 6f + k; plev.spin = new Vector3(10f, 25f, 0f); plev.wobble = 5f;
+                    for (int j = 0; j < 4; j++)
+                    {
+                        float b = a + (j - 1.5f) * 0.55f + 0.3f;
+                        Vector3 target = c + new Vector3(Mathf.Sin(b) * (radius - 0.6f), fy + 3.5f + j * 1.3f, Mathf.Cos(b) * (radius - 0.6f));
+                        Vector3 d = target - pp;
+                        var bm = Place("PrismBeam", "BeamUnit", j % 2 == 0 ? "LightBeamPrism" : "LightBeam", pp, Quaternion.LookRotation(d), t, false, 1f, false);
+                        bm.transform.localScale = new Vector3(1f + j * 0.3f, 1f + j * 0.3f, d.magnitude);
+                        var bl = new GameObject("BeamHit"); bl.transform.SetParent(t, false); bl.transform.position = target - d.normalized * 0.8f;
+                        var bli = bl.AddComponent<Light>(); bli.type = LightType.Point; bli.range = 4f; bli.intensity = 3f; bli.shadows = LightShadows.None;
+                        bli.color = Color.HSVToRGB((k * 4 + j) / 12f * 0.5f + 0.5f, 0.45f, 1f);
+                    }
+                }
             }
             for (int i = 0; i < 40; i++)
             {
@@ -1207,7 +1339,7 @@ namespace DarkFantasy.EditorTools
                     overrideSun = true, sunColor = new Color(0.7f, 0.6f, 1f), sunIntensity = 1.1f, sunEuler = new Vector3(70f, 20f, 0f) },
                 new LevelRefs.AtmosphereZone { name = "Stair Tower", bounds = new Bounds(TowerC + new Vector3(0f, -6f, 0f), new Vector3(13.5f, 40f, 13.5f)),
                     fog = new Color(0.07f, 0.06f, 0.055f), fogDensity = 0.025f, ambient = new Color(0.42f, 0.37f, 0.33f), exposure = 1.3f },
-                new LevelRefs.AtmosphereZone { name = "Thornwood", bounds = new Bounds(new Vector3(0f, ForestY + 8f, 435f), new Vector3(110f, 30f, 220f)),
+                new LevelRefs.AtmosphereZone { name = "Thornwood", bounds = new Bounds(new Vector3(0f, ForestY + 8f, 435f), new Vector3(130f, 30f, 220f)),
                     fog = new Color(0.11f, 0.08f, 0.16f), fogDensity = 0.03f, ambient = new Color(0.36f, 0.32f, 0.48f), exposure = 1.0f,
                     overrideSun = true, sunColor = new Color(0.55f, 0.48f, 0.85f), sunIntensity = 0.7f, sunEuler = new Vector3(40f, 160f, 0f) },
                 new LevelRefs.AtmosphereZone { name = "The Long Bridge", bounds = new Bounds(new Vector3(0f, 20f, 284f), new Vector3(110f, 50f, 128f)),

@@ -68,6 +68,8 @@ namespace DarkFantasy.EditorTools
                 ConfigureArcherImport();
                 ConfigureDragonImport();
                 ConfigureBardImport();
+                ConfigureReaperImport();
+                ConfigureMovesImport();
 
                 Step("Animator", 0.5f);
                 var ctrl = BuildAnimator();
@@ -112,6 +114,41 @@ namespace DarkFantasy.EditorTools
             };
             var report = BuildPipeline.BuildPlayer(opts);
             Debug.Log($"[DF] Build: {report.summary.result} → {Path.GetFullPath(opts.locationPathName)} ({report.summary.totalSize / (1024 * 1024)} MB)");
+            if (report.summary.result == UnityEditor.Build.Reporting.BuildResult.Succeeded)
+                EditorUtility.RevealInFinder(opts.locationPathName);
+            if (File.Exists(ScenePath)) EditorSceneManager.OpenScene(ScenePath);
+        }
+
+        /// <summary>
+        /// macOS build made from Windows: needs the "Mac Build Support (Mono)" module (Unity Hub ▸ Installs ▸
+        /// Add modules). The Mono backend is used (IL2CPP for Mac can only be built on a Mac). Universal app
+        /// (Intel + Apple Silicon), unsigned: see the README for running it on the Mac.
+        /// </summary>
+        [MenuItem("Dark Fantasy/Build macOS Player (from Windows)", priority = 21)]
+        public static void BuildMac()
+        {
+            if (!BuildPipeline.IsBuildTargetSupported(BuildTargetGroup.Standalone, BuildTarget.StandaloneOSX))
+            {
+                Debug.LogError("[DF] Mac Build Support is not installed: Unity Hub ▸ Installs ▸ (this version) ▸ Add modules ▸ Mac Build Support (Mono).");
+                EditorUtility.DisplayDialog(Title, "Mac Build Support is not installed.\n\nUnity Hub ▸ Installs ▸ 6000.3 ▸ ⚙ Add modules ▸ Mac Build Support (Mono), then try again.", "OK");
+                return;
+            }
+            if (!File.Exists(ScenePath)) BuildAll();
+            var standalone = UnityEditor.Build.NamedBuildTarget.Standalone;
+            var backend = PlayerSettings.GetScriptingBackend(standalone);
+            PlayerSettings.SetScriptingBackend(standalone, ScriptingImplementation.Mono2x);   // IL2CPP for Mac only builds on a Mac
+            try { EditorUserBuildSettings.SetPlatformSettings(BuildPipeline.GetBuildTargetName(BuildTarget.StandaloneOSX), "Architecture", "x64ARM64"); } catch { }
+            var opts = new BuildPlayerOptions
+            {
+                scenes = new[] { ScenePath },
+                locationPathName = "Builds/macOS/AshesOfTheThrone.app",
+                target = BuildTarget.StandaloneOSX,
+                targetGroup = BuildTargetGroup.Standalone,
+                options = BuildOptions.None
+            };
+            var report = BuildPipeline.BuildPlayer(opts);
+            PlayerSettings.SetScriptingBackend(standalone, backend);
+            Debug.Log($"[DF] macOS build: {report.summary.result} → {Path.GetFullPath(opts.locationPathName)} ({report.summary.totalSize / (1024 * 1024)} MB)");
             if (report.summary.result == UnityEditor.Build.Reporting.BuildResult.Succeeded)
                 EditorUtility.RevealInFinder(opts.locationPathName);
             if (File.Exists(ScenePath)) EditorSceneManager.OpenScene(ScenePath);
@@ -433,6 +470,9 @@ namespace DarkFantasy.EditorTools
             BuildCastleMaterials();
             BuildBardMaterials();
             BuildMirrorMaterials();
+            BuildArmorMaterials();
+            BuildRealmMaterials();
+            BuildReaperMaterials();
         }
 
         // ================================================================== mesh
@@ -479,6 +519,7 @@ namespace DarkFantasy.EditorTools
             SaveMesh(ProceduralMeshes.Greatsword(), "Greatsword");
             SaveMesh(ArrowMesh(), "Arrow");
             foreach (var r in new[] { "CinderOath", "Thornwraith", "Wyrmfang", "Wyrmwing", "RewardChest", "RewardChestLid" }) BuildRelicMesh(r);
+            BuildRadiantMeshes();
 
             // travi e tetto spezzato
             var beam = new MeshBuilder { uvScale = 0.8f };
@@ -497,13 +538,31 @@ namespace DarkFantasy.EditorTools
         const string BossMusic = "Assets/bossfight.mp3";
         static Sfx.Entry[] _sfxEntries;
 
+        /// <summary>
+        /// Project audio: a larger DSP buffer ("Good latency", 1024) so a frame hitch or a burst of effects
+        /// doesn't starve the mixer (that is what made the music crackle and stutter), and more real voices.
+        /// </summary>
+        static void ConfigureAudioSettings()
+        {
+            var am = AssetDatabase.LoadAllAssetsAtPath("ProjectSettings/AudioManager.asset");
+            if (am == null || am.Length == 0) return;
+            var so = new SerializedObject(am[0]);
+            var buf = so.FindProperty("m_DSPBufferSize"); if (buf != null) buf.intValue = 1024;
+            var req = so.FindProperty("m_RequestedDSPBufferSize"); if (req != null) req.intValue = 1024;
+            var rv = so.FindProperty("m_RealVoiceCount"); if (rv != null) rv.intValue = 48;
+            var vv = so.FindProperty("m_VirtualVoiceCount"); if (vv != null) vv.intValue = 256;
+            so.ApplyModifiedPropertiesWithoutUndo();
+            AssetDatabase.SaveAssets();
+        }
+
         static AudioClip Snd(string path, bool stream = false)
         {
             if (!path.StartsWith("Assets/")) path = SoundPack + path;
             if (AssetImporter.GetAtPath(path) is AudioImporter ai)
             {
                 var st = ai.defaultSampleSettings;
-                st.loadType = stream ? AudioClipLoadType.Streaming : AudioClipLoadType.DecompressOnLoad;
+                // music: compressed in memory, decoded on the fly (disk streaming stuttered under load)
+                st.loadType = stream ? AudioClipLoadType.CompressedInMemory : AudioClipLoadType.DecompressOnLoad;
                 st.compressionFormat = stream ? AudioCompressionFormat.Vorbis : AudioCompressionFormat.PCM;
                 st.quality = 0.7f;
                 ai.defaultSampleSettings = st;
@@ -551,7 +610,7 @@ namespace DarkFantasy.EditorTools
                 E(SfxId.Warning,    new Vector2(0.95f, 1.05f), 0.55f, 0.7f, L("Magical Interface 8-1.wav", 0.09f, 0.6f, 0.45f)),
                 E(SfxId.Leap,       new Vector2(0.9f, 1.0f), 1f, 0.7f, L("Whoosh 4-1.wav", 0f, 1f, 0.6f), L("Bag Handle 1-5.wav", 0.14f, 0.6f, 0.6f)),
                 // bow: tension creak on the draw, dry knock + short whoosh on the release, "thunk" in walls
-                E(SfxId.BowDraw,    new Vector2(0.95f, 1.1f), 0.45f, 0.8f, L("Wood and Door Creak 01.wav", 0.06f, 0.7f, 1.8f)),
+                E(SfxId.BowDraw,    new Vector2(0.96f, 1.06f), 0.75f, 0.8f, L("Assets/649337__sonofxaudio__bow_draw_fast02.wav", 0f, 1f, 1f)),
                 E(SfxId.BowRelease, new Vector2(0.92f, 1.08f), 0.9f, 0.75f, L("Wood 14-8.wav", 0.01f, 1f, 1.5f), L("Whoosh 1-1.wav", 0.05f, 0.7f, 1.6f)),
                 E(SfxId.ArrowImpact, new Vector2(0.9f, 1.15f), 0.8f, 0.9f, L("Wood Chop 1-4.wav", 0f, 1f, 1.3f), L("Shield Wood Impact 2-1.wav", 0.02f, 0.35f, 1.4f)),
                 // reward chest: heavy lid creak, then the relics' chime
@@ -745,6 +804,7 @@ namespace DarkFantasy.EditorTools
             react.motion = Clip("knight_hurt_left");
             react.speed = 1.4f;
 
+            AddBodyLayer(ctrl, KnightFbx, "KnightBody");
             EditorUtility.SetDirty(ctrl);
             return ctrl;
         }
@@ -958,6 +1018,7 @@ namespace DarkFantasy.EditorTools
             var react = upper.AddState(CharacterAnimator.HitReactUpper);
             react.motion = ArcherClip("knight_hurt_left");
             react.speed = 1.4f;
+            AddBodyLayer(ctrl, ArcherFbx, "ArcherBody");
             EditorUtility.SetDirty(ctrl);
             return ctrl;
         }
@@ -1010,8 +1071,9 @@ namespace DarkFantasy.EditorTools
         }
 
         // ================================================================== prefab
-        public class Prefabs { public GameObject player, archer, bard, arrow, guardian, boss, arena, shockwave, lobby, chest, dragonChest, progress, gaoler, bowman, warden, dragon, dragonArena,
-            radiantChest, wraith, revenant, mirror, mirrorArena; }
+        public class Prefabs { public GameObject player, archer, bard, smoker, arrow, guardian, boss, arena, shockwave, lobby, chest, dragonChest, progress, gaoler, bowman, warden, dragon, dragonArena,
+            radiantChest, wraith, revenant, mirror, mirrorArena, reaper,
+            shade, sentinel, reaperBoss, reaperArena; }
 
         /// <summary>
         /// Embers and heat that ride a dragon weapon while it is equipped: world-space particles so a
@@ -1230,7 +1292,13 @@ namespace DarkFantasy.EditorTools
             }
 
             // ---- bard (playable class): hooded wanderer with a singing staff (Tools/bard_anim.py)
-            BuildBardPrefab(p, BuildBardAnimator());
+            var bardCtrl = BuildBardAnimator();
+            BuildBardPrefab(p, bardCtrl);
+            // ---- smoker (playable class): the bard's rig with a giant pipe, smoke spirits
+            BuildSmokerPrefab(p, bardCtrl);
+
+            // ---- reaper (playable class): hooded reaper with a scythe (Tools/reaper_anim.py)
+            BuildReaperPrefab(p, BuildReaperAnimator());
 
             // ---- guardiano corrotto
             {
@@ -1320,12 +1388,14 @@ namespace DarkFantasy.EditorTools
                         rc.swordDisplay = BuildRelicDisplay("Wyrmfang", "DragonDisplaySword", halo);
                         rc.bowDisplay = BuildRelicDisplay("Wyrmwing", "DragonDisplayBow", halo);
                         if (Meshes.ContainsKey("StaffDragonDisplay")) rc.staffDisplay = BuildRelicDisplay("StaffDragonDisplay", "DragonDisplayStaff", halo);
+                        if (Meshes.ContainsKey("ScytheDragon")) rc.scytheDisplay = BuildRelicDisplay("ScytheDragon", "DragonDisplayScythe", halo);
                     }
                     else
                     {
                         rc.swordDisplay = BuildRelicDisplay("CinderOath", "RelicDisplaySword", halo);
                         rc.bowDisplay = BuildRelicDisplay("Thornwraith", "RelicDisplayBow", new Color(0.55f, 0.85f, 1f));
                         if (Meshes.ContainsKey("StaffRelicDisplay")) rc.staffDisplay = BuildRelicDisplay("StaffRelicDisplay", "RelicDisplayStaff", new Color(1f, 0.62f, 0.3f));
+                        if (Meshes.ContainsKey("ScytheRelic")) rc.scytheDisplay = BuildRelicDisplay("ScytheRelic", "RelicDisplayScythe", new Color(1f, 0.55f, 0.28f));
                     }
                     return SavePrefab(root, dragon ? "DragonHoard" : "RewardChest");
                 }
@@ -1369,6 +1439,9 @@ namespace DarkFantasy.EditorTools
             }
             BuildCastlePrefabs(p, ctrl, archerCtrl);
             BuildMirrorPrefabs(p, ctrl);
+            BuildRealmPrefabs(p, ctrl);
+            AddClassUltimates(p);
+            BuildArmor(p);
             return p;
         }
 
@@ -1702,17 +1775,20 @@ namespace DarkFantasy.EditorTools
             lv.arenaSize = new Vector3(28, 16, 40);
             WireCastleRefs(lv, systems.transform, spawn);
             WireMirrorRefs(lv, systems.transform);
+            WireRealmRefs(lv, systems.transform);
 
             systems.AddComponent<InputUpdater>();
             var sfx = systems.AddComponent<Sfx>();
             sfx.entries = _sfxEntries;
             sfx.slashPeakTime = 0.23f;   // measured peak of the sword-slash clip
+            ConfigureAudioSettings();
             var music = systems.AddComponent<MusicPlayer>();
             music.bossTheme = AssetDatabase.LoadAssetAtPath<AudioClip>(BossMusic);
             music.dragonTheme = Snd("Assets/dragonbossfight.mp3", true);
+            music.reaperTheme = Snd("Assets/MECHANICAL GOD.mp3", true);   // the Reaper's theme
             {
                 // the Mirror's theme is cut into sections (seeks): kept compressed in memory, stereo
-                const string MirrorMusic = "Assets/mirrorboss.mp3";
+                const string MirrorMusic = "Assets/boss fight.mp3";   // a plain looping theme (no sections)
                 if (AssetImporter.GetAtPath(MirrorMusic) is AudioImporter mai)
                 {
                     var st = mai.defaultSampleSettings;
@@ -1721,6 +1797,7 @@ namespace DarkFantasy.EditorTools
                     mai.SaveAndReimport();
                 }
                 music.mirrorTheme = AssetDatabase.LoadAssetAtPath<AudioClip>(MirrorMusic);
+                music.mirrorSections = false;
                 if (music.mirrorTheme == null) Debug.LogWarning("[DF] Missing " + MirrorMusic);
             }
             var mfx = systems.AddComponent<MirrorFx>();
@@ -1762,6 +1839,7 @@ namespace DarkFantasy.EditorTools
             var ui = uiGo.AddComponent<GameUI>();
             ui.skin = skin;
             ui.spellIcons = _spellSprites;
+            ui.ultIcons = _ultSprites;
 
             // ---- rete
             var netGo = new GameObject("NetworkManager");
@@ -1785,6 +1863,7 @@ namespace DarkFantasy.EditorTools
             boot.chestPrefab = prefabs.chest;
             boot.dragonChestPrefab = prefabs.dragonChest;
             boot.bardPrefab = prefabs.bard;
+            boot.smokerPrefab = prefabs.smoker;
             boot.progressPrefab = prefabs.progress;
             boot.gaolerPrefab = prefabs.gaoler;
             boot.bowmanPrefab = prefabs.bowman;
@@ -1792,10 +1871,15 @@ namespace DarkFantasy.EditorTools
             boot.dragonPrefab = prefabs.dragon;
             boot.dragonArenaPrefab = prefabs.dragonArena;
             boot.radiantChestPrefab = prefabs.radiantChest;
+            boot.reaperPrefab = prefabs.reaper;
             boot.wraithPrefab = prefabs.wraith;
             boot.revenantPrefab = prefabs.revenant;
             boot.mirrorPrefab = prefabs.mirror;
             boot.mirrorArenaPrefab = prefabs.mirrorArena;
+            boot.shadePrefab = prefabs.shade;
+            boot.sentinelPrefab = prefabs.sentinel;
+            boot.reaperBossPrefab = prefabs.reaperBoss;
+            boot.reaperArenaPrefab = prefabs.reaperArena;
 
             EditorSceneManager.SaveScene(scene, ScenePath);
             EditorSceneManager.OpenScene(ScenePath, OpenSceneMode.Single); // riapre il file salvato (non "Untitled")
@@ -1811,7 +1895,8 @@ namespace DarkFantasy.EditorTools
             var list = ScriptableObject.CreateInstance<NetworkPrefabsList>();
             foreach (var go in new[] { prefabs.player, prefabs.archer, prefabs.bard, prefabs.guardian, prefabs.boss, prefabs.arena, prefabs.lobby, prefabs.chest, prefabs.dragonChest,
                                        prefabs.progress, prefabs.gaoler, prefabs.bowman, prefabs.warden, prefabs.dragon, prefabs.dragonArena,
-                                       prefabs.radiantChest, prefabs.wraith, prefabs.revenant, prefabs.mirror, prefabs.mirrorArena })
+                                       prefabs.radiantChest, prefabs.wraith, prefabs.revenant, prefabs.mirror, prefabs.mirrorArena, prefabs.reaper, prefabs.smoker,
+                                       prefabs.shade, prefabs.sentinel, prefabs.reaperBoss, prefabs.reaperArena })
                 if (go != null) list.Add(new NetworkPrefab { Prefab = go });
             AssetDatabase.CreateAsset(list, path);
             return list;
@@ -1924,6 +2009,7 @@ namespace DarkFantasy.EditorTools
             BuildCastleInterior(castle);
             BuildTerrace(castle, R);
             BuildBeyond(castle);
+            BuildRealm(castle);
         }
 
         static void AddLight(Transform parent, Vector3 localPos, Color c, float intensity, float range, bool shadows)

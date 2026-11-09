@@ -1294,7 +1294,7 @@ namespace DarkFantasy.EditorTools
             lv.wardens = Points("WardenSpawn", _wardens);
 
             var cps = new List<LevelRefs.CheckpointDef> { new LevelRefs.CheckpointDef { name = "The Bonfire", point = playerSpawn, reachRadius = 0f } };
-            string[] order = { "The Throne", "Hall of Chains", "The Grand Stair", "The Long Bridge", "The Thornwood", "The Glass Temple" };
+            string[] order = { "The Throne", "Hall of Chains", "The Grand Stair", "The Long Bridge", "The Thornwood", "The Glass Temple", "The Red Moon" };
             foreach (var c in _checkpoints.OrderBy(c => System.Array.IndexOf(order, c.name)))
             {
                 var t = new GameObject("Checkpoint_" + c.name).transform; t.SetParent(systems); t.position = c.p; t.rotation = Yaw(c.yaw);

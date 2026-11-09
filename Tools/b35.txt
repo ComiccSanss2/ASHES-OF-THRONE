@@ -1,0 +1,32 @@
+stop
+wait:4
+refresh
+wait:60
+menu:Dark Fantasy/Build Everything (playable scene)
+wait:340
+clear
+play
+wait:30
+msg:GameUI,DevMenuTest,smoker
+msg:GameUI,DevQuickStart,x
+wait:8
+msg:Player_0 (local),DevGod,1
+msg:Player_0 (local),DevTeleport,0;-149.8;834
+wait:4
+render:1.6,-148.2,836.4,0,-148.9,834,40|sm_front
+render:-1.2,-148.4,831.5,0,-148.9,834,40|sm_back
+msg:Player_0 (local),DevSmoke,3
+wait:1.5
+render:0,-146.5,828,0,-148.5,840,60|sm_spirits
+wait:3
+shot
+msg:Player_0 (local),DevSmoke,gust
+wait:0.4
+render:3,-147,830,0,-148.5,840,60|sm_gust
+wait:2
+msg:Player_0 (local),DevUlt,x
+wait:3
+render:0,-145,822,0,-144,836,70|sm_colossus
+wait:2
+shot
+wait:6

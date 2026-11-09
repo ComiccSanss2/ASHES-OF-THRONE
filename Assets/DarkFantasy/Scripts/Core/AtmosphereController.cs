@@ -18,6 +18,9 @@ namespace DarkFantasy
         Color _sunCol0; float _sunInt0; Quaternion _sunRot0; bool _sunInit;
         Color _zSunCol = Color.white; float _zSunInt; Quaternion _zSunRot = Quaternion.identity;
 
+        /// <summary>Extra fog density laid over the zone (the Reaper's Veil of Darkness).</summary>
+        public static float VeilFog;
+
         void Start() { _outAmbient = RenderSettings.ambientLight; }
 
         void Update()
@@ -43,6 +46,7 @@ namespace DarkFantasy
                         break;
                     }
 
+            if (VeilFog > 0.001f) { dens += VeilFog; fog = Color.Lerp(fog, new Color(0.02f, 0.0f, 0.01f), Mathf.Clamp01(VeilFog * 12f)); }
             if (!_init) { _fog = fog; _amb = amb; _density = dens; _exposure = exp; _init = true; }
             float k = 1f - Mathf.Exp(-blendSpeed * Time.deltaTime * 2f);
             _fog = Color.Lerp(_fog, fog, k);

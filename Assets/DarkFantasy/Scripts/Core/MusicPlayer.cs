@@ -13,8 +13,12 @@ namespace DarkFantasy
         public AudioClip dragonTheme;
         [Tooltip("The Shattered Mirror's theme: phase 1 loops the dark choir, phase 2 the orchestral crescendo.")]
         public AudioClip mirrorTheme;
+        [Tooltip("Death's theme (falls back to the King's).")]
+        public AudioClip reaperTheme;
         public Vector2 mirrorPhase1Loop = new Vector2(0f, 64f);
         public float mirrorPhase2Entry = 66f;
+        [Tooltip("The old Mirror theme was cut into sections (choir / crescendo); a plain theme just loops.")]
+        public bool mirrorSections = true;
         public Vector2 mirrorPhase2Loop = new Vector2(68f, 112f);
         [Range(0, 1)] public float volume = 0.55f;
         public float fadeIn = 2.5f;
@@ -25,6 +29,15 @@ namespace DarkFantasy
 
         void Awake()
         {
+            // a DSP buffer of 1024 samples: smaller ones starve when a frame hitches or many effects start at
+            // once, and the music crackles and stutters (applied once, before anything plays)
+            var cfg = AudioSettings.GetConfiguration();
+            if (cfg.dspBufferSize < 1024 || cfg.numRealVoices < 48)
+            {
+                cfg.dspBufferSize = Mathf.Max(1024, cfg.dspBufferSize);
+                cfg.numRealVoices = Mathf.Max(48, cfg.numRealVoices);
+                AudioSettings.Reset(cfg);
+            }
             _src = gameObject.AddComponent<AudioSource>();
             _src.clip = bossTheme;
             _src.loop = true;
@@ -46,6 +59,9 @@ namespace DarkFantasy
             MirrorArena.Defeated += Stop;
             MirrorArena.FightReset += Stop;
             MirrorAI.Awakened += OnMirrorPhase2;
+            ReaperArena.FightStarted += OnReaperFight;
+            ReaperArena.Defeated += Stop;
+            ReaperArena.FightReset += Stop;
         }
 
         void OnDisable()
@@ -60,7 +76,12 @@ namespace DarkFantasy
             MirrorArena.Defeated -= Stop;
             MirrorArena.FightReset -= Stop;
             MirrorAI.Awakened -= OnMirrorPhase2;
+            ReaperArena.FightStarted -= OnReaperFight;
+            ReaperArena.Defeated -= Stop;
+            ReaperArena.FightReset -= Stop;
         }
+
+        void OnReaperFight(int players) => PlayTheme(reaperTheme ? reaperTheme : bossTheme);
 
         void OnFight(int players) => PlayTheme(bossTheme);
         void OnDragonFight(int players) => PlayTheme(dragonTheme ? dragonTheme : bossTheme);
@@ -69,13 +90,13 @@ namespace DarkFantasy
         {
             var m = MirrorAI.Instance;
             PlayTheme(mirrorTheme ? mirrorTheme : bossTheme);
-            if (mirrorTheme && _src.clip == mirrorTheme && m != null && m.Phase >= 2 && _src.time < mirrorPhase2Entry) _src.time = mirrorPhase2Entry;
+            if (mirrorSections && mirrorTheme && _src.clip == mirrorTheme && m != null && m.Phase >= 2 && _src.time < mirrorPhase2Entry) _src.time = mirrorPhase2Entry;
         }
 
         /// <summary>The glass cracks through: jump straight to the crescendo.</summary>
         void OnMirrorPhase2()
         {
-            if (mirrorTheme == null || _src.clip != mirrorTheme || !_src.isPlaying) return;
+            if (!mirrorSections || mirrorTheme == null || _src.clip != mirrorTheme || !_src.isPlaying) return;
             if (_src.time < mirrorPhase2Entry) _src.time = Mathf.Min(mirrorPhase2Entry, mirrorTheme.length - 1f);
         }
 
@@ -86,6 +107,8 @@ namespace DarkFantasy
             if (!_src.isPlaying) { _src.time = 0f; _src.Play(); }
             _target = volume;
         }
+
+        float _noFight;
 
         void Stop() => _target = 0f;
 
@@ -98,18 +121,23 @@ namespace DarkFantasy
             bool dragonFight = dragon != null && dragon.IsSpawned && dragon.FightActive && dragon.IsAlive;
             var mirror = MirrorAI.Instance;
             bool mirrorFight = mirror != null && mirror.IsSpawned && mirror.FightActive && mirror.IsAlive;
-            bool fighting = PlayerController.Local != null && (kingFight || dragonFight || mirrorFight);
-            if (fighting && _target <= 0f) { if (mirrorFight) OnMirrorFight(0); else if (dragonFight) OnDragonFight(0); else OnFight(0); }
+            var reaper = ReaperBossAI.Instance;
+            bool reaperFight = reaper != null && reaper.IsSpawned && reaper.FightActive && reaper.IsAlive;
+            bool fighting = PlayerController.Local != null && (kingFight || dragonFight || mirrorFight || reaperFight);
+            if (fighting && _target <= 0f) { if (reaperFight) OnReaperFight(0); else if (mirrorFight) OnMirrorFight(0); else if (dragonFight) OnDragonFight(0); else OnFight(0); }
 
             // the Mirror's theme loops by section (the choir in phase 1, the crescendo in phase 2)
-            if (mirrorTheme && _src.clip == mirrorTheme && _src.isPlaying && _target > 0f)
+            if (mirrorSections && mirrorTheme && _src.clip == mirrorTheme && _src.isPlaying && _target > 0f)
             {
                 bool p2 = mirror != null && mirror.Phase >= 2;
                 Vector2 loop = p2 ? mirrorPhase2Loop : mirrorPhase1Loop;
                 loop.y = Mathf.Min(loop.y, mirrorTheme.length - 0.5f);
                 if (_src.time >= loop.y || (p2 && _src.time < loop.x - 3f)) _src.time = loop.x;
             }
-            if (!fighting && _target > 0f && PlayerController.Local == null) _target = 0f;
+            // the music follows the fight state itself, not only the arena events (a client that missed the
+            // "defeated" / "reset" event — late join, out of the arena, host migration — kept the theme looping)
+            if (!fighting && _target > 0f) { _noFight += Time.unscaledDeltaTime; if (_noFight > 2.5f) _target = 0f; }
+            else _noFight = 0f;
 
             if (_target > 0f) _target = Mathf.Max(0.0001f, volume * GameSettings.MusicVolume);
             float rate = _target > _src.volume ? volume / Mathf.Max(0.1f, fadeIn) : volume / Mathf.Max(0.1f, fadeOut);

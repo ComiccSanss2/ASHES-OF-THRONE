@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 625345539
+  GlobalObjectIdHash: 2529969977
   InScenePlacedSourceGlobalObjectIdHash: 0
   m_InScenePlacedDisabledByDefault: 0
   DeferredDespawnTick: 0
@@ -84,6 +84,7 @@ MonoBehaviour:
   swordDisplay: {fileID: 155347715224324129, guid: 5213d0e48abf19f43819ac166b9776ac, type: 3}
   bowDisplay: {fileID: 15700025103732013, guid: 93e1f77f186d22d4ebf2921763924edc, type: 3}
   staffDisplay: {fileID: 7175063384493260653, guid: 6b5653964661f104ba18962ef713ffaf, type: 3}
+  scytheDisplay: {fileID: 8673205000456043841, guid: e037ec6a576f89441936cdb614e1bf2d, type: 3}
 --- !u!65 &8457211599515580943
 BoxCollider:
   m_ObjectHideFlags: 0

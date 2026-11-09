@@ -1,0 +1,33 @@
+stop
+wait:4
+refresh
+wait:60
+menu:Dark Fantasy/Build Everything (playable scene)
+wait:340
+clear
+play
+wait:30
+msg:GameUI,DevMenuTest,knight
+msg:GameUI,DevQuickStart,x
+wait:8
+msg:Player_0 (local),DevGod,1
+msg:GameUI,DevArmor,1
+wait:1
+render:1.8,1.6,2.6,0,1.0,0,34|z_armor
+msg:Player_0 (local),DevTeleport,-50;-23.8;405
+wait:4
+render:-46.5,-22,404,-58,-23.4,405,70|z_barrow
+msg:Player_0 (local),DevTeleport,50;-23.8;472
+wait:4
+render:47,-21.8,473,57,-23,470.5,70|z_grotto
+msg:Player_0 (local),DevTeleport,0;-23;490
+wait:4
+render:0,-16,484,0,-12,522,72|z_temple
+msg:Player_0 (local),DevTeleport,0;-149.8;830
+wait:6
+render:0,-138,893,0,-140,960,70|z_court
+render:-30,-135,915,0,-152,945,70|z_court2
+render:6,-147.5,839,6,-149.5,847,60|z_beasts
+msg:Player_0 (local),DevTeleport,30;-149.8;862
+wait:4
+render:28.5,-148,862,39,-149,862,70|z_ossuary

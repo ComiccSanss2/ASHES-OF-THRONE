@@ -155,7 +155,8 @@ namespace DarkFantasy
                     desiredRot = Quaternion.Slerp(_baseRot, desiredRot, MathUtil.Damp(rotationSharpness, dt));
             }
 
-            float wantedDistance = distance * (IsLocked ? Mathf.Lerp(1f, 1.35f, Mathf.Clamp01(CurrentTarget.framingSize - 1f)) : 1f);
+            // big bosses: the camera backs off so the whole body (head, tail, claws) stays readable up close
+            float wantedDistance = distance * (IsLocked ? Mathf.Lerp(1f, 1.75f, Mathf.Clamp01((CurrentTarget.framingSize - 1f) / 2f)) : 1f);
             wantedDistance = Mathf.Lerp(wantedDistance, aimDistance, aimE);
             Vector3 pivot = _smoothedPivot + desiredRot * Vector3.right * Mathf.Lerp(shoulderOffset, aimShoulder, aimE);
             Vector3 back = desiredRot * Vector3.back;

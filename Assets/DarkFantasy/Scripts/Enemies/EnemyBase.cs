@@ -224,6 +224,8 @@ namespace DarkFantasy
             {
                 if (p == null || !p.IsSpawned || p.IsDead) continue;
                 float d = Vector3.Distance(transform.position, p.transform.position);
+                // sneaking (crouched) players are noticed only from much closer, unless already fighting us
+                if (p.Crouched && target != p) d /= 0.5f;
                 if (d > bestD) continue;
                 if (requireLos && Physics.Linecast(transform.position + Vector3.up * 1.5f, p.transform.position + Vector3.up * 1.2f, Layers.EnvironmentMask, QueryTriggerInteraction.Ignore)) continue;
                 bestD = d; best = p;
@@ -555,6 +557,25 @@ namespace DarkFantasy
             netLocoSpeed.Value = 0f;
             PlayAnimRpc(StateIndex(CharacterAnimator.Death), 0.1f, 0.9f);
             DeathFxRpc();
+            SoulsRpc(SoulReward, IsBossReward);
+        }
+
+        /// <summary>Souls given to every player of the party when this enemy dies.</summary>
+        protected virtual int SoulReward => Mathf.Clamp(Mathf.RoundToInt(netMaxHealth.Value * 0.3f), 12, 300);
+        protected virtual bool IsBossReward => false;
+
+        [Rpc(SendTo.Everyone)]
+        void SoulsRpc(int amount, bool boss)
+        {
+            var me = PlayerController.Local;
+            if (me == null) return;
+            PlayerSkills.AddSouls(amount, boss);
+            SoulWisp.Spawn(transform.position + Vector3.up * 1.2f, me.transform, new Color(0.85f, 0.75f, 1f));
+            // a draught now and then (each player rolls their own loot)
+            float chance = boss ? 1f : 0.12f;
+            int n = boss ? 2 : 1;
+            for (int i = 0; i < n; i++)
+                if (Random.value < chance) Potions.Add((Potions.Kind)Random.Range(0, Potions.KindCount));
         }
 
         [Rpc(SendTo.Everyone)]

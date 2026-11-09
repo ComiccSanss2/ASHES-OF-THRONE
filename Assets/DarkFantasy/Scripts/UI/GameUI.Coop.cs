@@ -122,7 +122,7 @@ namespace DarkFantasy.UI
         void UpdateCoopHud()
         {
             var me = PlayerController.Local;
-            bool hudOn = me != null && !_paused && !InventoryOpen;
+            bool hudOn = me != null && !_paused && !InventoryOpen && !SkillsOpen;
             bool pvpOn = me != null && me.PvpOn;
             if (_pvpBadge.gameObject.activeSelf != pvpOn) _pvpBadge.gameObject.SetActive(pvpOn);
             if (_paused && Time.frameCount % 10 == 0) RefreshPvpButton(pvpOn);
@@ -203,7 +203,7 @@ namespace DarkFantasy.UI
             UpdateDownedMarkers(me);
         }
 
-        static string ClassName(PlayerClass c) => c == PlayerClass.Archer ? "Archer" : c == PlayerClass.Bard ? "Bard" : "Knight";
+        static string ClassName(PlayerClass c) => c == PlayerClass.Archer ? "Archer" : c == PlayerClass.Bard ? "Bard" : c == PlayerClass.Reaper ? "Reaper" : c == PlayerClass.Smoker ? "Smoker" : "Knight";
 
         /// <summary>Over every fallen ally: name, bleed-out countdown and the revive hint.</summary>
         void UpdateDownedMarkers(PlayerController me)

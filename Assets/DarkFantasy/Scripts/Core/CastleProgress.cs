@@ -24,6 +24,9 @@ namespace DarkFantasy
         readonly NetworkVariable<bool> _greatDoor = new NetworkVariable<bool>(false);
         readonly NetworkVariable<bool> _dragonSlain = new NetworkVariable<bool>(false);
         readonly NetworkVariable<bool> _mirrorSlain = new NetworkVariable<bool>(false);
+        readonly NetworkVariable<bool> _reaperSlain = new NetworkVariable<bool>(false);
+        /// <summary>The host began this lobby from the very first flame (skills and souls reset on joining).</summary>
+        readonly NetworkVariable<bool> _freshStart = new NetworkVariable<bool>(true);
         readonly NetworkVariable<bool> _radiantFound = new NetworkVariable<bool>(false);
         readonly NetworkVariable<byte> _checkpoint = new NetworkVariable<byte>(0);
         /// <summary>Flames found so far (bit per checkpoint index).</summary>
@@ -34,6 +37,39 @@ namespace DarkFantasy
         public bool GreatDoorOpen => _greatDoor.Value;
         public bool DragonSlain => _dragonSlain.Value;
         public bool MirrorSlain => _mirrorSlain.Value;
+        public bool ReaperSlain => _reaperSlain.Value;
+        public bool FreshStart => _freshStart.Value;
+
+        /// <summary>Armour of a boss protects only once that boss has fallen in this lobby (the look is always yours).</summary>
+        public static bool ArmorEarned(byte set)
+        {
+            var p = Instance;
+            if (p == null || !p.IsSpawned) return false;
+            return set switch
+            {
+                Inventory.ArmorAshen => p.ThroneDoorOpen,
+                Inventory.ArmorWyrm => p.DragonSlain,
+                Inventory.ArmorMirror => p.MirrorSlain,
+                Inventory.ArmorDeath => p.ReaperSlain,
+                _ => false
+            };
+        }
+
+        public static string ArmorCondition(byte set) => set switch
+        {
+            Inventory.ArmorAshen => "defeat the Ashen King in this lobby",
+            Inventory.ArmorWyrm => "slay Vaelthrax in this lobby",
+            Inventory.ArmorMirror => "shatter the Mirror in this lobby",
+            Inventory.ArmorDeath => "end the Reaper in this lobby",
+            _ => ""
+        };
+
+        public void ServerReaperSlain()
+        {
+            if (!IsServer || _reaperSlain.Value) return;
+            _reaperSlain.Value = true;
+            AnnounceRpc("DEATH IS DEAD", "The red moon closes its eye");
+        }
         public bool RadiantFound => _radiantFound.Value;
 
         /// <summary>
@@ -126,6 +162,7 @@ namespace DarkFantasy
             var lv = LevelRefs.Instance;
             int max = lv != null && lv.checkpoints != null ? lv.checkpoints.Length - 1 : 0;
             start = Mathf.Clamp(Mathf.Min(start, MenuSettings.UnlockedCheckpoint), 0, max);
+            _freshStart.Value = start <= 0;
             if (start <= 0) return;
             _throneDoor.Value = true;
             if (start >= 3) { _keyFound.Value = true; _greatDoor.Value = true; }
@@ -135,6 +172,7 @@ namespace DarkFantasy
             _checkpoint.Value = (byte)start;
             BossArena.Instance?.ServerSkipDefeated();
             if (start >= 4) { _dragonSlain.Value = true; DragonArena.Instance?.ServerSkipDefeated(); }
+            if (start >= 7) { _mirrorSlain.Value = true; MirrorArena.Instance?.ServerSkipDefeated(); }
             Debug.Log($"[DF] Session starts at checkpoint {start} ({(lv != null ? lv.checkpoints[start].name : "?")})");
         }
 
@@ -250,6 +288,7 @@ namespace DarkFantasy
             else if (what == "great") { _keyFound.Value = true; OpenGreatDoorRpc(); }
             else if (what.StartsWith("cp ")) ServerSetCheckpoint(int.Parse(what.Substring(3)));
             else if (what == "dragon" && !_dragonSlain.Value) { _dragonSlain.Value = true; DragonArena.Instance?.ServerSkipDefeated(); }
+            else if (what == "mirror" && !_mirrorSlain.Value) { _mirrorSlain.Value = true; MirrorArena.Instance?.ServerSkipDefeated(); }
         }
     }
 }

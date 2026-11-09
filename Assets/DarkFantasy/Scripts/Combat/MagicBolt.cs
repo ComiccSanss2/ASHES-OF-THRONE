@@ -179,6 +179,7 @@ namespace DarkFantasy
                 {
                     enemy.LocalHitReact(point, false, from, dir);
                     enemy.TakeRangedHitRpc(_damage, _poise, point, from, _knockback);
+                PlayerUltimate.LocalDealt(_damage);
                 }
                 else enemy.CurseRpc(_curseDuration);
             }

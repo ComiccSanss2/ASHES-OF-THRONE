@@ -1,0 +1,28 @@
+stop
+wait:4
+refresh
+wait:60
+menu:Dark Fantasy/Build Everything (playable scene)
+wait:330
+clear
+play
+wait:35
+msg:GameUI,DevMenuTest,knight
+msg:GameUI,DevQuickStart,x
+wait:8
+msg:GameUI,DevUnlockWeapons,x
+msg:Player_0 (local),DevTeleport,0;8.2;270
+wait:2
+msg:GameUI,DevArmor,3
+wait:1
+render:1.2,9.8,271.8,0,9.5,270,30|helm_mirror
+msg:GameUI,DevArmor,1
+wait:1
+render:1.2,9.8,271.8,0,9.5,270,30|helm_ashen
+msg:GameUI,DevInventory,1
+wait:2
+msg:GameUI,DevInvProbe,x
+stop
+wait:6
+menu:Dark Fantasy/Build Windows Player (multiplayer test)
+wait:330

@@ -28,7 +28,7 @@ namespace DarkFantasy
         /// <summary>Quando true (menu aperti, morte, ecc.) il gameplay ignora l'input.</summary>
         static bool _blocked;
         /// <summary>Menus open (pause, inventory, F9) or the chat being typed: no gameplay input.</summary>
-        public static bool GameplayBlocked { get => _blocked || ChatOpen; set => _blocked = value; }
+        public static bool GameplayBlocked { get => _blocked || ChatOpen || InputBindings.Listening; set => _blocked = value; }
         /// <summary>The chat box has the keyboard.</summary>
         public static bool ChatOpen;
 
@@ -52,10 +52,10 @@ namespace DarkFantasy
                 Vector2 v = Vector2.zero;
                 if (KB != null)
                 {
-                    if (KB.wKey.isPressed || KB.upArrowKey.isPressed) v.y += 1;
-                    if (KB.sKey.isPressed || KB.downArrowKey.isPressed) v.y -= 1;
-                    if (KB.dKey.isPressed || KB.rightArrowKey.isPressed) v.x += 1;
-                    if (KB.aKey.isPressed || KB.leftArrowKey.isPressed) v.x -= 1;
+                    if (InputBindings.KeyHeld(GameAction.MoveForward) || KB.upArrowKey.isPressed) v.y += 1;
+                    if (InputBindings.KeyHeld(GameAction.MoveBack) || KB.downArrowKey.isPressed) v.y -= 1;
+                    if (InputBindings.KeyHeld(GameAction.MoveRight) || KB.rightArrowKey.isPressed) v.x += 1;
+                    if (InputBindings.KeyHeld(GameAction.MoveLeft) || KB.leftArrowKey.isPressed) v.x -= 1;
                 }
                 if (GP != null)
                 {
@@ -99,44 +99,47 @@ namespace DarkFantasy
         }
 
         // ---------------------------------------------------------------- azioni
-        public static bool SprintHeld => !GameplayBlocked && ((KB != null && KB.leftShiftKey.isPressed) || (GP != null && GP.buttonEast.isPressed && _eastHeldTime > 0.25f));
-        public static bool RollPressed => !GameplayBlocked && ((KB != null && KB.spaceKey.wasPressedThisFrame) || (GP != null && GP.buttonEast.wasReleasedThisFrame && _eastHeldTime < 0.3f));
-        public static bool LightAttackPressed => !GameplayBlocked && ((MS != null && Cursor.lockState == CursorLockMode.Locked && MS.leftButton.wasPressedThisFrame) || (GP != null && GP.rightShoulder.wasPressedThisFrame));
-        public static bool HeavyPressed => !GameplayBlocked && ((KB != null && KB.fKey.wasPressedThisFrame) || (GP != null && GP.rightTrigger.wasPressedThisFrame));
-        public static bool HeavyHeld => !GameplayBlocked && ((KB != null && KB.fKey.isPressed) || (GP != null && GP.rightTrigger.isPressed));
-        public static bool BlockHeld => !GameplayBlocked && ((MS != null && Cursor.lockState == CursorLockMode.Locked && MS.rightButton.isPressed) || (GP != null && GP.leftShoulder.isPressed));
-        public static bool ParryPressed => !GameplayBlocked && ((KB != null && KB.qKey.wasPressedThisFrame) || (GP != null && GP.leftTrigger.wasPressedThisFrame));
-        public static bool LockOnPressed => !GameplayBlocked && ((MS != null && MS.middleButton.wasPressedThisFrame) || (GP != null && GP.rightStickButton.wasPressedThisFrame));
+        // gamepad: when sprint and roll share a button (B by default) a hold sprints and a tap rolls
+        static bool PadShared => InputBindings.PadOf(GameAction.Sprint) == InputBindings.PadOf(GameAction.Roll);
+        public static bool SprintHeld => !GameplayBlocked && (InputBindings.KeyHeld(GameAction.Sprint) || (InputBindings.PadHeld(GameAction.Sprint) && (!PadShared || _eastHeldTime > 0.25f)));
+        public static bool RollPressed => !GameplayBlocked && (InputBindings.KeyDown(GameAction.Roll) || (PadShared ? InputBindings.PadUp(GameAction.Roll) && _eastHeldTime < 0.3f : InputBindings.PadDown(GameAction.Roll)));
+        public static bool LightAttackPressed => !GameplayBlocked && (InputBindings.KeyDown(GameAction.Attack) || InputBindings.PadDown(GameAction.Attack));
+        /// <summary>Held: attacks keep coming (a full combo, or a stream of arrows / notes / puffs).</summary>
+        public static bool LightAttackHeld => !GameplayBlocked && (InputBindings.KeyHeld(GameAction.Attack) || InputBindings.PadHeld(GameAction.Attack));
+        public static bool HeavyPressed => !GameplayBlocked && (InputBindings.KeyDown(GameAction.Heavy) || InputBindings.PadDown(GameAction.Heavy));
+        public static bool HeavyHeld => !GameplayBlocked && (InputBindings.KeyHeld(GameAction.Heavy) || InputBindings.PadHeld(GameAction.Heavy));
+        public static bool BlockHeld => !GameplayBlocked && (InputBindings.KeyHeld(GameAction.Block) || InputBindings.PadHeld(GameAction.Block));
+        public static bool ParryPressed => !GameplayBlocked && (InputBindings.KeyDown(GameAction.Parry) || InputBindings.PadDown(GameAction.Parry));
+        public static bool LockOnPressed => !GameplayBlocked && (InputBindings.KeyDown(GameAction.LockOn) || InputBindings.PadDown(GameAction.LockOn));
         /// <summary>Hold: the scoreboard (players, class, weapon, kills / deaths / revives).</summary>
-        public static bool ScoreboardHeld => (KB != null && KB.tabKey.isPressed) || (GP != null && GP.selectButton.isPressed && GP.leftShoulder.isPressed);
+        public static bool ScoreboardHeld => InputBindings.KeyHeld(GameAction.Scoreboard) || (GP != null && GP.selectButton.isPressed && GP.leftShoulder.isPressed);
         /// <summary>Downed: hold to give up and go back to the last flame.</summary>
-        public static bool GiveUpHeld => !GameplayBlocked && ((KB != null && KB.spaceKey.isPressed) || (GP != null && GP.buttonNorth.isPressed));
-        public static bool FlaskPressed => !GameplayBlocked && ((KB != null && KB.rKey.wasPressedThisFrame) || (GP != null && GP.buttonWest.wasPressedThisFrame));
+        public static bool GiveUpHeld => !GameplayBlocked && (InputBindings.KeyHeld(GameAction.Roll) || (GP != null && GP.buttonNorth.isPressed));
+        /// <summary>Crouch toggle: Ctrl or C, gamepad left stick press.</summary>
+        public static bool CrouchPressed => !GameplayBlocked && (InputBindings.KeyDown(GameAction.Crouch) || (KB != null && KB.cKey.wasPressedThisFrame && InputBindings.KeyOf(GameAction.Crouch) == (int)Key.LeftCtrl) || InputBindings.PadDown(GameAction.Crouch));
+        public static bool FlaskPressed => !GameplayBlocked && (InputBindings.KeyDown(GameAction.Flask) || InputBindings.PadDown(GameAction.Flask));
         /// <summary>Bard spells: keys 1-4, gamepad D-pad up/right/down/left.</summary>
         public static bool SpellPressed(int i)
         {
             if (GameplayBlocked) return false;
+            var a = GameAction.Slot1 + Mathf.Clamp(i, 0, 3);
+            if (InputBindings.KeyDown(a) || InputBindings.PadDown(a)) return true;
             if (KB != null)
             {
-                var k = i == 0 ? KB.digit1Key : i == 1 ? KB.digit2Key : i == 2 ? KB.digit3Key : KB.digit4Key;
-                if (k.wasPressedThisFrame) return true;
                 var n = i == 0 ? KB.numpad1Key : i == 1 ? KB.numpad2Key : i == 2 ? KB.numpad3Key : KB.numpad4Key;
                 if (n.wasPressedThisFrame) return true;
             }
-            if (GP != null)
-            {
-                var d = i == 0 ? GP.dpad.up : i == 1 ? GP.dpad.right : i == 2 ? GP.dpad.down : GP.dpad.left;
-                if (d.wasPressedThisFrame) return true;
-            }
             return false;
         }
-        public static bool InteractPressed => !GameplayBlocked && ((KB != null && KB.eKey.wasPressedThisFrame) || (GP != null && GP.buttonSouth.wasPressedThisFrame));
+        public static bool InteractPressed => !GameplayBlocked && (InputBindings.KeyDown(GameAction.Interact) || InputBindings.PadDown(GameAction.Interact));
 
         // Queste funzionano anche a gameplay bloccato (servono per aprire/chiudere menu)
         public static bool PausePressed => (KB != null && KB.escapeKey.wasPressedThisFrame) || (GP != null && GP.startButton.wasPressedThisFrame);
         public static bool HelpPressed => KB != null && KB.f1Key.wasPressedThisFrame;
         /// <summary>Opens/closes the inventory (works while the inventory itself blocks gameplay).</summary>
-        public static bool InventoryPressed => (KB != null && KB.iKey.wasPressedThisFrame) || (GP != null && GP.selectButton.wasPressedThisFrame);
+        /// <summary>Skill tree.</summary>
+        public static bool SkillsPressed => !InputBindings.Listening && !ChatOpen && InputBindings.KeyDown(GameAction.Skills);
+        public static bool InventoryPressed => !InputBindings.Listening && !ChatOpen && (InputBindings.KeyDown(GameAction.Inventory) || InputBindings.PadDown(GameAction.Inventory));
 
         public static bool UsingGamepadLast { get; private set; }
 
@@ -148,12 +151,16 @@ namespace DarkFantasy
         {
             if (GP != null)
             {
-                if (GP.buttonEast.isPressed) _eastHeldTime += Time.unscaledDeltaTime;
-                else if (!GP.buttonEast.wasReleasedThisFrame) _eastHeldTime = 0f;
-                if (GP.wasUpdatedThisFrame && (GP.leftStick.ReadValue().sqrMagnitude > 0.1f || GP.rightStick.ReadValue().sqrMagnitude > 0.1f))
+                if (InputBindings.PadHeld(GameAction.Roll)) _eastHeldTime += Time.unscaledDeltaTime;
+                else if (!InputBindings.PadUp(GameAction.Roll)) _eastHeldTime = 0f;
+                // the prompts follow the device last touched (sticks or any button)
+                if (GP.wasUpdatedThisFrame && (GP.leftStick.ReadValue().sqrMagnitude > 0.1f || GP.rightStick.ReadValue().sqrMagnitude > 0.1f
+                    || GP.buttonSouth.isPressed || GP.buttonEast.isPressed || GP.buttonWest.isPressed || GP.buttonNorth.isPressed
+                    || GP.leftShoulder.isPressed || GP.rightShoulder.isPressed || GP.leftTrigger.isPressed || GP.rightTrigger.isPressed
+                    || GP.dpad.ReadValue().sqrMagnitude > 0.1f || GP.startButton.isPressed || GP.selectButton.isPressed))
                     UsingGamepadLast = true;
             }
-            if (MS != null && MS.delta.ReadValue().sqrMagnitude > 4f) UsingGamepadLast = false;
+            if ((MS != null && (MS.delta.ReadValue().sqrMagnitude > 4f || MS.leftButton.wasPressedThisFrame)) || (KB != null && KB.anyKey.wasPressedThisFrame)) UsingGamepadLast = false;
         }
 
         public static void SetCursorLocked(bool locked)

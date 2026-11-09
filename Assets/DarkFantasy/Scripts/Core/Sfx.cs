@@ -59,6 +59,11 @@ namespace DarkFantasy
         readonly Dictionary<SfxId, Entry> _map = new Dictionary<SfxId, Entry>();
         readonly Queue<AudioSource> _pool = new Queue<AudioSource>();
         readonly List<AudioSource> _busy = new List<AudioSource>();
+        readonly Dictionary<AudioClip, float> _lastStart = new Dictionary<AudioClip, float>();
+        /// <summary>Hard cap on simultaneous effects: past it the mixer starts dropping out (the music stutters).</summary>
+        public int maxVoices = 26;
+        const int MaxSameClip = 3;
+        const float MinSameClipGap = 0.04f;
 
         void Awake()
         {
@@ -96,13 +101,45 @@ namespace DarkFantasy
             return s;
         }
 
+        /// <summary>Voice budget: the same clip at most 3 at once and not twice within 40 ms (a crowd of hits or
+        /// a stream of puffs would stack dozens of copies), and never more than maxVoices in total.</summary>
+        bool Admit(AudioClip clip, float vol)
+        {
+            if (vol < 0.01f) return false;
+            float now = Time.unscaledTime;
+            if (_lastStart.TryGetValue(clip, out float t0) && now - t0 < MinSameClipGap) return false;
+            int same = 0, live = 0;
+            for (int i = 0; i < _busy.Count; i++)
+            {
+                var b = _busy[i];
+                if (b == null) continue;
+                live++;
+                if (b.clip == clip && (b.isPlaying || b.GetComponent<DelayedFlag>().pending)) same++;
+            }
+            if (same >= MaxSameClip) return false;
+            if (live >= maxVoices)
+            {
+                // full: replace the quietest effect only if this one is clearly louder, else drop it
+                AudioSource quiet = null;
+                foreach (var b in _busy) if (b && (quiet == null || b.volume < quiet.volume)) quiet = b;
+                if (quiet == null || quiet.volume * 1.5f > vol) return false;
+                quiet.Stop(); quiet.GetComponent<DelayedFlag>().pending = false;
+                _busy.Remove(quiet); _pool.Enqueue(quiet);
+            }
+            _lastStart[clip] = now;
+            return true;
+        }
+
         void PlayLayer(Layer l, Vector3 pos, float vol, float pitch, float spatial, float delay)
         {
             if (l == null || l.clip == null) return;
+            float v = Mathf.Clamp01(vol * l.volume * masterVolume * GameSettings.SfxVolume);
+            if (!Admit(l.clip, v)) return;
             var s = Get();
+            s.priority = spatial < 0.5f ? 64 : 160;     // the music source has priority 0: never stolen
             s.transform.position = pos;
             s.clip = l.clip;
-            s.volume = Mathf.Clamp01(vol * l.volume * masterVolume * GameSettings.SfxVolume);
+            s.volume = v;
             s.pitch = Mathf.Clamp(pitch * l.pitch, 0.1f, 3f);
             s.spatialBlend = spatial;
             float off = l.offset;

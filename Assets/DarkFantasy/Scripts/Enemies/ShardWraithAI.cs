@@ -25,6 +25,9 @@ namespace DarkFantasy
         public Transform[] shards;
         public Renderer glowRenderer;
         public Light glowLight;
+        [Tooltip("Mourning Shade (the Red Moon): one slow homing soul instead of a fan of glass.")]
+        public bool soulBolt;
+        public Color glowColor = new Color(0.55f, 0.25f, 1f);
 
         readonly NetworkVariable<byte> _act = new NetworkVariable<byte>(0);
         readonly NetworkVariable<double> _actStart = new NetworkVariable<double>(0);
@@ -132,6 +135,7 @@ namespace DarkFantasy
             var tcc = target.GetComponent<CharacterController>();
             if (tcc) aim += MathUtil.Flat(tcc.velocity) * 0.25f;   // a little lead
             Vector3 dir = (aim - from).normalized;
+            if (soulBolt) { SoulRpc(from, dir * 8.5f, target.NetworkObject); return; }
             for (int k = -1; k <= 1; k++)
             {
                 Vector3 v = Quaternion.AngleAxis(k * 9f, Vector3.up) * dir * splinterSpeed;
@@ -154,6 +158,14 @@ namespace DarkFantasy
         {
             GlassShard.Fire(GlassShard.Kind.Splinter, from, vel, this, IsServer, splinterDamage, 12f);
             Sfx.Play(SfxId.ArrowImpact, from, 0.6f, Random.Range(1.6f, 1.9f));
+        }
+
+        [Rpc(SendTo.Everyone)]
+        void SoulRpc(Vector3 from, Vector3 vel, Unity.Netcode.NetworkObjectReference victim)
+        {
+            Transform t = victim.TryGet(out Unity.Netcode.NetworkObject no) ? no.transform : null;
+            GlassShard.Fire(GlassShard.Kind.Phantom, from, vel, this, IsServer, splinterDamage, 14f, t, 0, 0f);
+            Sfx.Play(SfxId.MirrorCurse, from, 0.7f, Random.Range(0.6f, 0.75f));
         }
 
         [Rpc(SendTo.Everyone)]
@@ -191,7 +203,7 @@ namespace DarkFantasy
             if (glowRenderer)
             {
                 glowRenderer.GetPropertyBlock(_mpb);
-                _mpb.SetColor("_EmissionColor", MirrorFx.Void * glow * (alive ? 1f : 0f));
+                _mpb.SetColor("_EmissionColor", glowColor * glow * (alive ? 1f : 0f));
                 glowRenderer.SetPropertyBlock(_mpb);
             }
             if (glowLight) glowLight.intensity = alive ? 1.2f + glow * 2f : 0f;

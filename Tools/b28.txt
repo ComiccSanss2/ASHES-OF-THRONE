@@ -1,0 +1,38 @@
+stop
+wait:4
+refresh
+wait:50
+menu:Dark Fantasy/Build Everything (playable scene)
+wait:330
+clear
+play
+wait:35
+msg:GameUI,DevMenuTest,reaper
+msg:GameUI,DevQuickStart,x
+wait:8
+msg:Player_0 (local),DevGod,1
+msg:Player_0 (local),DevTeleport,0;8.2;270
+wait:3
+msg:Player_0 (local),DevPose,Locomotion;0.3;1
+msg:Player_0 (local),DevCrouch,1
+wait:1.5
+render:2.6,9.4,273.4,0,8.7,270,42|crouch
+msg:Player_0 (local),DevCrouch,0
+wait:1.5
+msg:Player_0 (local),DevRoll,x
+wait:0.2
+render:3.2,9.6,272,0,8.8,271.5,50|roll1
+wait:0.15
+render:3.2,9.6,272,0,8.8,272.5,50|roll2
+wait:0.15
+render:3.2,9.6,273,0,8.8,273.5,50|roll3
+wait:2
+msg:GameUI,DevMenuTest,death
+wait:9
+render:6,-146,924,0,-147.5,942,55|death_idle
+shot
+wait:2
+msg:ReaperBoss(Clone),DevHealth,0.35
+wait:5
+render:6,-146,924,0,-147.5,942,55|death_p2
+shot

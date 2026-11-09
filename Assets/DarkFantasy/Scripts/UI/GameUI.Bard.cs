@@ -42,6 +42,11 @@ namespace DarkFantasy.UI
             _manaBar = UIBar.Create(_hud, skin.barFrameMana ? skin.barFrameMana : skin.barFrameXp, skin.barFillMana ? skin.barFillMana : skin.barFillXp,
                                     new Vector2(0, 1), new Vector2(0, 1), new Vector2(38, -50), 176, new Color(0.45f, 0.65f, 1f));
             _manaBar.gameObject.SetActive(false);
+            // the smoker: breath drawn (pips) and spirits alive, under the mana bar
+            _smokeInfo = UIFactory.Label(_hud, "", new Vector2(0, 1), new Vector2(225, -70), new Vector2(420, 20), 14, new Color(0.82f, 0.78f, 0.7f), TextAnchor.MiddleLeft);
+            _smokeInfo.gameObject.SetActive(false);
+            BuildSmokeCharge();
+            SmokerCaster.CastFailed += why => { _smokeFail = why; _smokeFailT = 1.2f; };
 
             // buff icon row under the bars
             _statusRoot = UIFactory.Rect("Status", _hud, new Vector2(0, 1), new Vector2(0, 1), new Vector2(60, -96), new Vector2(200, 30));
@@ -67,9 +72,8 @@ namespace DarkFantasy.UI
                 s.cd.type = Image.Type.Filled; s.cd.fillMethod = Image.FillMethod.Radial360; s.cd.fillOrigin = (int)Image.Origin360.Top; s.cd.fillClockwise = false;
                 s.cdText = UIFactory.Text(UIFactory.Stretch("CdT", s.root), "", 20, skin.bone0, TextAnchor.MiddleCenter, true);
                 // key badge (top-left)
-                var key = UIFactory.Rect("Key", s.root, new Vector2(0, 1), new Vector2(0.5f, 0.5f), new Vector2(2, -2), new Vector2(22, 20));
-                UIFactory.Image(key, skin.keycap);
-                s.key = UIFactory.Text(UIFactory.Stretch("K", key, 0, 2, 0, 4), (i + 1).ToString(), 13, skin.bone0);
+                var glyph = InputGlyph.Create(s.root, GameAction.Slot1 + i, new Vector2(0, 1), new Vector2(2, -2), 22f);
+                s.key = glyph.GetComponentInChildren<Text>();
                 // mana cost (bottom-right)
                 s.cost = UIFactory.Label(s.root, "", new Vector2(1, 0), new Vector2(-14, 8), new Vector2(30, 14), 12, new Color(0.6f, 0.78f, 1f), TextAnchor.MiddleRight);
                 // name + effect above
@@ -103,6 +107,69 @@ namespace DarkFantasy.UI
             return _solid;
         }
 
+        Text _smokeInfo;
+        string _smokeFail;
+        float _smokeFailT;
+
+        // ---- the smoker's charge, in the middle of the screen while he draws on the pipe
+        RectTransform _chargeRt;
+        CanvasGroup _chargeCg;
+        Image[] _chargeFill, _chargeBack;
+        Text _chargeTitle, _chargeSub;
+        float _chargePulse;
+
+        void BuildSmokeCharge()
+        {
+            _chargeRt = UIFactory.Rect("SmokeCharge", _hud, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0f, -80f), new Vector2(330f, 92f));
+            _chargeCg = _chargeRt.gameObject.AddComponent<CanvasGroup>(); _chargeCg.alpha = 0f; _chargeCg.blocksRaycasts = false;
+            var bg = UIFactory.Image(UIFactory.Stretch("Bg", _chargeRt), _solid ? _solid : (_solid = MakeSolid()), false, new Color(0.04f, 0.035f, 0.03f, 0.72f));
+            var edge = UIFactory.Image(UIFactory.Rect("Edge", _chargeRt, new Vector2(0.5f, 1f), new Vector2(0.5f, 1f), Vector2.zero, new Vector2(330f, 2f)), _solid, false, new Color(1f, 0.6f, 0.3f, 0.7f));
+            _chargeTitle = UIFactory.Label(_chargeRt, "DRAWING SMOKE", new Vector2(0.5f, 1f), new Vector2(0f, -15f), new Vector2(320f, 24f), 19, new Color(1f, 0.82f, 0.62f), TextAnchor.MiddleCenter, true);
+            _chargeFill = new Image[3]; _chargeBack = new Image[3];
+            for (int i = 0; i < 3; i++)
+            {
+                var slot = UIFactory.Rect("Spirit" + i, _chargeRt, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2((i - 1) * 100f, -2f), new Vector2(88f, 16f));
+                _chargeBack[i] = UIFactory.Image(slot, _solid, false, new Color(0.22f, 0.2f, 0.18f, 0.9f));
+                var f = UIFactory.Rect("Fill", slot, new Vector2(0f, 0.5f), new Vector2(0f, 0.5f), new Vector2(2f, 0f), new Vector2(84f, 12f));
+                _chargeFill[i] = UIFactory.Image(f, _solid, false, new Color(1f, 0.55f, 0.22f));
+                _chargeFill[i].type = Image.Type.Filled; _chargeFill[i].fillMethod = Image.FillMethod.Horizontal; _chargeFill[i].fillAmount = 0f;
+            }
+            _chargeSub = UIFactory.Label(_chargeRt, "", new Vector2(0.5f, 0f), new Vector2(0f, 15f), new Vector2(320f, 20f), 14, new Color(0.85f, 0.8f, 0.72f));
+        }
+
+        void UpdateSmokerHud(PlayerController p)
+        {
+            var sm = SmokerCaster.Local;
+            bool on = p != null && p.IsSmoker && sm != null;
+            if (_smokeInfo.gameObject.activeSelf != on) _smokeInfo.gameObject.SetActive(on);
+            bool charging = on && sm.Inhaling && !p.IsDead;
+            _chargeCg.alpha = Mathf.MoveTowards(_chargeCg.alpha, charging ? 1f : 0f, Time.deltaTime * (charging ? 8f : 3f));
+            if (!on) return;
+            // the corner line: how to use it, cooldowns, spirits alive
+            string glyph = GameInput.UsingGamepadLast ? InputBindings.PadLabel(InputBindings.PadOf(GameAction.Block)) : InputBindings.KeyLabel(InputBindings.KeyOf(GameAction.Block));
+            string draw = sm.DrawCooldown > 0f ? $"<color=#8a8070>breath in {sm.DrawCooldown:0.0}s</color>" : $"<color=#ffb070>[{glyph}]</color> hold: draw smoke";
+            string gust = sm.GustCooldown > 0f ? $"   <color=#8a8070>gust {sm.GustCooldown:0.0}s</color>" : "";
+            if (_smokeFailT > 0f) { _smokeFailT -= Time.deltaTime; _smokeInfo.text = "<color=#e07a62>" + _smokeFail + "</color>"; }
+            else _smokeInfo.text = $"{draw}   Spirits {sm.Spirits}/{sm.maxSpirits}{gust}";
+            if (_chargeCg.alpha <= 0.001f) return;
+            float b = sm.Breath;
+            int full = Mathf.FloorToInt(b + 0.001f);
+            _chargePulse += Time.deltaTime;
+            for (int i = 0; i < 3; i++)
+            {
+                bool exists = i < sm.maxBreath;
+                _chargeBack[i].gameObject.SetActive(exists);
+                if (!exists) continue;
+                float f = Mathf.Clamp01(b - i);
+                _chargeFill[i].fillAmount = f;
+                float glow = f >= 1f ? 0.75f + 0.25f * Mathf.Sin(_chargePulse * 6f + i) : 0.55f;
+                _chargeFill[i].color = f >= 1f ? new Color(1f, 0.62f + 0.15f * glow, 0.28f, 1f) : new Color(0.75f, 0.5f, 0.3f, 1f);
+                _chargeBack[i].color = f >= 1f ? new Color(0.45f, 0.24f, 0.1f, 0.95f) : new Color(0.22f, 0.2f, 0.18f, 0.9f);
+            }
+            _chargeTitle.text = full >= sm.maxBreath ? "LUNGS FULL" : "DRAWING SMOKE";
+            _chargeSub.text = full < 1 ? "keep holding..." : $"release to exhale  <color=#ffb070>{full} spirit{(full > 1 ? "s" : "")}</color>";
+        }
+
         void UpdateBardHud()
         {
             var p = PlayerController.Local;
@@ -112,6 +179,7 @@ namespace DarkFantasy.UI
             bool mana = p != null && p.vitals != null && p.vitals.HasManaPool;
             if (_manaBar.gameObject.activeSelf != mana) _manaBar.gameObject.SetActive(mana);
             if (mana) _manaBar.SetValue(p.vitals.Mana01);
+            UpdateSmokerHud(p);
             // keep the boss bar and the prompt above the spell bar
             _bossRoot.anchoredPosition = _bossBase + (isBard ? new Vector2(0, 104) : Vector2.zero);
             _promptRt.anchoredPosition = _promptBase + (isBard ? new Vector2(0, 74) : Vector2.zero);
@@ -158,7 +226,8 @@ namespace DarkFantasy.UI
             }
 
             // boss curse icon
-            EnemyBase boss = MirrorAI.Instance != null && MirrorAI.Instance.FightActive ? MirrorAI.Instance
+            EnemyBase boss = ReaperBossAI.Instance != null && ReaperBossAI.Instance.FightActive ? ReaperBossAI.Instance
+                : MirrorAI.Instance != null && MirrorAI.Instance.FightActive ? MirrorAI.Instance
                 : DragonAI.Instance != null && DragonAI.Instance.FightActive ? DragonAI.Instance : BossAI.Instance;
             bool bc = boss != null && _bossRoot.gameObject.activeSelf && boss.IsCursed;
             if (_bossCurse.gameObject.activeSelf != bc) _bossCurse.gameObject.SetActive(bc);

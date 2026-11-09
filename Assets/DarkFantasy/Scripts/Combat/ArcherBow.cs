@@ -69,7 +69,7 @@ namespace DarkFantasy
             // aiming on the move: the bow is up with an arrow on the string (not drawn)
             bool ready = !drawn && anim != null && anim.GuardRaised && anim.IsInState(CharacterAnimator.Locomotion);
 
-            if (drawn && !_wasDrawn) Sfx.Play(SfxId.BowDraw, GripPosition, 0.55f);
+            if (drawn && !_wasDrawn) Sfx.Play(SfxId.BowDraw, GripPosition, 0.9f);
             if (!drawn && _wasDrawn && !ready) { _vibrate = 1f; Sfx.Play(SfxId.BowRelease, GripPosition, 0.9f); }
             _wasDrawn = drawn;
             IsDrawn = drawn;

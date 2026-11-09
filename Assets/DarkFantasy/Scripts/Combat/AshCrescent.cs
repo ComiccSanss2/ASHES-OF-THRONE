@@ -19,7 +19,10 @@ namespace DarkFantasy
         ParticleSystem _embers;
         Light _light;
 
-        public static void Spawn(Vector3 pos, Vector3 dir, float speed, float maxDist, float width, bool fire)
+        public static void Spawn(Vector3 pos, Vector3 dir, float speed, float maxDist, float width, bool fire) => Spawn(pos, dir, speed, maxDist, width, fire, null);
+
+        /// <summary>Same wave in a colour of its own (the Reaper's crescents of soul-light).</summary>
+        public static void Spawn(Vector3 pos, Vector3 dir, float speed, float maxDist, float width, bool fire, Color? tint)
         {
             if (Fx.Instance == null || Fx.Instance.slashMaterial == null) return;
             var go = new GameObject("AshCrescent");
@@ -27,6 +30,12 @@ namespace DarkFantasy
             go.transform.rotation = Quaternion.LookRotation(MathUtil.Flat(dir).normalized);
             var c = go.AddComponent<AshCrescent>();
             c.Init(MathUtil.Flat(dir).normalized, speed, maxDist, width, fire);
+            if (tint.HasValue)
+            {
+                c._color = tint.Value; c.SetAlpha(1f);
+                if (c._light) c._light.color = new Color(Mathf.Clamp01(tint.Value.r), Mathf.Clamp01(tint.Value.g), Mathf.Clamp01(tint.Value.b));
+                var m = c._embers.main; m.startColor = new ParticleSystem.MinMaxGradient(Color.white, new Color(Mathf.Clamp01(tint.Value.r), Mathf.Clamp01(tint.Value.g), Mathf.Clamp01(tint.Value.b)));
+            }
         }
 
         void Init(Vector3 dir, float speed, float maxDist, float width, bool fire)

@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace DarkFantasy
 {
-    public enum DragonMove : byte { None, Bite, DoubleBite, TailSweep, Breath, Stomp, Charge, Roar, TakeOff, FireRain, Land, Stagger, Death, Awaken }
+    public enum DragonMove : byte { None, Bite, DoubleBite, TailSweep, Breath, Stomp, Charge, Roar, TakeOff, FireRain, Land, Stagger, Death, Awaken, Pounce }
 
     /// <summary>
     /// Procedural pose of the dragon at time t of a move, evaluated identically by the server (for
@@ -43,6 +43,7 @@ namespace DarkFantasy
         public const float StaggerDur = 3.2f;
         public const float AwakenDur = 2.8f;
         public const float ChargeLock = 0.7f, ChargeRun = 1.35f, ChargeRunEnd = 2.75f, ChargeDur = 3.5f;
+        public const float PounceLock = 1.0f, PounceLand = 1.85f, PounceDur = 3.2f;
 
         public static float Duration(DragonMove m)
         {
@@ -54,6 +55,7 @@ namespace DarkFantasy
                 case DragonMove.Breath: return BreathDur;
                 case DragonMove.Stomp: return StompDur;
                 case DragonMove.Charge: return ChargeDur;
+                case DragonMove.Pounce: return PounceDur;
                 case DragonMove.Roar: return RoarDur;
                 case DragonMove.TakeOff: return TakeOffDur;
                 case DragonMove.FireRain: return FireRainDur;
@@ -122,6 +124,25 @@ namespace DarkFantasy
                     if (t < 0.8f) return DragonPose.Lerp(rest, rearUp, Seg(t, 0f, 0.8f));
                     if (t < StompHit + 0.05f) return DragonPose.Lerp(rearUp, slam, Seg(t, 0.8f, StompHit));
                     return DragonPose.Lerp(slam, rest, Seg(t, StompHit + 0.2f, StompDur));
+                }
+                case DragonMove.Pounce:
+                {
+                    // Elden-Ring style leap: sinks low on its haunches, chest glowing, wings half open → springs
+                    // up in an arc (nose up, then down) → crashes down on the marked spot → rises out of the dust
+                    var coil = P(28, 20, 18, 8, -0.6f, 0.6f); coil.bodyDrop = -0.75f;
+                    var air = P(-20, -12, -10, -16, 0.6f, 0.4f);
+                    var dive = P(30, 18, 10, 18, 0.8f, 0.9f);
+                    var crash = P(40, 26, -20, 10, 0.9f, 0.8f); crash.bodyDrop = -0.55f;
+                    if (t < PounceLock) { var c = DragonPose.Lerp(rest, coil, Seg(t, 0f, PounceLock * 0.8f)); c.bodyRoll = Mathf.Sin(t * 30f) * 1.5f * Seg(t, 0.4f, PounceLock); return c; }
+                    if (t < PounceLand)
+                    {
+                        float u = (t - PounceLock) / (PounceLand - PounceLock);
+                        var a = DragonPose.Lerp(air, dive, Seg(u, 0.35f, 1f));
+                        a.bodyDrop = Mathf.Sin(u * Mathf.PI) * 5.2f - 0.2f * u;
+                        return a;
+                    }
+                    if (t < PounceLand + 0.5f) return DragonPose.Lerp(dive, crash, Seg(t, PounceLand, PounceLand + 0.12f));
+                    return DragonPose.Lerp(crash, rest, Seg(t, PounceLand + 0.5f, PounceDur));
                 }
                 case DragonMove.Charge:
                 {
@@ -194,6 +215,7 @@ namespace DarkFantasy
                 case DragonMove.FireRain: return DragonVisuals.Hover;
                 case DragonMove.Land: return t < LandHit ? DragonVisuals.Hover : DragonVisuals.Locomotion;
                 case DragonMove.Charge: return DragonVisuals.Locomotion;
+                case DragonMove.Pounce: return t > PounceLock - 0.1f && t < PounceLand ? DragonVisuals.Hover : DragonVisuals.Locomotion;
                 default: return DragonVisuals.Locomotion;
             }
         }

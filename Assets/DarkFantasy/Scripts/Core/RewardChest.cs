@@ -29,12 +29,13 @@ namespace DarkFantasy
         [Tooltip("Lid rotation when fully open (degrees around its hinge, local X).")]
         public float openAngle = -108f;
         public float interactDistance = 2.4f;
-        public GameObject swordDisplay, bowDisplay, staffDisplay;
+        public GameObject swordDisplay, bowDisplay, staffDisplay, scytheDisplay;
 
         readonly NetworkVariable<bool> _opened = new NetworkVariable<bool>(false);
         readonly NetworkVariable<byte> _swords = new NetworkVariable<byte>(0);
         readonly NetworkVariable<byte> _bows = new NetworkVariable<byte>(0);
         readonly NetworkVariable<byte> _staffs = new NetworkVariable<byte>(0);
+        readonly NetworkVariable<byte> _scythes = new NetworkVariable<byte>(0);
 
         float _open;          // 0..1 lid animation
         float _spawnFx = 1f;  // appear effect
@@ -94,21 +95,21 @@ namespace DarkFantasy
         void OpenRpc()
         {
             if (_opened.Value) return;
-            int swords = 0, bows = 0, staffs = 0;
+            int swords = 0, bows = 0, staffs = 0, scythes = 0;
             foreach (var p in PlayerController.All)
             {
                 if (p == null || !p.IsSpawned) continue;
-                if (p.IsArcher) bows++; else if (p.IsBard) staffs++; else swords++;
+                if (p.IsArcher) bows++; else if (p.IsBard || p.IsSmoker) staffs++; else if (p.IsReaper) scythes++; else swords++;
             }
-            _swords.Value = (byte)swords; _bows.Value = (byte)bows; _staffs.Value = (byte)staffs;
+            _swords.Value = (byte)swords; _bows.Value = (byte)bows; _staffs.Value = (byte)staffs; _scythes.Value = (byte)scythes;
             _opened.Value = true;
             if (tier == Inventory.Radiant) CastleProgress.Instance?.ServerRadiantFound();
-            Debug.Log($"[DF] Reward chest (tier {tier}) opened: {swords} swords, {bows} bows, {staffs} mandolins");
-            OpenedRpc((byte)swords, (byte)bows, (byte)staffs);
+            Debug.Log($"[DF] Reward chest (tier {tier}) opened: {swords} swords, {bows} bows, {staffs} mandolins, {scythes} scythes");
+            OpenedRpc((byte)swords, (byte)bows, (byte)staffs, (byte)scythes);
         }
 
         [Rpc(SendTo.Everyone)]
-        void OpenedRpc(byte swords, byte bows, byte staffs)
+        void OpenedRpc(byte swords, byte bows, byte staffs, byte scythes)
         {
             Vector3 c = transform.position + Vector3.up * 0.6f;
             Sfx.Play(SfxId.ChestOpen, c, 1f);
@@ -118,10 +119,10 @@ namespace DarkFantasy
             if (tier == Inventory.Dragon) { BossFx.FirePillar(transform.position, 1.2f, 5f); BossFx.Embers(c, 1f, 60, 5f); }
             if (tier == Inventory.Radiant) { SpellFx.Sparkles(c, 2.2f); SpellFx.GroundRing(transform.position + Vector3.up * 0.05f, 0.5f, 5f, SpellFx.Radiant, 1.2f); }
             // the relics rise out of the chest, fanned out: one per player, by class
-            int n = swords + bows + staffs;
+            int n = swords + bows + staffs + scythes;
             for (int i = 0; i < n; i++)
             {
-                var prefab = i < swords ? swordDisplay : i < swords + bows ? bowDisplay : staffDisplay;
+                var prefab = i < swords ? swordDisplay : i < swords + bows ? bowDisplay : i < swords + bows + staffs ? staffDisplay : scytheDisplay;
                 if (prefab == null) continue;
                 float side = n == 1 ? 0f : Mathf.Lerp(-1f, 1f, i / (float)(n - 1));
                 var go = Instantiate(prefab, transform.position + Vector3.up * 0.4f, transform.rotation);

@@ -179,6 +179,7 @@ namespace DarkFantasy.EditorTools
             var react = upper.AddState(CharacterAnimator.HitReactUpper);
             react.motion = BardClip("knight_hurt_left");
             react.speed = 1.4f;
+            AddBodyLayer(ctrl, BardFbx, "BardBody");
             EditorUtility.SetDirty(ctrl);
             return ctrl;
         }

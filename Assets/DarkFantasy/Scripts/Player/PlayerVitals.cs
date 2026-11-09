@@ -39,6 +39,44 @@ namespace DarkFantasy
         readonly NetworkVariable<int> _revives = new NetworkVariable<int>(0);
         readonly NetworkVariable<ushort> _ping = new NetworkVariable<ushort>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
         readonly NetworkVariable<FixedString32Bytes> _name = new NetworkVariable<FixedString32Bytes>(default, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+        // max health grows with the Vitality skill: replicated so everybody's bars are right
+        readonly NetworkVariable<float> _maxHpNet = new NetworkVariable<float>(0f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+        float _baseMaxHealth = -1f, _baseMaxStamina, _baseMaxMana, _baseManaRegen, _baseStaminaRegen;
+        public float MaxHealth => _maxHpNet.Value > 0f ? _maxHpNet.Value : maxHealth;
+        // ---- potions (owner)
+        float _ironUntil, _tonicUntil, _salveUntil, _salvePerSecond;
+        public float PotionDamageTakenMul => Time.time < _ironUntil ? 0.7f : 1f;
+        public bool IronActive => Time.time < _ironUntil;
+        public bool TonicActive => Time.time < _tonicUntil;
+        public bool SalveActive => Time.time < _salveUntil;
+
+        /// <summary>Owner: the skill tree's Vitality / Endurance / Mind (keeps the current fractions).</summary>
+        public void ApplySkills()
+        {
+            if (_baseMaxHealth < 0f) { _baseMaxHealth = maxHealth; _baseMaxStamina = maxStamina; _baseMaxMana = maxMana; _baseManaRegen = manaRegen; _baseStaminaRegen = staminaRegen; }
+            float hp01 = maxHealth > 0f ? _hp.Value / maxHealth : 1f;
+            maxHealth = _baseMaxHealth * PlayerSkills.HealthMul;
+            maxStamina = _baseMaxStamina * PlayerSkills.StaminaMul;
+            staminaRegen = _baseStaminaRegen * PlayerSkills.StaminaRegenMul;
+            maxMana = _baseMaxMana > 0f ? _baseMaxMana * PlayerSkills.ManaMul : 0f;
+            manaRegen = _baseManaRegen * PlayerSkills.ManaRegenMul;
+            if (!IsSpawned || !IsOwner) return;
+            _maxHpNet.Value = maxHealth;
+            if (!IsDead && !IsDowned) _hp.Value = Mathf.Clamp(hp01, 0f, 1f) * maxHealth;
+        }
+
+        /// <summary>Owner: drinks one of the session's draughts.</summary>
+        public bool UsePotion(Potions.Kind k)
+        {
+            if (!IsOwner || IsDead || IsDowned || !Potions.Take(k)) return false;
+            switch (k)
+            {
+                case Potions.Kind.IronDraught: _ironUntil = Time.time + 30f; break;
+                case Potions.Kind.VigorTonic: _tonicUntil = Time.time + 30f; break;
+                case Potions.Kind.SoulSalve: _salveUntil = Time.time + 10f; _salvePerSecond = maxHealth * 0.045f; break;
+            }
+            return true;
+        }
 
         float _regenDelayTimer;
 
@@ -62,7 +100,7 @@ namespace DarkFantasy
         public int Flasks => _flasks.Value;
         public bool IsDead => _dead.Value;
         public bool IsAlive => !_dead.Value;
-        public float Health01 => maxHealth > 0 ? Mathf.Clamp01(_hp.Value / maxHealth) : 0;
+        public float Health01 => MaxHealth > 0 ? Mathf.Clamp01(_hp.Value / MaxHealth) : 0;
         public float Stamina01 => maxStamina > 0 ? Mathf.Clamp01(_stamina.Value / maxStamina) : 0;
         public float Mana => _mana.Value;
         public float Mana01 => maxMana > 0 ? Mathf.Clamp01(_mana.Value / maxMana) : 0;
@@ -118,6 +156,8 @@ namespace DarkFantasy
             _pvp.OnValueChanged += (a, b) => PvpChanged?.Invoke(this, b);
             if (IsOwner)
             {
+                ApplySkills();
+                PlayerSkills.Changed += ApplySkills;
                 _hp.Value = maxHealth;
                 _stamina.Value = maxStamina;
                 _flasks.Value = maxFlasks;
@@ -129,12 +169,15 @@ namespace DarkFantasy
             }
         }
 
+        public override void OnNetworkDespawn() { if (IsOwner) PlayerSkills.Changed -= ApplySkills; }
+
         void Update()
         {
             if (IsSpawned && IsOwner) UpdatePing();
             if (!IsSpawned || !IsOwner || IsDead) return;
             if (_regenDelayTimer > 0f) _regenDelayTimer -= Time.deltaTime;
-            else if (_stamina.Value < maxStamina) _stamina.Value = Mathf.Min(maxStamina, _stamina.Value + staminaRegen * RegenMultiplier * BuffRegenMultiplier * Time.deltaTime);
+            else if (_stamina.Value < maxStamina) _stamina.Value = Mathf.Min(maxStamina, _stamina.Value + staminaRegen * RegenMultiplier * BuffRegenMultiplier * (TonicActive ? 1.6f : 1f) * Time.deltaTime);
+            if (SalveActive && !IsDowned && _hp.Value < maxHealth) _hp.Value = Mathf.Min(maxHealth, _hp.Value + _salvePerSecond * Time.deltaTime);
             if (maxMana > 0f && _mana.Value < maxMana)
             {
                 _manaTick += manaRegen * Time.deltaTime;
@@ -267,8 +310,8 @@ namespace DarkFantasy
     {
         public static string PlayerName
         {
-            get => PlayerPrefs.GetString("df_name", "");
-            set => PlayerPrefs.SetString("df_name", value);
+            get => PlayerPrefs.GetString(SaveSlots.K("df_name"), "");
+            set => PlayerPrefs.SetString(SaveSlots.K("df_name"), value);
         }
         public static string LastIp
         {
@@ -281,23 +324,23 @@ namespace DarkFantasy
             set => PlayerPrefs.SetInt("df_port", value);
         }
         /// <summary>Furthest flame ever reached on this computer (1 = the throne room: the King was beaten).</summary>
-        public static int UnlockedCheckpoint => PlayerPrefs.GetInt("df_cp_unlocked", 0);
+        public static int UnlockedCheckpoint => PlayerPrefs.GetInt(SaveSlots.K("df_cp_unlocked"), 0);
         public static void UnlockCheckpoint(int i)
         {
             if (i <= UnlockedCheckpoint) return;
-            PlayerPrefs.SetInt("df_cp_unlocked", i); PlayerPrefs.Save();
+            PlayerPrefs.SetInt(SaveSlots.K("df_cp_unlocked"), i); PlayerPrefs.Save();
         }
         /// <summary>Where a new lobby starts (host): 0 = the bonfire, or an unlocked flame.</summary>
         public static int StartCheckpoint
         {
-            get => Mathf.Min(PlayerPrefs.GetInt("df_start_cp", 0), UnlockedCheckpoint);
-            set { PlayerPrefs.SetInt("df_start_cp", value); PlayerPrefs.Save(); }
+            get => Mathf.Min(PlayerPrefs.GetInt(SaveSlots.K("df_start_cp"), 0), UnlockedCheckpoint);
+            set { PlayerPrefs.SetInt(SaveSlots.K("df_start_cp"), value); PlayerPrefs.Save(); }
         }
         /// <summary>Class chosen in the menu (remembered between sessions).</summary>
         public static PlayerClass PlayerClass
         {
-            get => (PlayerClass)Mathf.Clamp(PlayerPrefs.GetInt("df_class", 0), 0, 2);
-            set { PlayerPrefs.SetInt("df_class", (int)value); PlayerPrefs.Save(); }
+            get => (PlayerClass)Mathf.Clamp(PlayerPrefs.GetInt(SaveSlots.K("df_class"), 0), 0, 4);
+            set { PlayerPrefs.SetInt(SaveSlots.K("df_class"), (int)value); PlayerPrefs.Save(); }
         }
     }
 }

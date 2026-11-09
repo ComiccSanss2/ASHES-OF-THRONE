@@ -911,6 +911,9 @@ namespace DarkFantasy
             PlayAnimRpc(StateIndex(CharacterAnimator.Hurt), 0.05f, 0.4f);
         }
 
+        protected override int SoulReward => 1200;
+        protected override bool IsBossReward => true;
+
         protected override void Die()
         {
             _state = State.Dead;

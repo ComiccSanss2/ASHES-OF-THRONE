@@ -1,0 +1,55 @@
+stop
+wait:3
+refresh
+wait:45
+clear
+play
+wait:30
+msg:GameUI,DevMenuTest,reaper
+msg:GameUI,DevQuickStart,x
+wait:8
+msg:Player_0 (local),DevGod,1
+msg:GameUI,DevUnlockWeapons,x
+msg:Player_0 (local),DevTeleport,0;8.2;270
+wait:4
+shot
+msg:Player_0 (local),DevPose,Locomotion;0.3
+wait:1
+render:2.6,9.6,273.4,0,9.0,270,40|rp_idle
+render:-2.6,9.6,266.6,0,9.0,270,40|rp_idle_b
+msg:Player_0 (local),DevPose,Attack1;0.37
+wait:1
+render:2.6,9.6,273.4,0,9.0,270,45|rp_a1
+msg:Player_0 (local),DevPose,Spin;0.47
+wait:1
+render:2.6,9.6,273.4,0,9.0,270,45|rp_a3
+msg:Player_0 (local),DevPose,Heavy;0.55
+wait:1
+render:2.6,9.6,273.4,0,9.0,270,45|rp_heavy
+msg:Player_0 (local),DevPose,Ultimate;1.4
+wait:1
+render:2.6,9.6,273.4,0,9.0,270,45|rp_ult
+msg:Player_0 (local),DevEquip,1
+msg:Player_0 (local),DevPose,Locomotion;0.3
+wait:1
+render:1.6,9.4,272,0,9.1,270,40|rp_relic
+msg:Player_0 (local),DevEquip,2
+wait:1
+render:1.6,9.4,272,0,9.1,270,40|rp_dragon
+msg:Player_0 (local),DevEquip,3
+wait:1
+render:1.6,9.4,272,0,9.1,270,40|rp_radiant
+msg:Player_0 (local),DevPose,Locomotion;0.3;1
+msg:Player_0 (local),DevEquip,0
+msg:Player_0 (local),DevTeleport,0;0.3;100
+wait:3
+shot
+msg:Player_0 (local),DevAttack,0
+wait:0.35
+shot
+wait:1.5
+msg:Player_0 (local),DevUlt,x
+wait:0.6
+shot
+wait:1
+shot

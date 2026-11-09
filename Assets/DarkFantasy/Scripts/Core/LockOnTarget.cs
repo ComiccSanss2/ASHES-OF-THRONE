@@ -18,12 +18,15 @@ namespace DarkFantasy
         public float framingSize = 1f;
 
         IHealthView _health;
+        PlayerController _player;
 
         public Vector3 Point => lockPoint ? lockPoint.position : transform.position + Vector3.up * heightOffset;
-        public bool IsValid => isActiveAndEnabled && (_health == null || _health.IsAlive);
+        /// <summary>Players can be locked only by a duelling PvP opponent.</summary>
+        public bool IsValid => isActiveAndEnabled && (_health == null || _health.IsAlive)
+                               && (_player == null || (_player != PlayerController.Local && PlayerController.CanPvp(PlayerController.Local, _player)));
         public IHealthView Health => _health;
 
-        void Awake() => _health = GetComponent<IHealthView>();
+        void Awake() { _health = GetComponent<IHealthView>(); _player = GetComponent<PlayerController>(); }
         void OnEnable() { if (!All.Contains(this)) All.Add(this); }
         void OnDisable() => All.Remove(this);
     }

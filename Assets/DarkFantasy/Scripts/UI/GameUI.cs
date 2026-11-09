@@ -44,6 +44,7 @@ namespace DarkFantasy.UI
             BuildOptions();
             BuildHelp();
             BuildInventory();
+            BuildSkills();
             BuildMessage();
             BuildDevMenu();
             ShowMenu(true);
@@ -67,10 +68,15 @@ namespace DarkFantasy.UI
             MirrorArena.Defeated += OnMirrorDefeated;
             MirrorArena.FightReset += OnFightReset;
             MirrorAI.Awakened += OnMirrorAwakened;
+            ReaperArena.FightStarted += OnReaperStarted;
+            ReaperArena.Defeated += OnReaperDefeated;
+            ReaperArena.FightReset += OnFightReset;
+            ReaperBossAI.Judgement += OnReaperJudgement;
             CastleProgress.Announce += OnAnnounce;
             CastleProgress.CheckpointReached += OnCheckpoint;
             CastleProgress.Rested += OnRested;
             RewardChest.RelicGranted += OnRelicGranted;
+            LootPickup.Looted += OnLooted;
             Inventory.Changed += RefreshInventory;
         }
 
@@ -92,10 +98,15 @@ namespace DarkFantasy.UI
             MirrorArena.Defeated -= OnMirrorDefeated;
             MirrorArena.FightReset -= OnFightReset;
             MirrorAI.Awakened -= OnMirrorAwakened;
+            ReaperArena.FightStarted -= OnReaperStarted;
+            ReaperArena.Defeated -= OnReaperDefeated;
+            ReaperArena.FightReset -= OnFightReset;
+            ReaperBossAI.Judgement -= OnReaperJudgement;
             CastleProgress.Announce -= OnAnnounce;
             CastleProgress.CheckpointReached -= OnCheckpoint;
             CastleProgress.Rested -= OnRested;
             RewardChest.RelicGranted -= OnRelicGranted;
+            LootPickup.Looted -= OnLooted;
             Inventory.Changed -= RefreshInventory;
         }
 
@@ -163,7 +174,7 @@ namespace DarkFantasy.UI
 
             // ---------------------------------------------------------- main
             {
-                _scrMain = MakeScreen("Gather the Fellowship", new Vector2(340, 364), out var c);
+                _scrMain = MakeScreen("Gather the Fellowship", new Vector2(340, 400), out var c);
                 float y = -6;
                 UIFactory.Label(c, "Name", new Vector2(0.5f, 1f), new Vector2(-104, y - 12), new Vector2(84, 22), 16, skin.bone3, TextAnchor.MiddleLeft);
                 _nameField = UIFactory.Field(c, MenuSettings.PlayerName, "Nameless Knight", new Vector2(0.5f, 1f), new Vector2(38, y - 12), 196);
@@ -181,6 +192,8 @@ namespace DarkFantasy.UI
                 UIFactory.Button(c, "Quit", new Vector2(0.5f, 1f), new Vector2(66, y - 14), 120, Quit, true);
                 y -= 32;
                 _statusText = UIFactory.Label(c, "Create a lobby, or find your friends' one.", new Vector2(0.5f, 1f), new Vector2(0, y - 12), new Vector2(290, 30), 14, skin.bone3);
+                y -= 34;
+                UIFactory.Button(c, "Change Character", new Vector2(0.5f, 1f), new Vector2(0, y - 14), 200, () => { SaveFields(); ShowScreen(_scrChars); }, true);
             }
             // ---------------------------------------------------------- create lobby
             {
@@ -289,12 +302,13 @@ namespace DarkFantasy.UI
             var ipPanel = UIFactory.Panel(_menu, new Vector2(0.5f, 0f), new Vector2(0.5f, 0f), new Vector2(0, 14), new Vector2(520, 44));
             _ipText = UIFactory.Text(UIFactory.Stretch("IpText", ipPanel, 12, 8, 12, 8), "", 14, skin.bone1);
             UIFactory.Label(_menu, "UI: Ravenhollow Lite by Brunka Games · Font: Jacquard 12 / Jersey 10 (OFL)", new Vector2(1f, 0f), new Vector2(-170, 8), new Vector2(330, 14), 10, skin.bone4, TextAnchor.LowerRight);
-            ShowScreen(_scrMain);
+            BuildCharacterScreens();
+            ShowScreen(_scrChars);
             RefreshClass();
         }
 
         Text _startText;
-        static readonly string[] StartNames = { "The Bonfire", "The Throne Room", "Hall of Chains", "The Grand Stair", "The Long Bridge", "The Thornwood", "The Glass Temple" };
+        static readonly string[] StartNames = { "The Bonfire", "The Throne Room", "Hall of Chains", "The Grand Stair", "The Long Bridge", "The Thornwood", "The Glass Temple", "The Red Moon" };
 
         void RefreshStart()
         {
@@ -308,12 +322,16 @@ namespace DarkFantasy.UI
         {
             PlayerClass.Archer => "Archer  (war-bow)",
             PlayerClass.Bard => "Bard  (mandolin & songs)",
+            PlayerClass.Reaper => "Reaper  (scythe)",
+            PlayerClass.Smoker => "Smoker  (pipe & smoke)",
             _ => "Knight  (greatsword)",
         };
 
         void ToggleClass()
         {
-            var next = (PlayerClass)(((int)MenuSettings.PlayerClass + 1) % 3);
+            // the class belongs to the character: from the menu this opens the character choice instead
+            if (SaveSlots.Current >= 0) { if (LobbyState.Instance == null) ShowScreen(_scrChars); return; }
+            var next = (PlayerClass)(((int)MenuSettings.PlayerClass + 1) % 5);
             if (LobbyState.Instance != null) LobbyState.Instance.SetLocalClass(next);
             else MenuSettings.PlayerClass = next;
             RefreshClass();
@@ -336,12 +354,13 @@ namespace DarkFantasy.UI
 
         void ShowScreen(RectTransform scr)
         {
-            foreach (var s in new[] { _scrMain, _scrCreate, _scrBrowse, _scrDirect, _scrLobby })
+            foreach (var s in new[] { _scrMain, _scrCreate, _scrBrowse, _scrDirect, _scrLobby, _scrChars, _scrNewChar })
                 if (s) s.gameObject.SetActive(s == scr);
             var lan = LanDiscovery.Instance;
             if (lan) { if (scr == _scrBrowse) lan.StartListening(); else lan.StopListening(); }
             if (scr == _scrBrowse) OnlineLobby.ForceRefresh();
             if (scr == _scrCreate && _createStatus) _createStatus.text = "";
+            if (_ipText) _ipText.transform.parent.gameObject.SetActive(scr != _scrChars && scr != _scrNewChar);
         }
 
         void RefreshVis()
@@ -437,7 +456,7 @@ namespace DarkFantasy.UI
                         var m = ls.Members[i];
                         bool isHost = m.clientId == NetworkManager.ServerClientId;
                         bool me = nm && m.clientId == nm.LocalClientId;
-                        string cls = m.Class == PlayerClass.Archer ? "<color=#9fb08a>Archer</color>" : m.Class == PlayerClass.Bard ? "<color=#a89adf>Bard</color>" : "<color=#b0a48a>Knight</color>";
+                        string cls = m.Class == PlayerClass.Archer ? "<color=#9fb08a>Archer</color>" : m.Class == PlayerClass.Bard ? "<color=#a89adf>Bard</color>" : m.Class == PlayerClass.Reaper ? "<color=#b98ae0>Reaper</color>" : m.Class == PlayerClass.Smoker ? "<color=#b9b0a2>Smoker</color>" : "<color=#b0a48a>Knight</color>";
                         _lobbyRows[i].text = $"{(isHost ? "<color=#c9a25a>[Host]</color> " : "")}{m.name}   {cls}{(me ? "  <color=#8a8579>(you)</color>" : "")}";
                     }
                     else _lobbyRows[i].text = ls != null && i < ls.MaxPlayers.Value ? "<color=#5d5a52>— empty seat —</color>" : "";
@@ -499,16 +518,16 @@ namespace DarkFantasy.UI
             _crosshair.gameObject.SetActive(false);
 
             // ---- prompt interazione
-            _promptRt = UIFactory.Panel(_hud, new Vector2(0.5f, 0), new Vector2(0.5f, 0), new Vector2(0, 96), new Vector2(260, 40));
+            _promptRt = UIFactory.Panel(_hud, new Vector2(0.5f, 0), new Vector2(0.5f, 0), new Vector2(0, 142), new Vector2(260, 40));   // above the ultimate / spell bar
             var key = UIFactory.Rect("Key", _promptRt, new Vector2(0, 0.5f), new Vector2(0, 0.5f), new Vector2(10, 0), new Vector2(36, 28));
-            UIFactory.Image(key, skin.keycap);
-            UIFactory.Text(UIFactory.Stretch("K", key, 0, 4, 0, 7), "E", 16, skin.bone0);
+            InputGlyph.Create(key, GameAction.Interact, new Vector2(0.5f, 0.5f), Vector2.zero, 28f);
             _promptText = UIFactory.Text(UIFactory.Rect("T", _promptRt, new Vector2(0, 0.5f), new Vector2(0, 0.5f), new Vector2(54, 0), new Vector2(196, 24)), "", 16, skin.bone1, TextAnchor.MiddleLeft);
             _promptRt.gameObject.SetActive(false);
 
             _sessionInfo = UIFactory.Label(_hud, "", new Vector2(0, 0), new Vector2(110, 10), new Vector2(210, 14), 10, skin.bone4, TextAnchor.LowerLeft);
-            UIFactory.Label(_hud, "F1 controls · F9 developer · Esc pause", new Vector2(1, 0), new Vector2(-100, 10), new Vector2(190, 14), 10, skin.bone4, TextAnchor.LowerRight);
+            UIFactory.Label(_hud, "F1 controls (rebind) · F9 developer · Esc pause", new Vector2(1, 0), new Vector2(-100, 10), new Vector2(190, 14), 10, skin.bone4, TextAnchor.LowerRight);
             BuildBardHud();
+            BuildUltHud();
             BuildCoopHud();
             BuildChat();
         }
@@ -525,7 +544,7 @@ namespace DarkFantasy.UI
             _pvpButtonText = pvp.GetComponentInChildren<Text>();
             UIFactory.Label(content, "only players with PvP ON can hurt each other", new Vector2(0.5f, 1), new Vector2(0, y - 10), new Vector2(240, 14), 10, skin.bone4); y -= 26;
             UIFactory.Button(content, "Options", new Vector2(0.5f, 1), new Vector2(0, y - 14), 200, () => ShowOptions(true)); y -= 34;
-            UIFactory.Button(content, "Controls", new Vector2(0.5f, 1), new Vector2(0, y - 14), 200, () => _help.gameObject.SetActive(!_help.gameObject.activeSelf)); y -= 40;
+            UIFactory.Button(content, "Controls", new Vector2(0.5f, 1), new Vector2(0, y - 14), 200, () => ShowControls(!ControlsOpen)); y -= 40;
             UIFactory.Button(content, "Leave session", new Vector2(0.5f, 1), new Vector2(0, y - 14), 200, () => { SetPaused(false); NetworkBootstrap.Instance?.Shutdown(); }, true);
             _pause.gameObject.SetActive(false);
         }
@@ -577,104 +596,6 @@ namespace DarkFantasy.UI
             if (_pause) _pause.gameObject.SetActive(!on && _paused);
         }
 
-        void BuildHelp()
-        {
-            _help = UIFactory.Panel(_root, new Vector2(0, 0.5f), new Vector2(0, 0.5f), new Vector2(16, 0), new Vector2(250, 500));
-            var t = UIFactory.Text(UIFactory.Stretch("T", _help, 14, 12, 12, 12),
-                "<b>CONTROLS</b>\n" +
-                "WASD / L-stick   move\n" +
-                "Mouse / R-stick  camera\n" +
-                "Shift / B (hold)  sprint\n" +
-                "Space / B   dodge roll\n" +
-                "LMB / R1   attack (combo)\n" +
-                "F / R2 (hold)  heavy\n" +
-                "RMB / L1   block\n" +
-                "Q / L2   parry\n" +
-                "Wheel / R3  lock-on\n" +
-                "  flick mouse L/R: switch\n" +
-                "R / X   flask\n" +
-                "E / A   interact\n" +
-                "Esc / Start   pause\n" +
-                "I / Select   inventory\n" +
-                "Tab (hold)   scoreboard\n" +
-                "Enter        chat\n" +
-                "E near a fallen ally  revive\n" +
-                "<b>ARCHER</b>\n" +
-                "LMB / R1   quick shot\n" +
-                "F / R2 (hold)  power shot\n" +
-                "RMB / L1 (hold)  aim\n" +
-                "<b>BARD</b>\n" +
-                "LMB / R1   arcane note\n" +
-                "F / R2   triad (3 notes)\n" +
-                "1-4 / D-pad   spells (mana)\n" +
-                "RMB / L1 (hold)  aim", 14, skin.bone1, TextAnchor.UpperLeft);
-            _help.gameObject.SetActive(false);
-        }
-
-        // ---- inventory: starting weapon / relic of the local player's class
-        RectTransform _inventory;
-        Text _invTitle;
-        readonly Text[] _invName = new Text[Inventory.WeaponCount], _invDesc = new Text[Inventory.WeaponCount], _invBtnText = new Text[Inventory.WeaponCount];
-        readonly Button[] _invBtn = new Button[Inventory.WeaponCount];
-
-        void BuildInventory()
-        {
-            _inventory = UIFactory.Stretch("Inventory", _root);
-            UIFactory.Image(UIFactory.Stretch("Veil", _inventory), null, false, new Color(0, 0, 0, 0.5f)).raycastTarget = true;
-            var c = UIFactory.Window(_inventory, "Inventory", new Vector2(460, 488), out _);
-            float y = -4;
-            _invTitle = UIFactory.Label(c, "", new Vector2(0.5f, 1f), new Vector2(0, y - 10), new Vector2(420, 20), 15, skin.bone3);
-            y -= 26;
-            for (int i = 0; i < Inventory.WeaponCount; i++)
-            {
-                var row = UIFactory.Panel(c, new Vector2(0.5f, 1f), new Vector2(0.5f, 1f), new Vector2(0, y), new Vector2(420, 84));
-                _invName[i] = UIFactory.Text(UIFactory.Rect("Name", row, new Vector2(0, 1), new Vector2(0, 1), new Vector2(12, -8), new Vector2(280, 22)), "", 18, skin.bone0, TextAnchor.MiddleLeft, true);
-                _invDesc[i] = UIFactory.Text(UIFactory.Rect("Desc", row, new Vector2(0, 1), new Vector2(0, 1), new Vector2(12, -32), new Vector2(290, 54)), "", 12, skin.bone3, TextAnchor.UpperLeft);
-                byte w = (byte)i;
-                _invBtn[i] = UIFactory.Button(row, "Equip", new Vector2(1, 0.5f), new Vector2(-62, 0), 100, () => { PlayerController.Local?.Equip(w); RefreshInventory(); });
-                _invBtnText[i] = _invBtn[i].GetComponentInChildren<Text>();
-                y -= 90;
-            }
-            UIFactory.Label(c, "I / Select or Esc: close", new Vector2(0.5f, 1f), new Vector2(0, y - 10), new Vector2(400, 16), 12, skin.bone4);
-            _inventory.gameObject.SetActive(false);
-        }
-
-        bool InventoryOpen => _inventory && _inventory.gameObject.activeSelf;
-
-        void ShowInventory(bool on)
-        {
-            _inventory.gameObject.SetActive(on);
-            GameInput.GameplayBlocked = on || _paused;
-            GameInput.SetCursorLocked(!on && !_paused);
-            if (on) RefreshInventory();
-        }
-
-        void RefreshInventory()
-        {
-            if (!_inventory) return;
-            var p = PlayerController.Local;
-            var cls = p ? p.playerClass : MenuSettings.PlayerClass;
-            byte equipped = p ? p.EquippedWeapon : Inventory.Equipped(cls);
-            _invTitle.text = cls + " · weapons";
-            for (byte i = 0; i < Inventory.WeaponCount; i++)
-            {
-                bool owned = Inventory.Owns(cls, i);
-                bool on = equipped == i;
-                Color tierCol = i == Inventory.Radiant ? new Color(1f, 0.95f, 0.75f) : i == Inventory.Dragon ? new Color(1f, 0.42f, 0.25f) : skin.gold2;
-                _invName[i].text = owned ? Inventory.Name(cls, i)
-                    : i == Inventory.Radiant ? "??? — a light in the dark" : i == Inventory.Dragon ? "??? — the wyrm's hoard" : "??? — sealed relic";
-                _invName[i].color = on ? tierCol : owned ? skin.bone0 : skin.bone4;
-                string desc = owned ? Inventory.Description(cls, i)
-                    : i == Inventory.Radiant ? "Some say a radiant chest waits where no map shows a door. Its light is not always there."
-                    : i == Inventory.Dragon ? "Slay Vaelthrax, the Cinder Wyrm, and claim its hoard." : "Defeat The Ashen King and open the chest he guards.";
-                // owned weapons keep their look everywhere; their power wakes only once earned in this lobby
-                if (owned && i != Inventory.BaseWeapon && p != null && !CastleProgress.TierEarned(i))
-                    desc += "\n<color=#8f8a9e>Dormant: " + CastleProgress.TierCondition(i) + " to wake its power.</color>";
-                _invDesc[i].text = desc;
-                _invBtnText[i].text = on ? "Equipped" : owned ? "Equip" : "Locked";
-                _invBtn[i].interactable = owned && !on && p != null;
-            }
-        }
 
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
         /// <summary>Development (editor bridge): LAN lobby + immediate start, no clicks.</summary>
@@ -698,11 +619,19 @@ namespace DarkFantasy.UI
             else if (a == "temple") DevGo(new Vector3(0f, -23.3f, 476f), 0f, false);
             else if (a == "mirror") DevGo(new Vector3(0f, -23.3f, 488f), 0f, false, 2);
             else if (a == "radiant") DevSpawnRadiant();
+            else if (a == "realm") DevGo(new Vector3(0f, -149.7f, 824f), 0f, false);
+            else if (a == "death") DevGo(new Vector3(0f, -149.6f, 930f), 0f, false, 3);
+            else if (a == "portal") { CastleProgress.Instance?.DevProgress("mirror"); DevGo(new Vector3(0f, -23.3f, 500f), 0f, false); }
+            else if (a == "ult") PlayerUltimate.Local?.DevCharge("");
             else if (a == "bard") MenuSettings.PlayerClass = PlayerClass.Bard;
             else if (a == "archer") MenuSettings.PlayerClass = PlayerClass.Archer;
             else if (a == "knight") MenuSettings.PlayerClass = PlayerClass.Knight;
+            else if (a == "reaper") MenuSettings.PlayerClass = PlayerClass.Reaper;
+            else if (a == "smoker") MenuSettings.PlayerClass = PlayerClass.Smoker;
         }
 #endif
+
+        void OnLooted(string title, string sub) => ShowMessage(title, sub, new Color(0.85f, 0.78f, 0.6f), 2.5f, 34);
 
         void OnRelicGranted(PlayerClass c, byte tier) => ShowMessage(tier == Inventory.Radiant ? "RADIANT WEAPON ACQUIRED" : tier == Inventory.Dragon ? "WYRM'S WEAPON ACQUIRED" : "RELIC ACQUIRED",
             Inventory.Name(c, tier) + "  —  press I to equip it", tier == Inventory.Radiant ? new Color(1f, 0.95f, 0.75f) : tier == Inventory.Dragon ? new Color(1f, 0.4f, 0.2f) : skin.gold2, 5f, 48);
@@ -779,7 +708,7 @@ namespace DarkFantasy.UI
 
         void ShowMenu(bool show)
         {
-            if (show && InventoryOpen) _inventory.gameObject.SetActive(false);
+            if (show && InventoryOpen) ShowInventory(false);
             _menu.gameObject.SetActive(show);
             _hud.gameObject.SetActive(!show);
             GameInput.GameplayBlocked = show;
@@ -807,13 +736,27 @@ namespace DarkFantasy.UI
         // ================================================================== eventi di gioco
         void OnLocalDied(PlayerController p) => ShowMessage("YOU DIED", p.IsSpectating ? "You fell in this battle · your allies fight on" : "Returning to the last flame…", skin.hp1, 4f);
         void OnFightStarted(int players) => ShowMessage("THE ASHEN KING", players > 1 ? $"rises against {players} challengers" : "rises from his throne", skin.bone0, 3f, 48);
-        void OnBossDefeated() => ShowMessage("GREAT ENEMY FELLED", "The fog lifts", skin.gold2, 6f);
+        void OnBossDefeated() { ShowMessage("GREAT ENEMY FELLED", "The fog lifts", skin.gold2, 6f); StartCoroutine(ArmorWon(Inventory.ArmorAshen, 6.5f)); }
+
+        /// <summary>Every member of the party wins the boss's armour set (kept on this computer).</summary>
+        System.Collections.IEnumerator ArmorWon(byte set, float delay)
+        {
+            if (PlayerController.Local == null) yield break;
+            bool had = Inventory.OwnsArmorSet(set);
+            Inventory.GrantArmorSet(set);
+            yield return new WaitForSeconds(delay);
+            ShowMessage(had ? "ARMOUR AWAKENED" : "ARMOUR WON", Inventory.SetName(set) + "  —  press I to wear it", SetColor(set), 5f, 44);
+            Sfx.Play2D(SfxId.RelicReveal, 0.7f, 0.9f);
+        }
         void OnBossIgnited() => ShowMessage("THE ASHEN KING", "is consumed by the flame", new Color(1f, 0.55f, 0.2f), 3f, 40);
         void OnFightReset() { if (_bossRoot) _bossRoot.gameObject.SetActive(false); }
         void OnDragonStarted(int players) => ShowMessage("VAELTHRAX", players > 1 ? $"the Cinder Wyrm descends upon {players} challengers" : "the Cinder Wyrm", new Color(1f, 0.6f, 0.3f), 3.5f, 48);
-        void OnDragonDefeated() => ShowMessage("WYRM SLAIN", "The castle falls silent", skin.gold2, 7f);
+        void OnDragonDefeated() { ShowMessage("WYRM SLAIN", "The castle falls silent", skin.gold2, 7f); StartCoroutine(ArmorWon(Inventory.ArmorWyrm, 7.5f)); }
         void OnMirrorStarted(int players) => ShowMessage("SHATTERED MIRROR OF MALICE", players > 1 ? $"it shows {players} of you what you lack" : "it shows you what you lack", new Color(0.78f, 0.62f, 1f), 3.8f, 44);
-        void OnMirrorDefeated() => ShowMessage("MIRROR SHATTERED", "Every stolen reflection flies home", new Color(0.85f, 0.8f, 1f), 7f);
+        void OnMirrorDefeated() { ShowMessage("MIRROR SHATTERED", "Every stolen reflection flies home · the glass opens", new Color(0.85f, 0.8f, 1f), 7f); StartCoroutine(ArmorWon(Inventory.ArmorMirror, 7.5f)); }
+        void OnReaperStarted(int players) => ShowMessage("DEATH", players > 1 ? $"the Reaper has come for {players} souls" : "the Reaper has come for you", new Color(0.85f, 0.2f, 0.25f), 4f, 56);
+        void OnReaperDefeated() { ShowMessage("DEATH IS DEAD", "The red moon closes its eye", new Color(0.95f, 0.85f, 0.8f), 8f); StartCoroutine(ArmorWon(Inventory.ArmorDeath, 8.5f)); }
+        void OnReaperJudgement() => ShowMessage("THE FINAL JUDGEMENT", "its cloak burns away · only hunger remains", new Color(0.65f, 0.45f, 1f), 3.5f, 40);
         void OnMirrorAwakened() => ShowMessage("THE GLASS BREAKS", "and what was behind it wakes", new Color(0.75f, 0.45f, 1f), 3f, 40);
         void OnDragonEnraged() => ShowMessage("VAELTHRAX", "takes to the sky", new Color(1f, 0.5f, 0.2f), 3f, 40);
         void OnAnnounce(string title, string sub) => ShowMessage(title, sub, skin.gold2, 4.5f, 48);
@@ -840,7 +783,7 @@ namespace DarkFantasy.UI
         {
             _dev = UIFactory.Stretch("DevMenu", _root);
             UIFactory.Image(UIFactory.Stretch("Veil", _dev), null, false, new Color(0, 0, 0, 0.45f)).raycastTarget = true;
-            var content = UIFactory.Window(_dev, "Developer", new Vector2(320, 618), out _);
+            var content = UIFactory.Window(_dev, "Developer", new Vector2(320, 656), out _);
             float y = -6;
             void Btn(string label, UnityEngine.Events.UnityAction a, bool secondary = false) { UIFactory.Button(content, label, new Vector2(0.5f, 1), new Vector2(0, y - 14), 250, a, secondary); y -= 34; }
             Btn("Dragon: terrace", () => DevGo(new Vector3(0f, 7.8f, 162f), 0f, false));
@@ -853,6 +796,7 @@ namespace DarkFantasy.UI
             Btn("Mirror: start the fight", () => DevGo(new Vector3(0f, -23.3f, 488f), 0f, false, 2));
             Btn("Spawn radiant chest (host)", DevSpawnRadiant);
             Btn("Unlock every weapon", () => DevUnlockWeapons(""));
+            Btn("Charge the ultimate", () => { PlayerUltimate.Local?.DevCharge(""); SetDevMenu(false); });
             var god = UIFactory.Button(content, "Invincible: OFF", new Vector2(0.5f, 1), new Vector2(0, y - 14), 250, DevToggleGod, true); y -= 34;
             _devGodLabel = god.GetComponentInChildren<Text>();
             UIFactory.Label(content, "Host: also opens the doors and moves the checkpoint", new Vector2(0.5f, 1), new Vector2(0, y - 8), new Vector2(290, 16), 11, skin.bone4);
@@ -865,6 +809,7 @@ namespace DarkFantasy.UI
         public void DevUnlockWeapons(string _)
         {
             foreach (PlayerClass c in System.Enum.GetValues(typeof(PlayerClass))) { Inventory.GrantRelic(c); Inventory.GrantDragon(c); Inventory.GrantRadiant(c); }
+            for (byte s = 1; s < Inventory.ArmorSetCount; s++) Inventory.GrantArmorSet(s);
             ShowMessage("ARMOURY OPENED", "Every weapon unlocked · press I", skin.gold2, 3f, 36);
         }
 
@@ -881,6 +826,13 @@ namespace DarkFantasy.UI
 
         /// <summary>Development: "0" / "1" / "2" equips that weapon on the local player.</summary>
         public void DevEquip(string w) { PlayerController.Local?.Equip(byte.Parse(w)); }
+        /// <summary>Development: wears the whole armour set "n" (0 = own clothes) on the local player.</summary>
+        public void DevArmor(string set)
+        {
+            var p = PlayerController.Local; if (p == null) return;
+            byte s = byte.Parse(set);
+            for (int i = 0; i < Inventory.ArmorSlotCount; i++) Inventory.SetArmor(p.playerClass, (Inventory.Slot)i, s);
+        }
 
         void SetDevMenu(bool open)
         {
@@ -913,11 +865,19 @@ namespace DarkFantasy.UI
                 if (pos.z > 100f) prog.DevProgress("cp 2");
                 if (pos.z > 150f) { prog.DevProgress("great"); prog.DevProgress("cp 3"); }
                 if (pos.z > 220f) prog.DevProgress("dragon");
+                if (pos.z > 700f) prog.DevProgress("mirror");
             }
             p.TeleportTo(pos, Quaternion.Euler(0f, yaw, 0f));
             if (startDragon && DragonArena.Instance != null) StartCoroutine(DevStartDragon());
             if (startBoss == 2 && MirrorArena.Instance != null) StartCoroutine(DevStartMirror());
+            if (startBoss == 3 && ReaperArena.Instance != null) StartCoroutine(DevStartReaper());
             SetDevMenu(false);
+        }
+
+        System.Collections.IEnumerator DevStartReaper()
+        {
+            yield return new WaitForSeconds(0.5f);
+            ReaperArena.Instance?.DevStartFight(null);
         }
 
         System.Collections.IEnumerator DevStartMirror()
@@ -958,22 +918,30 @@ namespace DarkFantasy.UI
             }
 
             bool chatUsed = _chatRoot != null && UpdateChat(inSession);
-            if (chatUsed) { }
+            if (InputBindings.Listening) { }                      // a rebind is waiting for its key
+            else if (chatUsed) { }
+            else if (ControlsOpen && (GameInput.PausePressed || GameInput.HelpPressed)) ShowControls(false);
+            else if (GameInput.HelpPressed) ShowControls(true);
             else if (inSession && kb != null && kb.f9Key.wasPressedThisFrame && PlayerController.Local != null) SetDevMenu(!DevOpen);
             else if (DevOpen && GameInput.PausePressed) SetDevMenu(false);
             else if (InventoryOpen && (GameInput.PausePressed || GameInput.InventoryPressed)) ShowInventory(false);
+            else if (SkillsOpen && (GameInput.PausePressed || GameInput.SkillsPressed)) ShowSkills(false);
+            else if (inSession && !_paused && !InventoryOpen && GameInput.SkillsPressed && PlayerController.Local != null) ShowSkills(true);
             else if (inSession && GameInput.PausePressed)
             {
                 if (_options.gameObject.activeSelf) ShowOptions(false);
                 else SetPaused(!_paused);
             }
             else if (inSession && !_paused && GameInput.InventoryPressed && PlayerController.Local != null) ShowInventory(true);
-            if (!chatUsed && GameInput.HelpPressed) _help.gameObject.SetActive(!_help.gameObject.activeSelf);
+            UpdateControls();
 
             UpdateMessage();
             UpdatePlayerHud();
             UpdateParty();
             UpdateBardHud();
+            UpdateUltHud();
+            UpdateInventory();
+            UpdateSoulsHud();
             UpdateCoopHud();
             UpdateBoss();
             UpdateOverheadAndReticle();
@@ -1030,6 +998,16 @@ namespace DarkFantasy.UI
 
         void UpdateBoss()
         {
+            var reaper = ReaperBossAI.Instance;
+            if (reaper != null && reaper.IsSpawned && reaper.FightActive)
+            {
+                bool rshow = reaper.IsAlive;
+                if (_bossRoot.gameObject.activeSelf != rshow) { _bossRoot.gameObject.SetActive(rshow); if (rshow) _bossBar.SetValue(1f, true); }
+                if (!rshow) return;
+                _bossName.text = reaper.Phase >= 2 ? "<color=#b9a0ff>" + reaper.DisplayName + "  · the Final Judgement</color>" : reaper.DisplayName;
+                _bossBar.SetValue(reaper.Health01);
+                return;
+            }
             var mirror = MirrorAI.Instance;
             if (mirror != null && mirror.IsSpawned && mirror.FightActive)
             {
@@ -1118,6 +1096,7 @@ namespace DarkFantasy.UI
                 entry.bar.SetValue(e.Health01);
                 UpdateEnemyCurse(e, entry.root);
             }
+            UpdateNameTags(cam, canvasRect);
         }
 
         void UpdatePrompt()
@@ -1134,6 +1113,8 @@ namespace DarkFantasy.UI
             if (prompt == null && darena != null && darena.IsSpawned) can = darena.LocalCanInteract(out prompt);
             var marena = MirrorArena.Instance;
             if (prompt == null && marena != null && marena.IsSpawned) can = marena.LocalCanInteract(out prompt);
+            var rarena = ReaperArena.Instance;
+            if (prompt == null && rarena != null && rarena.IsSpawned) can = rarena.LocalCanInteract(out prompt);
             if (prompt == null)
                 foreach (var it in Interactables.All)
                 {

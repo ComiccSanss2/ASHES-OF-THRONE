@@ -29,6 +29,11 @@ namespace DarkFantasy
         public const string Knockdown = "Knockdown";
         public const string Death = "Death";
         public const string Taunt = "Taunt";
+        public const string Ultimate = "Ultimate";    // class ultimate (key 1)
+        // body layer (hips, spine, legs — not the arms, which keep holding each class's weapon)
+        public const string BodyEmpty = "BodyEmpty", CrouchLoco = "CrouchLoco", RollBody = "Roll";
+        public const float RollClipLength = 19f / 30f;   // MV_Roll (Tools/moves_anim.py)
+        static readonly int RollMulHash = Animator.StringToHash("RollMul");
         public const string BlockUpper = "Block";
         public const string HitReactUpper = "HitReact";
         public const string EmptyUpper = "Empty";
@@ -71,6 +76,12 @@ namespace DarkFantasy
         Vector3[] _bindLocal;
 
         public bool IsRollingVisual => _rollTimer >= 0f;
+        int _bodyLayer = -1;
+        bool _crouch;
+        float _bodyWeight;
+        /// <summary>The character has the shared roll / crouch clips (body layer).</summary>
+        public bool HasBodyLayer => _bodyLayer >= 0;
+        public bool Crouching => _crouch;
         /// <summary>The upper-body guard pose is up (knight: blade across; archer: bow raised, arrow nocked).</summary>
         public bool GuardRaised => _blockTarget > 0.5f && _upperWeight > 0.6f && _reactTimer <= 0f;
         public float PlaybackSpeed => _baseSpeed;
@@ -84,6 +95,7 @@ namespace DarkFantasy
             {
                 animator.applyRootMotion = false;
                 animator.cullingMode = AnimatorCullingMode.AlwaysAnimate;
+                _bodyLayer = animator.GetLayerIndex("Body");
             }
             if (inPlaceBones != null)
             {
@@ -184,7 +196,7 @@ namespace DarkFantasy
 
         public bool IsInState(string state) => GetStateTime(state) >= 0f;
 
-        public bool IsInAttackState => IsInState(Attack1) || IsInState(Attack2) || IsInState(Heavy) || IsInState(Spin);
+        public bool IsInAttackState => IsInState(Attack1) || IsInState(Attack2) || IsInState(Heavy) || IsInState(Spin) || IsInState(Ultimate);
 
         public void SetBlocking(bool on) => _blockTarget = on ? 1f : 0f;
 
@@ -202,7 +214,34 @@ namespace DarkFantasy
         }
 #endif
 
-        public void StartRoll(float duration) { _rollTimer = 0f; _rollDuration = duration; }
+        public void StartRoll(float duration)
+        {
+            _rollTimer = 0f; _rollDuration = duration;
+            if (_bodyLayer >= 0 && animator)
+            {
+                animator.SetFloat(RollMulHash, RollClipLength / Mathf.Max(0.1f, duration));
+                animator.CrossFadeInFixedTime(RollBody, 0.04f, _bodyLayer, 0f);
+                _bodyWeight = 1f;
+                animator.SetLayerWeight(_bodyLayer, 1f);
+            }
+        }
+
+        /// <summary>Crouched stance / sneaking walk on the body layer.</summary>
+        public void SetCrouch(bool on)
+        {
+            if (_crouch == on) return;
+            _crouch = on;
+            if (_bodyLayer >= 0 && animator && _rollTimer < 0f)
+                animator.CrossFadeInFixedTime(on ? CrouchLoco : BodyEmpty, on ? 0.15f : 0.2f, _bodyLayer);
+        }
+
+        void UpdateBodyLayer(float dt)
+        {
+            if (_bodyLayer < 0) return;
+            float target = _rollTimer >= 0f || _crouch ? 1f : 0f;
+            _bodyWeight = Mathf.MoveTowards(_bodyWeight, target, dt * 6f);
+            animator.SetLayerWeight(_bodyLayer, _bodyWeight);
+        }
 
         /// <summary>Hit reaction: brief red flash + upper-body flinch + hit-stop.</summary>
         public void HitReact(float hitStop = 0.07f)
@@ -245,6 +284,7 @@ namespace DarkFantasy
             UpdateUpperLayer(dt);
             UpdateSwingPresentation();
             UpdateRoll(dt);
+            UpdateBodyLayer(dt);
 
             if (_flashTimer > 0f || _flashActive)
             {
@@ -326,8 +366,31 @@ namespace DarkFantasy
 
         void UpdateRoll(float dt)
         {
-            if (visualRoot == null) return;
             if (_rollTimer < 0f) return;
+            if (_bodyLayer >= 0)
+            {
+                // the body layer tucks the character into a ball; here the ball turns a full somersault
+                // on the ground, about its own centre
+                _rollTimer += dt;
+                float rt = Mathf.Clamp01(_rollTimer / _rollDuration);
+                if (visualRoot)
+                {
+                    float k = Mathf.Clamp01((rt - 0.08f) / 0.74f);
+                    float ang = k * k * (3f - 2f * k) * 360f;
+                    Vector3 cRel = new Vector3(0f, -pivotHeight * 0.45f, 0.05f);
+                    Quaternion r = Quaternion.Euler(ang, 0f, 0f);
+                    visualRoot.localRotation = r;
+                    visualRoot.localPosition = new Vector3(0f, pivotHeight, 0f) + cRel - r * cRel;
+                }
+                if (_rollTimer >= _rollDuration)
+                {
+                    _rollTimer = -1f;
+                    if (visualRoot) { visualRoot.localRotation = Quaternion.identity; visualRoot.localPosition = new Vector3(0, pivotHeight, 0); }
+                    animator.CrossFadeInFixedTime(_crouch ? CrouchLoco : BodyEmpty, 0.12f, _bodyLayer);
+                }
+                return;
+            }
+            if (visualRoot == null) return;
             _rollTimer += dt;
             float t = Mathf.Clamp01(_rollTimer / _rollDuration);
             float eased = t * t * (3f - 2f * t);

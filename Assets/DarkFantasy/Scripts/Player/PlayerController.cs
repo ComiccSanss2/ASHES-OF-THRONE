@@ -117,8 +117,15 @@ namespace DarkFantasy
         public float radiantArrowSpeedMul = 1.4f;
         public Color radiantTrailColor = new Color(1f, 0.95f, 0.75f, 1f);
 
+        [Header("Ultimate (key 1, all but the bard)")]
+        public PlayerUltimate ult;
+        bool _ultActive;
+        /// <summary>The ultimate is playing: hyper armour (no flinch, no knockdown), 40% less damage taken.</summary>
+        public bool UltArmor => _ultActive && _state == State.Attacking;
+
         [Header("Bard")]
         public BardCaster bard;
+        public SmokerCaster smoker;
         public PlayerBuffs buffs;
 
         [Header("Archer")]
@@ -140,6 +147,13 @@ namespace DarkFantasy
         readonly NetworkVariable<bool> _netBlocking = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
         readonly NetworkVariable<byte> _netAct = new NetworkVariable<byte>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
         readonly NetworkVariable<byte> _netWeapon = new NetworkVariable<byte>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+        readonly NetworkVariable<bool> _netCrouch = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+        [Header("Crouch (Ctrl / C)")]
+        public float crouchSpeed = 1.9f;
+        bool _crouched;
+        float _ccHeight, _ccCenterY;
+        /// <summary>Crouched: slower, lower, harder for enemies to notice.</summary>
+        public bool Crouched => IsOwner ? _crouched : _netCrouch.Value;
 
         /// <summary>Equipped weapon (Inventory.BaseWeapon / Inventory.Relic), replicated.</summary>
         public byte EquippedWeapon => _netWeapon.Value;
@@ -180,6 +194,7 @@ namespace DarkFantasy
         bool _heavyReleased;
         bool _remoteHeavyHold;
         float _queuedLightTime = -10f, _queuedRollTime = -10f;
+        bool _holdBlocked;   // a click that opened/closed a menu must not turn into a held attack
         Vector3 _rollDir;
         bool _blocking;
         float _hurtTime;
@@ -203,12 +218,21 @@ namespace DarkFantasy
         public bool IsInvulnerable => (_state == State.Rolling && _stateTime >= iframeStart && _stateTime <= iframeEnd) || _state == State.Traversing || Time.time < _hitInvulnUntil || DevGodOn;
         public string DisplayName => vitals ? vitals.DisplayName : name;
         public bool CanInteract => IsOwner && _state == State.Free && !IsDead;
+        /// <summary>Owner: drinking a flask right now (the Reaper punishes it from afar).</summary>
+        public bool IsDrinkingNow => _state == State.Drinking;
         public bool IsArcher => playerClass == PlayerClass.Archer;
         public bool IsBard => playerClass == PlayerClass.Bard;
+        public bool IsReaper => playerClass == PlayerClass.Reaper;
+        public bool IsSmoker => playerClass == PlayerClass.Smoker;
+        /// <summary>Bard or smoker: mana, the Arcana skill.</summary>
+        public bool IsCaster => IsBard || IsSmoker;
         /// <summary>Archer or bard: no guard, the right button aims over the shoulder.</summary>
-        public bool IsRanged => IsArcher || IsBard;
+        public bool IsRanged => IsArcher || IsBard || IsSmoker;
         /// <summary>Damage multiplier from buffs (War Anthem).</summary>
-        public float DamageDealtMul => buffs ? buffs.DamageDealtMul : 1f;
+        /// <summary>Anthem, and the skill tree: Strength (weapons) or Arcana (the bard's magic).</summary>
+        public float DamageDealtMul => (buffs ? buffs.DamageDealtMul : 1f) * (IsCaster ? PlayerSkills.ArcanaMul : PlayerSkills.StrengthMul);
+        [Header("Armour (boss sets)")]
+        public PlayerArmor armor;
         System.Action _spellRelease;
         int _spellIndex = -1;
         public bool IsCastingSpell => _spellRelease != null && _state == State.Attacking;
@@ -219,7 +243,8 @@ namespace DarkFantasy
 
         public static event System.Action<PlayerController> LocalDied;
         /// <summary>Player-vs-player damage is halved: fights between players last a few exchanges, not one swing.</summary>
-        public const float PvpDamageMul = 0.5f;
+        /// <summary>Duels: blows land almost in full (players have less health than monsters' blows assume).</summary>
+        public const float PvpDamageMul = 0.95f;
         public bool PvpOn => vitals != null && vitals.PvpOn;
         /// <summary>Both players opted into PvP, both on their feet.</summary>
         public static bool CanPvp(PlayerController a, PlayerController b) => a != null && b != null && a != b && a.PvpOn && b.PvpOn && !a.IsDead && !b.IsDead;
@@ -236,6 +261,7 @@ namespace DarkFantasy
             if (anim == null) anim = GetComponentInChildren<CharacterAnimator>();
             if (buffs == null) buffs = GetComponent<PlayerBuffs>();
             if (bard == null) bard = GetComponent<BardCaster>();
+            if (smoker == null) smoker = GetComponent<SmokerCaster>();
         }
 
         public override void OnNetworkSpawn()
@@ -244,13 +270,19 @@ namespace DarkFantasy
             Layers.SetLayerRecursive(gameObject, Layers.Character);
             if (weapon != null) { weapon.ownerRoot = transform; weapon.OnHit += OnWeaponHit; }
             _netWeapon.OnValueChanged += OnWeaponChanged;
+            _netCrouch.OnValueChanged += OnCrouchChanged;
             ApplyWeaponVisual(_netWeapon.Value);
             if (!IsOwner && !Interactables.All.Contains(this)) Interactables.All.Add(this);
+            // PvP: opponents can be locked on (LockOnTarget.IsValid filters by the duel)
+            if (!IsOwner && !TryGetComponent<LockOnTarget>(out _)) { var lot = gameObject.AddComponent<LockOnTarget>(); lot.lockPoint = lockPoint; }
+            if (armor == null) armor = GetComponent<PlayerArmor>();
+            if (IsOwner) StartCoroutine(SessionStartChecks());
             if (IsOwner)
             {
                 BossArena.BossDefeated += ClearBan; BossArena.FightReset += ClearBan;
                 DragonArena.Defeated += ClearBan; DragonArena.FightReset += ClearBan;
                 MirrorArena.Defeated += ClearBan; MirrorArena.FightReset += ClearBan;
+                ReaperArena.Defeated += ClearBan; ReaperArena.FightReset += ClearBan;
                 _netWeapon.Value = Inventory.Equipped(playerClass);
                 Inventory.Changed += OnInventoryChanged;
                 Local = this;
@@ -270,7 +302,7 @@ namespace DarkFantasy
             _netWeapon.OnValueChanged -= OnWeaponChanged;
             if (IsOwner) Inventory.Changed -= OnInventoryChanged;
             Interactables.All.Remove(this);
-            if (IsOwner) { BossArena.BossDefeated -= ClearBan; BossArena.FightReset -= ClearBan; DragonArena.Defeated -= ClearBan; DragonArena.FightReset -= ClearBan; MirrorArena.Defeated -= ClearBan; MirrorArena.FightReset -= ClearBan; }
+            if (IsOwner) { BossArena.BossDefeated -= ClearBan; BossArena.FightReset -= ClearBan; DragonArena.Defeated -= ClearBan; DragonArena.FightReset -= ClearBan; MirrorArena.Defeated -= ClearBan; MirrorArena.FightReset -= ClearBan; ReaperArena.Defeated -= ClearBan; ReaperArena.FightReset -= ClearBan; }
             if (_reviveFx) Destroy(_reviveFx);
             if (Local == this)
             {
@@ -337,7 +369,11 @@ namespace DarkFantasy
                 if (lv != null) { Vector3 sp = lv.GetPlayerSpawn(OwnerClientId, out var srot); TeleportTo(sp, srot); }
             }
             _stateTime += dt;
-            if (GameInput.LightAttackPressed) _queuedLightTime = Time.time;
+            if (ult) ult.OwnerTick(dt);
+            // holding the button keeps attacking (re-queues every frame while free)
+            if (GameInput.LightAttackPressed || (GameInput.LightAttackHeld && _state == State.Free && !_holdBlocked)) _queuedLightTime = Time.time;
+            if (GameInput.GameplayBlocked) _holdBlocked = true;
+            else if (!GameInput.LightAttackHeld) _holdBlocked = false;
             if (GameInput.RollPressed) _queuedRollTime = Time.time;
             bool lightQueued = Time.time - _queuedLightTime < inputBuffer;
             bool rollQueued = Time.time - _queuedRollTime < inputBuffer;
@@ -356,9 +392,29 @@ namespace DarkFantasy
             {
                 case State.Free:
                     ComputeMoveInput(out desiredMove, out speedLimit);
+                    if (GameInput.CrouchPressed) SetCrouched(!_crouched);
+                    if (_crouched)
+                    {
+                        if (_sprinting) SetCrouched(false);                // sprinting stands you up
+                        else speedLimit = Mathf.Min(speedLimit, crouchSpeed);
+                    }
                     if (IsBard) bard?.OwnerPollSpells();
-                    if (_state != State.Free) break;   // a spell started
-                    if (IsRanged)
+                    else
+                    {
+                        if (ult && GameInput.SpellPressed(0)) ult.TryActivate();
+                        // keys 2-4: the session's draughts (the bard keeps those keys for his songs)
+                        for (int k = 0; k < Potions.KindCount; k++)
+                            if (GameInput.SpellPressed(k + 1)) DrinkPotion((Potions.Kind)k);
+                    }
+                    if (_state != State.Free) break;   // a spell / the ultimate started
+                    if (IsSmoker && smoker)
+                    {
+                        // the right button draws on the pipe; letting go exhales the smoke spirits
+                        bool inhaling = smoker.OwnerInhale(GameInput.BlockHeld, dt);
+                        if (_state != State.Free) break;   // exhaled
+                        if (inhaling) { speedLimit = Mathf.Min(speedLimit, aimMoveSpeed); _sprinting = false; break; }
+                    }
+                    else if (IsRanged)
                     {
                         // the archer has no guard: the right button raises the bow and aims over the shoulder
                         _aiming = GameInput.BlockHeld;
@@ -377,13 +433,13 @@ namespace DarkFantasy
                         bool cont = Time.time - _lastAttackEnd < comboGrace && _lastComboIndex >= 0;
                         StartAttack(cont ? (_lastComboIndex + 1) % lightCombo.Length : 0, cont);
                     }
-                    else if (GameInput.HeavyPressed && vitals.HasStamina()) StartAttack(-1, false);
+                    else if (GameInput.HeavyPressed && vitals.HasStamina() && (!IsSmoker || smoker == null || smoker.CanGust())) StartAttack(-1, false);
                     else if (GameInput.ParryPressed && vitals.HasStamina() && !IsRanged) StartParry();
                     else if (GameInput.FlaskPressed && vitals.Flasks > 0) StartDrink();
                     break;
 
                 case State.Attacking:
-                    if (IsRanged && GameInput.BlockHeld) { _aiming = true; SoulsCamera.RequestAim(); }
+                    if (IsRanged && !IsSmoker && GameInput.BlockHeld) { _aiming = true; SoulsCamera.RequestAim(); }
                     UpdateAttack(dt, rollQueued);
                     break;
 
@@ -405,6 +461,7 @@ namespace DarkFantasy
                     if (_stateTime >= parryDuration) EnterFree();
                     break;
                 case State.Hurt:
+                    if (_grabbed) { UpdateSoulGrab(dt); break; }
                     _velocity = Vector3.MoveTowards(_velocity, Vector3.zero, 11f * dt);   // slide back from the impact
                     if (_stateTime >= _hurtTime) EnterFree();
                     break;
@@ -454,12 +511,13 @@ namespace DarkFantasy
 
             UpdateFacing(dt, desiredMove);
 
-            if (_state != State.Traversing)
+            if (_state != State.Traversing && !(_grabbed && _state == State.Hurt))
             {
                 if (_cc.isGrounded && _vy < 0f) _vy = -2f;
                 _vy -= gravity * dt;
                 _cc.Move((_velocity + ExternalPull() + Vector3.up * _vy) * dt);
-                if (transform.position.y < -60f) Respawn();
+                // fell out of the world (the Realm of the Red Moon lies far below the castle: its own floor)
+                if (transform.position.y < (transform.position.z > 760f ? -190f : -60f)) Respawn();
             }
 
             float planarSpeed = MathUtil.Flat(_velocity).magnitude;
@@ -556,6 +614,7 @@ namespace DarkFantasy
         /// <param name="index">0..2 = light combo hit, -1 = heavy.</param>
         void StartAttack(int index, bool chained)
         {
+            if (_crouched) SetCrouched(false);
             _isHeavy = index < 0;
             _comboIndex = Mathf.Max(0, index);
             _attack = (_isHeavy ? heavyAttack : lightCombo[_comboIndex]).Clone();
@@ -567,7 +626,7 @@ namespace DarkFantasy
             _stateTime = 0f;
             _comboQueued = false;
             _heavyCharge = 0f;
-            _heavyReleased = !_isHeavy || IsBard;   // the bard's heavy (Triad) is not charged
+            _heavyReleased = !_isHeavy || IsCaster;   // the bard's heavy (Triad) is not charged
             _fired = false;
             if (_hitboxOn) { weapon.EndSwing(); _hitboxOn = false; }
             if (vitals.Stamina < _attack.staminaCost)
@@ -600,7 +659,7 @@ namespace DarkFantasy
             float t = AttackTime();
             // any swing, shot or cast can be cancelled into a roll at any moment: the stamina of the
             // attack is already spent, the blow (or the spell) is simply lost
-            if (rollQueued && vitals.HasStamina() && _state == State.Attacking)
+            if (rollQueued && vitals.HasStamina() && _state == State.Attacking && !_ultActive)
             {
                 _queuedRollTime = -10;
                 if (_hitboxOn) { weapon.EndSwing(); _hitboxOn = false; }
@@ -613,7 +672,7 @@ namespace DarkFantasy
             if (_spellRelease != null) { UpdateSpell(t, dt, rollQueued); return; }
 
             // buffer every press made during the swing: the chain continues as soon as possible
-            if (GameInput.LightAttackPressed && t > _attack.startTime + 0.05f) { _comboQueued = true; _queuedLightTime = -10; }
+            if ((GameInput.LightAttackPressed || (GameInput.LightAttackHeld && !_holdBlocked)) && t > _attack.startTime + 0.05f) { _comboQueued = true; _queuedLightTime = -10; }
 
             // ---- heavy charge: pause at the top of the swing while held
             if (_isHeavy && !_heavyReleased)
@@ -689,6 +748,11 @@ namespace DarkFantasy
                 if (!_fired && t >= _attack.hitStart) { _fired = true; if (bard) bard.FireBolt(_attack, _isHeavy); }
                 return;
             }
+            if (IsSmoker)
+            {
+                if (!_fired && t >= _attack.hitStart) { _fired = true; if (smoker) { if (_isHeavy) smoker.Gust(_attack); else smoker.FireBolt(_attack); } }
+                return;
+            }
             if (IsArcher)
             {
                 // the arrow leaves on the release frame of the clip (same frame the string snaps)
@@ -751,9 +815,42 @@ namespace DarkFantasy
             return true;
         }
 
+        /// <summary>Owner: plays the class ultimate; 'release' runs on its decisive frame (hitStart).</summary>
+        public bool StartUltimate(AttackData data, System.Action release)
+        {
+            if (!IsOwner || _state != State.Free || IsDead || data == null) return false;
+            if (_crouched) SetCrouched(false);
+            _attack = data.Clone();
+            _isHeavy = false;
+            _comboIndex = 0;
+            _attackStartReal = Time.time;
+            _state = State.Attacking;
+            _stateTime = 0f;
+            _comboQueued = false;
+            _heavyReleased = true;
+            _fired = false;
+            _spellRelease = release;
+            _spellIndex = -2;
+            _ultActive = true;
+            var cam = SoulsCamera.Instance;
+            Vector3 f = cam && cam.IsLocked ? MathUtil.Flat(cam.CurrentTarget.transform.position - transform.position)
+                      : cam ? cam.PlanarForward : transform.forward;
+            if (f.sqrMagnitude > 0.01f) transform.rotation = Quaternion.LookRotation(f.normalized);
+            anim.Play(_attack.state, 0.1f, _attack.animSpeed, _attack.startTime);
+            ActionRpc((byte)NetAction.Ultimate, 0f);
+            return true;
+        }
+
         void UpdateSpell(float t, float dt, bool rollQueued)
         {
             _velocity = Vector3.MoveTowards(_velocity, Vector3.zero, deceleration * dt);
+            if (_ultActive)
+            {
+                if (ult) ult.OwnerUpdateActive(t);
+                if (!_fired && t >= _attack.hitStart) { _fired = true; var r0 = _spellRelease; r0?.Invoke(); }
+                if (t >= _attack.endTime) EnterFree(0.3f);
+                return;
+            }
             if (!_fired && t >= _attack.hitStart) { _fired = true; var r = _spellRelease; r?.Invoke(); }
             if (_fired && t >= _attack.cancelTime)
             {
@@ -766,10 +863,12 @@ namespace DarkFantasy
 
         void ClearSpell()
         {
+            if (_ultActive) { _ultActive = false; if (ult) ult.OnEnded(); }
             if (_spellRelease == null) return;
             _spellRelease = null;
+            bool wasSpell = _spellIndex >= 0;
             _spellIndex = -1;
-            if (bard) bard.OnSpellEnded();
+            if (bard && wasSpell) bard.OnSpellEnded();
         }
 
         // ================================================================== weapons
@@ -922,6 +1021,57 @@ namespace DarkFantasy
             anim.ReturnToLocomotion(fade);
         }
 
+        /// <summary>Owner: crouch / stand (the capsule shrinks; standing up needs head room).</summary>
+        void SetCrouched(bool on)
+        {
+            if (on == _crouched || anim == null || !anim.HasBodyLayer) return;
+            if (_ccHeight <= 0f) { _ccHeight = _cc.height; _ccCenterY = _cc.center.y; }
+            if (!on)
+            {
+                float r = _cc.radius * 0.9f;
+                Vector3 from = transform.position + Vector3.up * (_cc.height - r);
+                if (Physics.SphereCast(from, r, Vector3.up, out _, _ccHeight - _cc.height + 0.05f, Layers.EnvironmentMask, QueryTriggerInteraction.Ignore)) return;
+            }
+            _crouched = on;
+            _cc.height = on ? _ccHeight * 0.62f : _ccHeight;
+            _cc.center = new Vector3(_cc.center.x, on ? _ccCenterY * 0.62f : _ccCenterY, _cc.center.z);
+            anim.SetCrouch(on);
+            if (_netCrouch.Value != on) _netCrouch.Value = on;
+            Sfx.Play(SfxId.StepDirt, transform.position, 0.4f, on ? 0.8f : 1.1f);
+        }
+
+        /// <summary>Owner: drinks a draught (instant, no animation lock).</summary>
+        public void DrinkPotion(Potions.Kind k)
+        {
+            if (!IsOwner || IsDead || !vitals.UsePotion(k)) return;
+            PotionFxRpc((byte)k);
+        }
+
+        /// <summary>Local clock of the last flask or draught this player was seen drinking (every peer).</summary>
+        [System.NonSerialized] public float LastHealTime = -99f;
+
+        [Rpc(SendTo.Everyone)]
+        void PotionFxRpc(byte k)
+        {
+            LastHealTime = Time.time;
+            Color c = k == 0 ? new Color(0.7f, 0.72f, 0.8f) : k == 1 ? new Color(0.5f, 1f, 0.45f) : new Color(1f, 0.9f, 0.6f);
+            SpellFx.GroundRing(transform.position + Vector3.up * 0.05f, 0.2f, 1.4f, c, 0.6f, 0.8f);
+            SpellFx.Sparkles(transform.position + Vector3.up * 1.2f, 0.6f);
+            Sfx.Play(SfxId.Drink, transform.position + Vector3.up, 0.8f, k == 1 ? 1.2f : 0.95f);
+        }
+
+        /// <summary>Owner, once per session: a lobby that starts from the beginning resets the skill tree.</summary>
+        System.Collections.IEnumerator SessionStartChecks()
+        {
+            Potions.ResetSession();
+            float t = 0f;
+            while ((CastleProgress.Instance == null || !CastleProgress.Instance.IsSpawned) && t < 8f) { t += Time.deltaTime; yield return null; }
+            yield return null;
+            if (CastleProgress.Instance != null && CastleProgress.Instance.FreshStart) PlayerSkills.ResetAll();
+        }
+
+        void OnCrouchChanged(bool was, bool now) { if (!IsOwner && anim) anim.SetCrouch(now); }
+
         void StartRoll(Vector3 dir)
         {
             ClearSpell();
@@ -943,6 +1093,7 @@ namespace DarkFantasy
 
         void StartParry()
         {
+            if (_crouched) SetCrouched(false);
             _state = State.Parrying;
             _stateTime = 0f;
             vitals.UseStamina(parryStamina);
@@ -952,16 +1103,19 @@ namespace DarkFantasy
 
         void StartDrink()
         {
+            if (_crouched) SetCrouched(false);
             if (!vitals.UseFlask()) return;
             _state = State.Drinking;
             _stateTime = 0f;
             _drankApplied = false;
             Sfx.Play(SfxId.Drink, transform.position + Vector3.up);
+            LastHealTime = Time.time;
             ActionRpc((byte)NetAction.Drink, 0f);
         }
 
         void EnterHurt(NetAction kind, float duration)
         {
+            if (_crouched) SetCrouched(false);
             ClearSpell();
             _state = State.Hurt;
             _stateTime = 0f;
@@ -977,6 +1131,7 @@ namespace DarkFantasy
 
         void EnterDeath(bool giveUp = false)
         {
+            if (_crouched) SetCrouched(false);
             bool wasDown = _state == State.Downed;
             ClearSpell();
             _state = State.Dead;
@@ -1008,6 +1163,49 @@ namespace DarkFantasy
         {
             if (kind == 1) _invertUntil = Time.time + duration; else _slowUntil = Time.time + duration;
             LocalMirrorCursed?.Invoke(this, kind);
+        }
+
+        // ================================================================== the Reaper's Call of Souls (owner)
+        bool _grabbed;
+        float _grabUntil, _grabDrain, _grabSlam;
+        Vector3 _grabPos, _grabThrow;
+        public bool SoulGrabbed => _grabbed;
+        public static event System.Action<PlayerController> LocalSoulGrabbed;
+
+        /// <summary>Server → the victim's owner: the skeletal hand closed on you. Lifted to 'holdPos', drained, then hurled down.</summary>
+        [Rpc(SendTo.Owner)]
+        public void SoulGrabRpc(Vector3 holdPos, float hold, float drainPerSecond, float slamDamage, Vector3 throwDir)
+        {
+            if (IsDead || _state == State.Dead || _state == State.Downed || (_grabbed && _state == State.Hurt) || DevGodOn) return;
+            if (_crouched) SetCrouched(false);
+            _grabbed = true;
+            _grabUntil = Time.time + hold;
+            _grabPos = holdPos; _grabDrain = drainPerSecond; _grabSlam = slamDamage; _grabThrow = MathUtil.Flat(throwDir).normalized;
+            EnterHurt(NetAction.GuardBreak, hold + 5f);
+            SoulsCamera.Shake(0.08f, 0.4f);
+            LocalSoulGrabbed?.Invoke(this);
+        }
+
+        void UpdateSoulGrab(float dt)
+        {
+            _velocity = Vector3.zero; _vy = 0f;
+            _cc.enabled = false;
+            transform.position = Vector3.Lerp(transform.position, _grabPos, 1f - Mathf.Exp(-5f * dt));
+            _cc.enabled = true;
+            vitals.Damage(_grabDrain * dt, true);
+            if (vitals.IsDead || vitals.IsDowned) { _grabbed = false; return; }
+            if (Time.time < _grabUntil) return;
+            // hurled to the ground: heavy fall, then the curse of the grave (slowed)
+            _grabbed = false;
+            vitals.Damage(_grabSlam, true);
+            SoulsCamera.Shake(0.2f, 0.45f);
+            if (vitals.IsDead || vitals.IsDowned) return;
+            EnterHurt(NetAction.Knockdown, knockdownDuration);
+            _hitInvulnUntil = Time.time + knockdownDuration + 0.3f;
+            _velocity = _grabThrow * 7f;
+            _vy = -6f;
+            _slowUntil = Time.time + 6f;
+            LocalMirrorCursed?.Invoke(this, 2);
         }
 
         /// <summary>Everyone (each owner moves itself): the Soul Vortex drags players toward its centre.</summary>
@@ -1056,6 +1254,7 @@ namespace DarkFantasy
             if (ArenaFighting(1) && (lv == null || lv.IsInsideArena(p))) return 1;
             if (ArenaFighting(2) && (lv == null || lv.IsInsideDragonArena(p))) return 2;
             if (ArenaFighting(3) && (lv == null || lv.IsInsideMirrorArena(p))) return 3;
+            if (ArenaFighting(4) && (lv == null || lv.IsInsideReaperArena(p))) return 4;
             return 0;
         }
 
@@ -1064,6 +1263,7 @@ namespace DarkFantasy
             if (arena == 1) { var a = BossArena.Instance; return a != null && a.IsSpawned && a.State == BossArena.ArenaState.Fighting; }
             if (arena == 2) { var d = DragonArena.Instance; return d != null && d.IsSpawned && d.State == BossArena.ArenaState.Fighting; }
             if (arena == 3) { var m = MirrorArena.Instance; return m != null && m.IsSpawned && m.State == BossArena.ArenaState.Fighting; }
+            if (arena == 4) { var r = ReaperArena.Instance; return r != null && r.IsSpawned && r.State == BossArena.ArenaState.Fighting; }
             return false;
         }
 
@@ -1292,6 +1492,11 @@ namespace DarkFantasy
 
         /// <summary>Development only: equips "0" (starting weapon) or "1" (relic).</summary>
         public void DevEquip(string w) => Equip(byte.Parse(w));
+        /// <summary>Development: "1" crouches, "0" stands up; DevRoll rolls forward.</summary>
+        public void DevCrouch(string on) { if (IsOwner && _state == State.Free) SetCrouched(on == "1"); }
+        public void DevRoll(string _) { if (IsOwner && _state == State.Free) StartRoll(transform.forward); }
+        /// <summary>Development: plays only the roll's visual, slowed to "seconds" (to look at its frames).</summary>
+        public void DevRollVisual(string seconds) => anim.StartRoll(float.Parse(seconds, System.Globalization.CultureInfo.InvariantCulture));
         /// <summary>Development: "0".."2" = that light-combo hit, "h" = the heavy (archer: the shot fires as usual).</summary>
         public void DevAttack(string i) { if (IsOwner && _state == State.Free) StartAttack(i == "h" ? -1 : int.Parse(i), false); }
 
@@ -1341,6 +1546,7 @@ namespace DarkFantasy
             if (swing.sqrMagnitude < 1f) swing = transform.right;
             enemy.LocalHitReact(point, _isHeavy, transform.position, swing);
             enemy.TakeHitRpc(_attack.damage, _attack.poiseDamage, point, transform.position, _attack.knockback);
+            PlayerUltimate.LocalDealt(_attack.damage);
             if (WeaponTier == Inventory.Dragon) { DragonCutFx(point); DragonCutRpc(point); }
             else if (WeaponTier == Inventory.Radiant) { RadiantCutFx(point); RadiantCutRpc(point); }
         }
@@ -1374,7 +1580,21 @@ namespace DarkFantasy
                 if (Vector3.Angle(transform.forward, MathUtil.Flat(to)) > cone) continue;
                 if (best == null || d < bestD) { best = e; bestD = d; }
             }
-            if (best != null) Land(best, best.transform.position + Vector3.up * 1.2f);
+            if (best != null) { Land(best, best.transform.position + Vector3.up * 1.2f); return; }
+            // duel: the same small assist against an opponent
+            foreach (var p in All)
+            {
+                if (!CanPvp(this, p)) continue;
+                Vector3 to = p.transform.position - transform.position;
+                if (MathUtil.Flat(to).magnitude > 2.4f || Mathf.Abs(to.y) > 2f) continue;
+                float cone = _attack.state == CharacterAnimator.Spin ? 180f : 55f;
+                if (Vector3.Angle(transform.forward, MathUtil.Flat(to)) > cone) continue;
+                _hitLanded = true;
+                anim.HitStop(_isHeavy ? 0.1f : 0.06f);
+                p.ReceiveHitRpc(_attack.damage * PvpDamageMul, _attack.poiseDamage, transform.position,
+                                (byte)(_isHeavy ? HitFlags.Heavy : HitFlags.Parryable), NetworkObject);
+                return;
+            }
         }
 
         // ================================================================== hits received
@@ -1388,6 +1608,9 @@ namespace DarkFantasy
             var f = (HitFlags)flags;
             if (IsInvulnerable) return;
             if (buffs) damage *= buffs.DamageTakenMul;
+            if (UltArmor) damage *= 0.6f;
+            if (armor) damage *= armor.DamageTakenMul;
+            damage *= vitals.PotionDamageTakenMul;
 
             bool facing = CombatUtil.IsInFront(transform, attackerPos, 75f);
 
@@ -1417,7 +1640,7 @@ namespace DarkFantasy
                 }
                 else
                 {
-                    vitals.Damage(damage * blockChip);
+                    vitals.Damage(damage * ((f & HitFlags.Dark) != 0 ? Mathf.Max(blockChip, 0.45f) : blockChip));
                     _velocity = MathUtil.Flat(transform.position - attackerPos).normalized * ((f & HitFlags.Heavy) != 0 ? 5f : 3.2f);
                     SoulsCamera.Shake(0.04f);
                     anim.HitStop(0.06f);
@@ -1435,12 +1658,26 @@ namespace DarkFantasy
             }
             bool hyper = _state == State.Attacking && _attack != null && _attack.hyperArmor;
             Vector3 away = MathUtil.Flat(transform.position - attackerPos).normalized;
+            if (UltArmor) { SoulsCamera.Shake(0.08f, 0.2f); return; }
+            if (pvpAttacker != null)
+            {
+                // duel: the blow staggers briefly, close enough for the attacker to press on
+                SoulsCamera.Shake((f & HitFlags.Heavy) != 0 ? 0.14f : 0.08f, 0.2f);
+                if (!hyper || (f & HitFlags.Heavy) != 0)
+                {
+                    bool heavyHit = (f & HitFlags.Heavy) != 0;
+                    EnterHurt(NetAction.Hurt, heavyHit ? hurtDuration * 1.2f : hurtDuration * 0.75f);
+                    _hitInvulnUntil = Time.time + 0.18f;
+                    _velocity = away * (heavyHit ? 3.6f : 1.6f);
+                }
+                return;
+            }
             if ((f & HitFlags.Heavy) != 0)
             {
                 SoulsCamera.Shake(0.2f, 0.35f);
                 EnterHurt(NetAction.Knockdown, knockdownDuration);
                 _hitInvulnUntil = Time.time + knockdownDuration + 0.3f;
-                _velocity = away * 8.5f;
+                _velocity = away * 6f;
             }
             else if (!hyper && poiseDamage > 5f)
             {
@@ -1499,11 +1736,16 @@ namespace DarkFantasy
                 case NetAction.Death: _remoteHeavyHold = false; anim.Play(CharacterAnimator.Death, 0.1f, 1f); Sfx.Play(SfxId.Death, transform.position, 0.9f); break;
                 case NetAction.Respawn: anim.ReturnToLocomotion(0.1f); break;
                 case NetAction.Recover: _remoteHeavyHold = false; anim.ReturnToLocomotion(param > 0f ? param : 0.25f); break;
-                case NetAction.Drink: if (!IsOwner) Sfx.Play(SfxId.Drink, transform.position + Vector3.up, 0.6f); break;
+                case NetAction.Drink: LastHealTime = Time.time; if (!IsOwner) Sfx.Play(SfxId.Drink, transform.position + Vector3.up, 0.6f); break;
+                case NetAction.Ultimate:
+                    if (ult && ult.cast != null) anim.Play(ult.cast.state, 0.1f, ult.cast.animSpeed, ult.cast.startTime);
+                    _remoteHeavyHold = false;
+                    break;
                 case NetAction.Spell:
                 {
                     int i = Mathf.RoundToInt(param);
-                    if (bard && i >= 0 && i < bard.spells.Length && bard.spells[i]?.cast != null)
+                    if (smoker && smoker.exhaleCast != null) anim.Play(smoker.exhaleCast.state, 0.12f, smoker.exhaleCast.animSpeed, smoker.exhaleCast.startTime);
+                    else if (bard && i >= 0 && i < bard.spells.Length && bard.spells[i]?.cast != null)
                     {
                         var c = bard.spells[i].cast;
                         anim.Play(c.state, 0.12f, c.animSpeed, c.startTime);
